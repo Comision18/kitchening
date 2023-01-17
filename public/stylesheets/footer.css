@@ -1,0 +1,35 @@
+.footer__nav--menu {
+    background-color: var(--colorRojo);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.footer__nav--menu li {
+    width: 100%;
+    text-transform: capitalize;
+    border-bottom: 1px solid white;
+    text-align: center;
+    padding: 10px 0;
+}
+
+@media (min-width:1180px) {
+    .footer__nav--menu {
+        height: 180px;
+        border-radius: 20px 20px 0 0;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .footer__nav--menu li {
+        width: 120px;
+        padding: 0 10px;
+        border-bottom: none;
+        border-right: 2px solid white;
+    }
+
+    .footer__nav--menu li:last-child {
+        border-right: none;
+    }
+}

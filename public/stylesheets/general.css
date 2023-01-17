@@ -1,0 +1,29 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+}
+
+body{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 10px;
+    background-image: url("/images/bg-body.png");
+}
+
+a{
+    text-decoration: none;
+    color : white;
+}
+
+a:hover{
+    color: whitesmoke;
+}
+
+li {
+    list-style: none;
+}
+
+ol, ul {
+    padding: 0;
+}

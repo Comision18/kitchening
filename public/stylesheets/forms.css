@@ -1,0 +1,30 @@
+.form__header {
+    margin: 30px 0;
+    color: #fff;
+}
+.form__box {
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.form__box input {
+    padding: 8px;
+    width: 100%;
+    border: 1px solid silver;
+}
+
+.form__label {
+    color: #fff;
+}
+
+.form__box--buttons{
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.form__footer {
+    margin: 30px 0;
+    text-align: center;
+}
+

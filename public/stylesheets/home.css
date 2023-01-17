@@ -1,0 +1,94 @@
+.home__main__section--banner{
+    display: none;
+}
+
+.home__main__section--productos{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.home__main__section__article{
+    width:100%;
+}
+
+.home__main__section__article--imagen{
+    position: relative;
+}
+
+.home__main__section__article--imagen-product{
+    width: 100%;
+}
+
+.home__main__section__article--imagen-sticker{
+    position: absolute;
+    top: 0px;
+    right: 10px;
+}
+
+.home__main__section__article--imagen-zoom {
+    position: absolute;
+    top: 45%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin: 0 auto;
+    text-transform: uppercase;
+    padding: 10px 0;
+}
+.home__main__section__article--contenido h4{
+    margin: 20px 0;
+}
+
+.home__main__section__article--contenido a{
+    display: inline-block;
+    margin: 20px 0;
+    background-color: var(--colorGris);
+    padding: 8px;
+}
+
+
+.home__main__section--courses {
+    padding: 0 20px;
+}
+
+.home__main__section--courses .carousel-courses-item{
+    margin: 0 5px;
+}
+
+.home__main__section--whatsapp {
+    position: fixed;
+    z-index: 1000;
+    right: -10px;
+    bottom: 10px;
+}
+
+.home__main__section--whatsapp img {
+    width: 100px;
+}
+
+@media (min-width:768px) {
+
+    .home__main__section--banner{
+        display: block;
+        margin-bottom: 30px;
+    }
+    .home__main__section--banner img{
+        width: 100%;
+    }
+    .home__main__section--productos{
+        justify-content: space-between;
+    }
+    .home__main__section__article{
+        width: 48%;
+    }
+
+}
+
+@media (min-width:1180px) {
+    .home__main__section__article{
+        width: 32%;      
+    }
+
+}
+
