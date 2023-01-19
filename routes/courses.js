@@ -7,9 +7,7 @@ const {list,detail} = require('../controllers/courseController');
 
 router
     .get('/list',list)
-    .get('/detail',detail)
-
-
+    .get('/detail/:id',detail)
 
 
 module.exports = router;

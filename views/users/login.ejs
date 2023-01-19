@@ -1,12 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Login</h1>
-</body>
+
+<%- include('../partials/head') %>
+
+  <body class="home">
+    <!-- encabezado -->
+    <%- include('../partials/header') %>
+
+      <!-- principal -->
+      <main class="login__main">
+        <div class="row mb-5">
+            <div class="col-12 col-md-8 mx-auto">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h5 class="card-title">Login de Usuario</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="">
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Correo electrónico</label>
+                                <input type="email" class="form-control" id="email" name="email">
+                              </div>
+                              <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                              </div>
+                              <button type="submit" class="buttons buttons__primary">Ingresar</button>
+                        </form>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+      </main>
+
+
+      <%- include('../partials/footer') %>
+
+
+        <%- include('../partials/scripts') %>
+
+          <script src="/javascripts/home.js"></script>
+
+  </body>
+
 </html>

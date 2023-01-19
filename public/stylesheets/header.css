@@ -10,7 +10,7 @@
 .header__logo{
     border-radius: 50%;
     border: 1px solid var(--colorGris);
-    width: 180px;
+    width: 100px;
     margin: 15px auto 30px;
     display: block;
     transition: all 5s;

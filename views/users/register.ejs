@@ -1,12 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Register</h1>
-</body>
+
+<%- include('../partials/head') %>
+
+  <body class="home">
+    <!-- encabezado -->
+    <%- include('../partials/header') %>
+
+      <!-- principal -->
+      <main class="register__main">
+        <div class="row mb-5">
+            <div class="col-12 col-md-8 mx-auto">
+                <div class="card shadow">
+                    <div class="card-header">
+                        <h5 class="card-title">Registro de Usuario</h5>
+                    </div>
+                    <div class="card-body">
+                        <form action="" class="row">
+                            <div class="col-12 col-md-6 mb-3">
+                                <label for="name" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="name" name="name">
+                              </div>
+                              <div class="col-12 col-md-6 mb-3">
+                                <label for="surname" class="form-label">Apellido</label>
+                                <input type="text" class="form-control" id="surname" name="surname">
+                              </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Correo electrónico</label>
+                                <input type="email" class="form-control" id="email" name="email">
+                              </div>
+                              <div class="mb-3 col-12 col-md-6">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                              </div>
+                              <div class="mb-3 col-12 col-md-6">
+                                <label for="password" class="form-label">Confirme contraseña</label>
+                                <input type="password" class="form-control" id="password" name="password">
+                              </div>
+                              <div class="d-flex justify-content-end">
+                                <button type="submit" class="buttons buttons__primary">Registrarme</button>
+                              </div>
+                              
+                        </form>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+      </main>
+
+
+      <%- include('../partials/footer') %>
+
+
+        <%- include('../partials/scripts') %>
+
+          <script src="/javascripts/home.js"></script>
+
+  </body>
+
 </html>
