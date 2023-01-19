@@ -5,8 +5,9 @@ const {register,login,profile} = require('../controllers/userController')
 
 /* /users */
 
-router.get('/register',register);
-router.get('/login',login);
-router.get('/profile',profile);
+router
+    .get('/register',register)
+    .get('/login',login)
+    .get('/profile',profile)
 
 module.exports = router;

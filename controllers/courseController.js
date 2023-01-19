@@ -1,8 +1,8 @@
 module.exports = {
     list : (req,res) => {
-        return res.render('products/list')
+        return res.render('courses/list')
     },
     detail : (req,res) => {
-        return res.render('products/detail')
+        return res.render('courses/detail')
     },
 }
