@@ -1,0 +1,18 @@
+[
+    {
+        "id" : 1,
+        "title" : "SUSHI PROFESIONAL",
+        "price" : 10530,
+        "description": "Con una gran experiencia Roberto Nishida te enseña los secretos de las técnicas básicas en la elaboración del sushi, vas a descubrir la importancia de cada ingrediente para que realices una gran variedad de rolls, sashimis y niguiris.",
+        "image": "Sushi-web.jpg",
+        "chef": "Roberto Nishida"
+    },
+    {
+        "id" : 2,
+        "title" : "ABC DE LA COCINA",
+        "price" : 10530,
+        "description": "Tu comida puede transformarse en platos de restaurante de la mano de Guillermo Calabrese que te enseñará a combinar ingredientes simples con productos gourmet para darle un sabor distinto a tus recetas.",
+        "image": "abc.jpg",
+        "chef": "Guillermo Calabrese"
+    }
+]
