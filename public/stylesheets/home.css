@@ -13,11 +13,18 @@
 
 .home__main__section__article--imagen{
     position: relative;
+    overflow: hidden;
 }
 
 .home__main__section__article--imagen-product{
     width: 100%;
 }
+
+.home__main__section__article--imagen-product:hover{
+    transform: scale(1.5);
+    transition: all 2s ease;
+}
+
 
 .home__main__section__article--imagen-sticker{
     position: absolute;
