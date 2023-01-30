@@ -1,11 +1,50 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%=title%></title>
-</head>
-<body>
-    Detalle del curso: <%= id %> 
+<html lang="es">
+
+<%- include('../partials/head',{
+    title: "Agregar Curso"
+}) %>
+
+  <body class="form">
+    <!-- encabezado -->
+    <%- include('../partials/header') %>
+
+      <!-- principal -->
+      <main class="form__main">
+     
+     <h2>Detalle del Curso</h2>
+     <hr>
+     <div class="row">
+        <div class="col-12 col-md-8 mx-auto">
+            <div class="card mb-3" style="max-width: 540px;">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    <img src="/images/courses/<%= image %>" class="img-fluid rounded-start" alt="...">
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title"><%= title %></h5>
+                      <p class="card-text"><%= description %></p>
+                      <div class="d-flex gap-2">
+                        <a class="btn btn-success" href="/courses/edit/<%= id %>">Editar</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+
+     </div>
+
+      </main>
+      <!-- pie de pagina -->
+
+      <%- include('../partials/footer') %>
+
+
+        <%- include('../partials/scripts') %>
+
+
+  </body>
+
 </html>

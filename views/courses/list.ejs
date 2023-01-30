@@ -12,18 +12,13 @@
      
         <!-- productos -->
         <section class="home__main__section--productos">
-          <% courses.forEach(({title,price,description,chef,image,id}) => { %>
-            <article class="home__main__section__article animate__animated">
-              <div class="home__main__section__article--imagen">
-                <img class="home__main__section__article--imagen-product" src="/images/cursos/<%= image %>" alt="">
-                <img class="home__main__section__article--imagen-sticker" src="/images/img-nuevo.png" alt="">
-              </div>
-              <div class="home__main__section__article--contenido">
-                <h4><%= title %> </h4>
-                <p><%= description %> </p>
-                <a href="/courses/detail/<%= id %>">ver más</a>
-              </div>
-            </article>
+          <% courses.forEach(({title,price,description,chef,image,id,sale,free,new : newest}) => { %>
+            <%- include('../partials/courseArticle',{
+              title,
+              image,
+              id,
+              sticker: newest ? 'img-nuevo.png' : sale ? "img-descuento.png" : "img-gratis.png"
+            }) %> 
           <% }) %>
          
          

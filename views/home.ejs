@@ -44,83 +44,46 @@
           </div>
         </section>
         <!-- productos -->
+        <h2>Ultimos agregados</h2>
+        <hr>
         <section class="home__main__section--productos">
                <!-- producto -->
-          <article class="home__main__section__article animate__animated">
-            <div class="home__main__section__article--imagen">
-              <img class="home__main__section__article--imagen-product" src="/images/img-pdto-1.jpg" alt="">
-              <img class="home__main__section__article--imagen-sticker" src="/images/img-nuevo.png" alt="">
-              <!-- <a class="home__main__section__article--imagen-zoom" href="">ampliar foto</a> -->
-            </div>
-            <div class="home__main__section__article--contenido">
-              <h4>Lorem, ipsum dolor.</h4>
-              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Illo vero rerum iure dolorum optio delectus
-                aut
-                obcaecati culpa magni laudantium!</p>
-              <a href="">ver más</a>
-            </div>
-          </article>    
-       
+               <% newCourses.forEach(({title,description,image,id}) => { %>
+                <%- include('./partials/courseArticle',{
+                  title,
+                  image,
+                  id,
+                  sticker: 'img-nuevo.png'
+                }) %> 
+               <% }) %>
+        </section>
+        <h2>Ofertas</h2>
+        <hr>
+        <section class="home__main__section--productos">
+               <!-- producto -->
+               <% saleCourses.forEach(({title,description,image,id}) => { %>
+                <%- include('./partials/courseArticle',{
+                  title,
+                  image,
+                  id,
+                  sticker: 'img-descuento.png'
+                }) %> 
+               <% }) %>
         </section>
         <section class="home__main__section--courses">
           <div class="glider-contain">
             <div class="glider">
-              <a href="">
-                <div class="card carousel-courses-item">
-                  <img src="/images/cursos/curso01.webp" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title text-dark">ABC cocina</h5>
+              <% courses.forEach(({title,image,id}) => { %>
+                <a href="/courses/detail/<%= id %>">
+                  <div class="card carousel-courses-item" style="height: 40vh;">
+                    <img src="/images/courses/<%= image %>" class="card-img-top" alt="...">
+                    <div class="card-body">
+                      <h5 class="card-title text-dark"><%= title %></h5>
+                    </div>
                   </div>
-                </div>
-              </a>
-              <a href="">
-                <div class="card carousel-courses-item">
-                  <img src="/images/cursos/curso02.webp" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title text-dark">ABC cocina</h5>
-                  </div>
-                </div>
-              </a>
-              <a href="">
-                <div class="card carousel-courses-item">
-                  <img src="/images/cursos/curso03.jpg" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title text-dark">ABC cocina</h5>
-                  </div>
-                </div>
-              </a>
-              <a href="">
-                <div class="card carousel-courses-item">
-                  <img src="/images/cursos/curso04.webp" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title text-dark">ABC cocina</h5>
-                  </div>
-                </div>
-              </a>
-              <a href="">
-                <div class="card carousel-courses-item">
-                  <img src="/images/cursos/curso05.jpg" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title text-dark">ABC cocina</h5>
-                  </div>
-                </div>
-              </a>
-              <a href="">
-                <div class="card carousel-courses-item">
-                  <img src="/images/cursos/curso06.jpg" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title text-dark">ABC cocina</h5>
-                  </div>
-                </div>
-              </a>
-              <a href="">
-                <div class="card carousel-courses-item">
-                  <img src="/images/cursos/curso07.webp" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title text-dark">ABC cocina</h5>
-                  </div>
-                </div>
-              </a>
+                </a>
+              <% }) %>
+             
             </div>
 
             <button aria-label="Previous" class="glider-prev">«</button>

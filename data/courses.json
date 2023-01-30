@@ -6,8 +6,8 @@
         "description": "Con una gran experiencia Roberto Nishida te enseña los secretos de las técnicas básicas en la elaboración del sushi, vas a descubrir la importancia de cada ingrediente para que realices una gran variedad de rolls, sashimis y niguiris.",
         "image": "Sushi-web.jpg",
         "chef": "Roberto Nishida",
-        "sale" : true,
-        "new" : false,
+        "sale" : false,
+        "new" : true,
         "free" : false
     },
     {
