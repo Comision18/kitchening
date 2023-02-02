@@ -18,7 +18,7 @@
         <div class="col-12 col-md-8 mx-auto">
             <div class="card">
                 <div class="card-body">
-                    <form action="" class="row">
+                    <form action="/courses/update/<%= id %>?_method=PUT" class="row" method="POST">
                         <div class="col-9 mb-3">
                             <label for="title" class="form-label">Título</label>
                             <input type="text" class="form-control" id="title" placeholder="Título del curso" name="title" value="<%= title %>">
@@ -30,9 +30,8 @@
                           <div class="col-12 mb-3">
                             <label for="chef" class="form-label">Chef</label>
                             <select name="chef" id="chef" class="form-control">
-                                <option value="" selected hidden>Seleccione...</option>
                                 <% chefs.forEach(({name}) => { %>
-                                 <option value="<%= name %>"><%= name %></option>
+                                 <option value="<%= name %>" <%= chef === name && 'selected' %> ><%= name %></option>
                                 <% }) %>
                             </select>
                           </div>
@@ -43,19 +42,19 @@
                           <div class="col-12 mb-3">
                             <div class="d-flex justify-content-around">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="section" id="new">
+                                    <input class="form-check-input" type="radio" name="section" id="new" <%= newest && 'checked'  %>>
                                     <label class="form-check-label" for="new">
                                       Nuevo
                                     </label>
                                   </div>
                                   <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="section" id="sale" >
+                                    <input class="form-check-input" type="radio" name="section" id="sale" <%= sale && 'checked'  %>>
                                     <label class="form-check-label" for="sale">
                                       Oferta
                                     </label>
                                   </div>
                                   <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="section" id="free" >
+                                    <input class="form-check-input" type="radio" name="section" id="free" <%= free && 'checked'  %>>
                                     <label class="form-check-label" for="free">
                                       Gratis
                                     </label>
@@ -63,7 +62,13 @@
                             </div>
                            
                           </div>
-                          <div class="col-12 mb-3">
+                          <div class="col-3 mb-3 d-flex justify-content-center align-items-end">
+                            <div class="form-check form-switch">
+                              <input class="form-check-input" type="checkbox" role="switch" id="visible" name="visible" <%= visible && 'checked'  %>>
+                              <label class="form-check-label" for="visible">Visible</label>
+                            </div>
+                          </div>
+                          <div class="col-9 mb-3">
                             <label for="image" class="form-label">Imagen</label>
                             <input type="file" class="form-control" id="image" name="image"/>
                           </div>

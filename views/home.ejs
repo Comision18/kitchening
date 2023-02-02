@@ -76,7 +76,7 @@
               <% courses.forEach(({title,image,id}) => { %>
                 <a href="/courses/detail/<%= id %>">
                   <div class="card carousel-courses-item" style="height: 40vh;">
-                    <img src="/images/courses/<%= image %>" class="card-img-top" alt="...">
+                    <img src="/images/courses/<%= image ? image : 'not-image.png' %>" class="card-img-top" alt="...">
                     <div class="card-body">
                       <h5 class="card-title text-dark"><%= title %></h5>
                     </div>

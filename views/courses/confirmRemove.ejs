@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<%- include('../partials/head',{
+    title: "Agregar Curso"
+}) %>
+
+  <body class="form">
+    <!-- encabezado -->
+    <%- include('../partials/header') %>
+
+      <!-- principal -->
+      <main class="form__main">
+     
+     <h2>Advertencia</h2>
+     <hr>
+     <div class="row">
+        <div class="col-12 col-md-10 mx-auto">
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h3 class="text-center">¿Estas seguro que querés eliminar el curso: <%= title %>?</h3>
+                    <p class="text-center">No podrás revertir los cambios</p>
+                    <div class="d-flex justify-content-center gap-2 align-items-center">
+                        <a class="btn btn-secondary" href="/courses/detail/<%= id %>">No, me arrepentí</a>
+                        <form action="/courses/remove/<%= id %>?_method=DELETE" method="POST">
+                            <button type="submit" class="btn btn-danger">Si, borralo</button>
+                        </form>
+                    </div>
+                   
+                </div>
+             
+              </div>
+        </div>
+
+     </div>
+
+      </main>
+      <!-- pie de pagina -->
+
+      <%- include('../partials/footer') %>
+
+
+        <%- include('../partials/scripts') %>
+
+
+  </body>
+
+</html>

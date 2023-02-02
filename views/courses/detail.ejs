@@ -15,11 +15,19 @@
      <h2>Detalle del Curso</h2>
      <hr>
      <div class="row">
-        <div class="col-12 col-md-8 mx-auto">
-            <div class="card mb-3" style="max-width: 540px;">
+        <div class="col-12 col-md-10 mx-auto">
+            <div class="card mb-3">
                 <div class="row g-0">
                   <div class="col-md-4">
-                    <img src="/images/courses/<%= image %>" class="img-fluid rounded-start" alt="...">
+                    <div class="d-flex flex-column gap-1">
+                      <img src="/images/courses/<%= image ? image : 'not-image.png' %>" class="img-fluid rounded-start" alt="...">
+                      <div class="d-flex flex-row justify-content-between  flex-wrap gap-1">
+                        <img width="32%" src="/images/courses/<%= image ? image : 'not-image.png' %>" class="img-fluid" alt="...">
+                        <img  width="32%"src="/images/courses/<%= image ? image : 'not-image.png' %>" class="img-fluid" alt="...">
+                        <img width="32%" src="/images/courses/<%= image ? image : 'not-image.png' %>" class="img-fluid" alt="...">
+                      </div>
+                    </div>
+                    
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
@@ -27,6 +35,7 @@
                       <p class="card-text"><%= description %></p>
                       <div class="d-flex gap-2">
                         <a class="btn btn-success" href="/courses/edit/<%= id %>">Editar</a>
+                        <a class="btn btn-danger" href="/courses/remove/<%= id %>">Eliminar</a>
                       </div>
                     </div>
                   </div>
