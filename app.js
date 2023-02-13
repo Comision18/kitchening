@@ -23,9 +23,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(methodOverride('_method'));
 
 /* rutas */
-app.use('/', indexRouter); // http://localhost:3000
-app.use('/users', usersRouter); //http://localhost:3000/users
-app.use('/courses',coursesRouter); // http:localhost:3000/courses
+app
+  .use('/', indexRouter) //http://localhost:3000/
+  .use('/users', usersRouter) //http://localhost:3000/users
+  .use('/courses',coursesRouter) // http:localhost:3000/courses
 
 
 // catch 404 and forward to error handler
