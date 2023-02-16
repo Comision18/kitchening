@@ -9,6 +9,10 @@
 
 .home__main__section__article{
     width:100%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .home__main__section__article--imagen{
@@ -84,17 +88,23 @@
         width: 100%;
     }
     .home__main__section--productos{
-        justify-content: space-between;
+        justify-content: start;
+        gap: 2%;
     }
     .home__main__section__article{
-        width: 48%;
+        width: 32%;
+        height: 40vh;
     }
 
 }
 
 @media (min-width:1180px) {
+    .home__main__section--productos{
+        gap: 2.5%;
+    }
     .home__main__section__article{
-        width: 32%;      
+        width: 23%;
+        height: 70vh;   
     }
 
 }
