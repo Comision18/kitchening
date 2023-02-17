@@ -36,19 +36,19 @@ module.exports = {
 
     const errors = validationResult(req);
 
-    if(!req.files.length){
+/*     if(!req.files.length){
       errors.errors.push({
         value : "",
         msg : "El producto debe tener por lo menos una imagen",
         param : "images",
         location : "files"
       })
-    }
+    } */
 
-    if(req.multerError){
+    if(req.fileValidationError){
       errors.errors.push({
         value : "",
-        msg : "Solo puedes subir hasta 3 imágenes",
+        msg : req.fileValidationError,
         param : "images",
         location : "files"
       })
