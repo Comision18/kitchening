@@ -1,5 +1,8 @@
+const fs = require('fs');
 const {validationResult} = require('express-validator')
 const { readJSON, writeJSON } = require("../data");
+const chefs = readJSON('chefs.json');
+const chefsSort = chefs.sort((a, b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0);
 
 module.exports = {
   list: (req, res) => {
@@ -33,6 +36,15 @@ module.exports = {
 
     const errors = validationResult(req);
 
+    if(!req.file){
+      errors.errors.push({
+        value : "",
+        msg : "El producto debe tener una imagen",
+        param : "image",
+        location : "file"
+      })
+    }
+
     if(errors.isEmpty()){
 
       const courses = readJSON('courses.json')
@@ -59,8 +71,9 @@ module.exports = {
       
     }else{
 
-      const chefs = readJSON('chefs.json');
-      const chefsSort = chefs.sort((a, b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0);
+      if(req.file){
+        fs.existsSync(`./public/images/courses/${req.file.filename}`) && fs.unlinkSync(`./public/images/courses/${req.file.filename}`)
+      }
       
       return res.render('courses/formAdd', {
         chefs: chefsSort,
@@ -83,41 +96,56 @@ module.exports = {
     })
   },
   update : (req,res) => {
-    const courses = readJSON('courses.json')
 
-    const { title, price, description, section, chef, visible } = req.body;
-    
-    const id = +req.params.id
+    const errors = validationResult(req);
 
-    const course = courses.find(course => course.id === +id);
+    if(errors.isEmpty()){
+      const courses = readJSON('courses.json')
 
-    const courseUpdated = {
-      id,
-      title : title.trim(),
-      price: +price,
-      description: description.trim(),
-      image: course.image,
-      chef,
-      sale: section === "sale" && true,
-      newest: section === "newest" && true,
-      free: section === "free" && true,
-      visible : visible ? true : false
-    };
+      const { title, price, description, section, chef, visible } = req.body;
+      const id = +req.params.id
+      const course = courses.find(course => course.id === +id);
+  
+      const courseUpdated = {
+        id,
+        title : title.trim(),
+        price: +price,
+        description: description.trim(),
+        image: course.image,
+        chef,
+        sale: section === "sale" && true,
+        newest: section === "newest" && true,
+        free: section === "free" && true,
+        visible : visible ? true : false
+      };
+  
+      const coursesModified = courses.map(course => {
+        if(course.id === id){
+          return courseUpdated
+        }
+        return course
+      });
+  
+  
+      writeJSON('courses.json', coursesModified);
+  
+      return res.redirect(`/courses/detail/${id}`)
+    }else{
 
-    /* actualizar mi array de cursos */
-    const coursesModified = courses.map(course => {
-      if(course.id === id){
-        return courseUpdated
-      }
-      return course
-    });
+      const { id } = req.params;
+      const courses = readJSON('courses.json')
+  
+      const course = courses.find(course => course.id === +id);
+      return res.render('courses/formEdit', {
+        ...course,
+        chefs: chefsSort,
+        errors : errors.mapped(),
+        old : req.body
+      })
 
-    //console.log(coursesModified);
+    }
 
-    /* guardar los cambios */
-    writeJSON('courses.json', coursesModified);
 
-    return res.redirect(`/courses/detail/${id}`)
   },
   removeConfirm : (req,res) => {
     const courses = readJSON('courses.json')
