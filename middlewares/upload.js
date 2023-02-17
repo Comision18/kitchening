@@ -10,9 +10,24 @@ const storageCourseImages = multer.diskStorage({
     }
 });
 
-const uploadCoursesImages = multer({
-    storage : storageCourseImages
+const configUploadCoursesImages = multer({
+    storage : storageCourseImages,
+    limits : {
+        files : 3
+    }
 });
+
+const uploadCoursesImages =  (req,res,next) => {
+        const upload = configUploadCoursesImages.array('images');
+
+        upload(req,res, function (error) {
+            if(error){
+                req.multerError = error.message
+            }
+            next()
+        })
+
+    }
 
 module.exports = {
     uploadCoursesImages

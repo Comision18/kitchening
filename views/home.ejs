@@ -48,10 +48,10 @@
         <hr>
         <section class="home__main__section--productos">
                <!-- producto -->
-               <% newCourses.forEach(({title,description,image,id}) => { %>
+               <% newCourses.forEach(({title,description,images,id}) => { %>
                 <%- include('./partials/courseArticle',{
                   title,
-                  image,
+                  images,
                   id,
                   sticker: 'img-nuevo.png'
                 }) %> 
@@ -61,10 +61,10 @@
         <hr>
         <section class="home__main__section--productos">
                <!-- producto -->
-               <% saleCourses.forEach(({title,description,image,id}) => { %>
+               <% saleCourses.forEach(({title,description,images,id}) => { %>
                 <%- include('./partials/courseArticle',{
                   title,
-                  image,
+                  images,
                   id,
                   sticker: 'img-descuento.png'
                 }) %> 
@@ -73,10 +73,10 @@
         <section class="home__main__section--courses">
           <div class="glider-contain">
             <div class="glider">
-              <% courses.forEach(({title,image,id}) => { %>
+              <% courses.forEach(({title,images,id}) => { %>
                 <a href="/courses/detail/<%= id %>">
                   <div class="card carousel-courses-item" style="height: 40vh;">
-                    <img src="/images/courses/<%= image ? image : 'not-image.png' %>" class="card-img-top" alt="...">
+                    <img src="/images/courses/<%= images.length ? images[0] : 'not-image.png' %>" class="card-img-top" alt="...">
                     <div class="card-body">
                       <h5 class="card-title text-dark"><%= title %></h5>
                     </div>

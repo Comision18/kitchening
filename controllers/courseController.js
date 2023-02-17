@@ -36,12 +36,21 @@ module.exports = {
 
     const errors = validationResult(req);
 
-    if(!req.file){
+    if(!req.files.length){
       errors.errors.push({
         value : "",
-        msg : "El producto debe tener una imagen",
-        param : "image",
-        location : "file"
+        msg : "El producto debe tener por lo menos una imagen",
+        param : "images",
+        location : "files"
+      })
+    }
+
+    if(req.multerError){
+      errors.errors.push({
+        value : "",
+        msg : "Solo puedes subir hasta 3 imágenes",
+        param : "images",
+        location : "files"
       })
     }
 
@@ -56,7 +65,7 @@ module.exports = {
         title : title.trim(),
         price: +price,
         description: description.trim(),
-        image: req.file ? req.file.filename : null,
+        images: req.files.map(file => file.filename),
         chef,
         sale: section === "sale" && true,
         newest: section === "newest" && true,
@@ -71,8 +80,11 @@ module.exports = {
       
     }else{
 
-      if(req.file){
-        fs.existsSync(`./public/images/courses/${req.file.filename}`) && fs.unlinkSync(`./public/images/courses/${req.file.filename}`)
+      if(req.files.length){
+        req.files.forEach(file => {
+          fs.existsSync(`./public/images/courses/${file.filename}`) && fs.unlinkSync(`./public/images/courses/${file.filename}`)
+
+        });
       }
       
       return res.render('courses/formAdd', {
@@ -99,28 +111,37 @@ module.exports = {
 
     const errors = validationResult(req);
 
+    if(req.multerError){
+      errors.errors.push({
+        value : "",
+        msg : "Solo puedes subir hasta 3 imágenes",
+        param : "images",
+        location : "files"
+      })
+    }
+
     if(errors.isEmpty()){
       const courses = readJSON('courses.json')
 
       const { title, price, description, section, chef, visible } = req.body;
       const id = +req.params.id
-      const course = courses.find(course => course.id === +id);
-  
-      const courseUpdated = {
-        id,
-        title : title.trim(),
-        price: +price,
-        description: description.trim(),
-        image: course.image,
-        chef,
-        sale: section === "sale" && true,
-        newest: section === "newest" && true,
-        free: section === "free" && true,
-        visible : visible ? true : false
-      };
   
       const coursesModified = courses.map(course => {
         if(course.id === id){
+
+          const courseUpdated = {
+            id,
+            title : title.trim(),
+            price: +price,
+            description: description.trim(),
+            images: req.files.length ? req.files.map(file => file.filename) : course.images,
+            chef,
+            sale: section === "sale" && true,
+            newest: section === "newest" && true,
+            free: section === "free" && true,
+            visible : visible ? true : false
+          };
+
           return courseUpdated
         }
         return course

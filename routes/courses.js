@@ -12,9 +12,9 @@ router
     .get('/list',list)
     .get('/detail/:id',detail)
     .get('/add',add)
-    .post('/add',uploadCoursesImages.single('image'), addCourseValidator, store)
+    .post('/add',uploadCoursesImages, addCourseValidator, store)
     .get('/edit/:id',edit)
-    .put('/update/:id',uploadCoursesImages.single('image'), editCourseValidator, update)
+    .put('/update/:id', editCourseValidator, update)
     .get('/remove/:id',removeConfirm)
     .delete('/remove/:id',remove)
 

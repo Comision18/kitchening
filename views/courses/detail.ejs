@@ -20,11 +20,13 @@
                 <div class="row g-0">
                   <div class="col-md-4">
                     <div class="d-flex flex-column gap-1">
-                      <img src="/images/courses/<%= image ? image : 'not-image.png' %>" class="img-fluid rounded-start" alt="...">
+                      <img src="/images/courses/<%= images.length ? images[0] : 'not-image.png' %>" height="300px" class=" rounded-start" alt="..." id="imgMain" style="object-fit:cover;">
                       <div class="d-flex flex-row justify-content-between  flex-wrap gap-1">
-                        <img width="32%" src="/images/courses/<%= image ? image : 'not-image.png' %>" class="img-fluid" alt="...">
-                        <img  width="32%"src="/images/courses/<%= image ? image : 'not-image.png' %>" class="img-fluid" alt="...">
-                        <img width="32%" src="/images/courses/<%= image ? image : 'not-image.png' %>" class="img-fluid" alt="...">
+                        <% images.forEach(image => { %>
+                          <img width="32%" src="/images/courses/<%= image ? image : 'not-image.png' %>" class="img-fluid" alt="..." style="object-fit: cover;" onclick="document.getElementById('imgMain').setAttribute('src',this.src)">
+
+                        <% }) %>
+                       
                       </div>
                     </div>
                     
