@@ -142,6 +142,12 @@ module.exports = {
             visible : visible ? true : false
           };
 
+          if(req.files.length){
+            course.images.forEach(image => {
+              fs.existsSync(`./public/images/courses/${image}`) && fs.unlinkSync(`./public/images/courses/${image}`)
+            });
+          }
+
           return courseUpdated
         }
         return course
@@ -154,7 +160,14 @@ module.exports = {
     }else{
 
       const { id } = req.params;
-      const courses = readJSON('courses.json')
+      const courses = readJSON('courses.json');
+
+      if(req.files.length){
+        req.files.forEach(file => {
+          fs.existsSync(`./public/images/courses/${file.filename}`) && fs.unlinkSync(`./public/images/courses/${file.filename}`)
+
+        });
+      }
   
       const course = courses.find(course => course.id === +id);
       return res.render('courses/formEdit', {

@@ -14,7 +14,7 @@ router
     .get('/add',add)
     .post('/add',uploadCoursesImages, addCourseValidator, store)
     .get('/edit/:id',edit)
-    .put('/update/:id', editCourseValidator, update)
+    .put('/update/:id',uploadCoursesImages, editCourseValidator, update)
     .get('/remove/:id',removeConfirm)
     .delete('/remove/:id',remove)
 

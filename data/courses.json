@@ -5,7 +5,9 @@
       "price": 10530,
       "description": "Con una gran experiencia Roberto Nishida te enseña los secretos de las técnicas básicas en la elaboración del sushi, vas a descubrir la importancia de cada ingrediente para que realices una gran variedad de rolls, sashimis y niguiris.",
       "images": [
-         "Sushi-web.jpg"
+         "1676658519148_courses_.jpg",
+         "1676658519145_courses_.jpg",
+         "1676658519142_courses_.jpg"
       ],
       "chef": "Roberto Nishida",
       "sale": false,
@@ -19,12 +21,14 @@
       "price": 9530,
       "description": "Tu comida puede transformarse en platos de restaurante de la mano de Guillermo Calabrese que te enseñará a combinar ingredientes simples con productos gourmet para darle un sabor distinto a tus recetas.",
       "images": [
-         "abc.jpg"
+         "1676659234345_courses_.jpg",
+         "1676659234346_courses_.jpg",
+         "1676659234348_courses_.jpg"
       ],
       "chef": "Guillermo Calabrese",
       "sale": false,
       "newest": false,
-      "free": false,
+      "free": true,
       "visible": true
    },
    {
@@ -245,9 +249,9 @@
       "price": 9720,
       "description": "Luis Badillo nos trae desde México las recetas típicas para que aprendas de manera fácil a preparar tacos, quesadillas, tamales y tortillas con todo el sabor para renovar tu menú.",
       "images": [
-         "1676657880607_courses_.jpg",
-         "1676657880604_courses_.jpg",
-         "1676657880610_courses_.jpg"
+         "1676659338947_courses_.jpg",
+         "1676659338949_courses_.jpg",
+         "1676659338950_courses_.jpg"
       ],
       "chef": "Luis Badillo",
       "sale": false,
