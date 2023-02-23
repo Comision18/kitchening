@@ -36,10 +36,20 @@ module.exports = {
 
     const errors = validationResult(req);
 
-/*     if(!req.files.length){
+    if(!req.files.length && !req.fileValidationError){
       errors.errors.push({
         value : "",
         msg : "El producto debe tener por lo menos una imagen",
+        param : "images",
+        location : "files"
+      })
+    }
+
+    
+/*     if(req.files.length > 3){
+      errors.errors.push({
+        value : "",
+        msg : "Solo se aceptan hasta 3 archivos",
         param : "images",
         location : "files"
       })
@@ -82,8 +92,7 @@ module.exports = {
 
       if(req.files.length){
         req.files.forEach(file => {
-          fs.existsSync(`./public/images/courses/${file.filename}`) && fs.unlinkSync(`./public/images/courses/${file.filename}`)
-
+          fs.existsSync(`./public/images/courses/${file.filename}`) && fs.unlinkSync(`./public/images/courses/${file.filename}`);
         });
       }
       
@@ -111,10 +120,10 @@ module.exports = {
 
     const errors = validationResult(req);
 
-    if(req.multerError){
+    if(req.fileValidationError){
       errors.errors.push({
         value : "",
-        msg : "Solo puedes subir hasta 3 imágenes",
+        msg : req.fileValidationError,
         param : "images",
         location : "files"
       })
