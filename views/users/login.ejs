@@ -16,14 +16,16 @@
                         <h5 class="card-title">Login de Usuario</h5>
                     </div>
                     <div class="card-body">
-                        <form action="">
+                        <form action="" method="POST">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Correo electrónico</label>
                                 <input type="email" class="form-control" id="email" name="email">
+                                <small class="text-danger ms-2"><%= (locals.errors && errors.email) && errors.email.msg %></small>
                               </div>
                               <div class="mb-3">
                                 <label for="password" class="form-label">Contraseña</label>
                                 <input type="password" class="form-control" id="password" name="password">
+                                <small class="text-danger ms-2"><%= (locals.errors && errors.password) && errors.password.msg %></small>
                               </div>
                               <button type="submit" class="buttons buttons__primary">Ingresar</button>
                         </form>

@@ -1,4 +1,5 @@
 const {check, body} = require('express-validator');
+const {readJSON} = require('../data')
 
 module.exports = [
     check('name')
@@ -6,18 +7,26 @@ module.exports = [
         .isLength({
             min: 2
         }).withMessage('Mínimo dos letras').bail()
-        .isAlpha().withMessage('Solo caracteres alfabéticos'),
+        .isAlpha('es-ES',{
+            ignore : " "
+        }).withMessage('Solo caracteres alfabéticos'),
 
     check('surname')
         .notEmpty().withMessage('El apellido es obligatorio').bail()
         .isLength({
             min: 2
         }).withMessage('Mínimo dos letras').bail()
-        .isAlpha().withMessage('Solo caracteres alfabéticos'),
+        .isAlpha('es-ES',{
+            ignore : " "
+        }).withMessage('Solo caracteres alfabéticos'),
 
-    check('email')
+    body('email')
         .notEmpty().withMessage('El email es obligatorio').bail()
-        .isEmail().withMessage('Debe ser un email con formato válido'),
+        .isEmail().withMessage('Debe ser un email con formato válido')
+        .custom((value, {req}) => {
+            let user = readJSON('users.json').find(user => user.email === value);
+            return !user // user ? false : true
+        }).withMessage('El email ya se encuentra registrado'),
 
     check('password')
         .notEmpty().withMessage('La contraseña es obligatoria').bail()

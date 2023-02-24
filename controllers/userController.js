@@ -21,8 +21,8 @@ module.exports = {
                 name : name.trim(),
                 surname : surname.trim(),
                 email : email.trim(),
-                password : hashSync(password,12)
-
+                password : hashSync(password,12),
+                rol : 'user'
             }
 
             users.push(newUser);
@@ -45,7 +45,27 @@ module.exports = {
         })
     },
     processLogin : (req,res) => {
-        return res.send(req.body)
+        const errors = validationResult(req);
+
+        if(errors.isEmpty()){
+
+            const {id, name, rol} = readJSON('users.json').find(user => user.email === req.body.email);
+
+            req.session.userLogin = {
+                id,
+                name,
+                rol
+            };
+
+            console.log(req.session);
+
+            return res.redirect('/')
+        }else{
+            return res.render('login',{
+                title : "Inicio de sesión",
+                errors : errors.mapped()
+            })
+        }
     },
     profile : (req,res) => {
         return res.render('users/profile',{
@@ -54,5 +74,9 @@ module.exports = {
     },
     update : (req,res) => {
         return res.send(req.body)
+    },
+    logout : (req,res) => {
+        req.session.destroy();
+        return res.redirect('/')
     }
 }

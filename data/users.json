@@ -4,6 +4,23 @@
       "name": "Eric",
       "surname": "Mena",
       "email": "menaericdaniel@gmail.com",
-      "password": "$2a$12$QC1eLFXR85UnkIZoUMaT7.axvJMRkMBnQvppbjGmGLDhpLy7TWWj2"
+      "password": "$2a$12$QC1eLFXR85UnkIZoUMaT7.axvJMRkMBnQvppbjGmGLDhpLy7TWWj2",
+      "rol" : "admin" 
+   },
+   {
+      "id": 2,
+      "name": "Gabriel",
+      "surname": "Lanzillotti",
+      "email": "gabriel@gmail.com",
+      "password": "$2a$12$51w1/puBOwYvNM2XQY/R7eiYNF8myHviLWyCDu1IS5CdTs.obZXSa",
+      "rol" : "user" 
+   },
+   {
+      "id": 3,
+      "name": "Carlos",
+      "surname": "Guillen",
+      "email": "carlos@gmail.com",
+      "password": "$2a$12$PA32p5Pn/axvL/nWP5jFJOdBFwnQDb6HrowXdLP6lAaDbQ.SQ3ET6",
+      "rol" : "user" 
    }
 ]

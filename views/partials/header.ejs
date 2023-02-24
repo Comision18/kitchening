@@ -18,13 +18,21 @@
         <li>
           <a href="/courses/add">Agregar</a>
         </li>
+        <% if (locals.userLogin) { %>
+          <li>
+            <a href="/users/profile">Hola, <%= userLogin.name %></a>
+          </li>
+          <li>
+            <a href="/users/logout">Salir</a>
+          </li>
+        <% }else{ %>
         <li>
           <a href="/users/register">registrar</a>
         </li>
         <li>
           <a href="/users/login">ingresar</a>
-
         </li>
+        <% } %>
       </ul>
     </nav>
   </header>
