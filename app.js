@@ -10,6 +10,7 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const coursesRouter = require("./routes/courses");
 const localsUserCheck = require("./middlewares/localsUserCheck");
+const cookieCheck = require("./middlewares/cookieCheck");
 
 const app = express();
 
@@ -30,7 +31,8 @@ app
       saveUninitialized : true
     })
   )
-  .use(localsUserCheck)
+  .use(cookieCheck) //cargo en session lo que hay en la cookie
+  .use(localsUserCheck) //cargo en locals lo que hay en session
 
 
 /* rutas */

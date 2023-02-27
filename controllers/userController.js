@@ -57,11 +57,13 @@ module.exports = {
                 rol
             };
 
-            console.log(req.session);
+           if(req.body.remember){
+                res.cookie('userKitchening18',req.session.userLogin,{maxAge: 1000*60} )
+           }
 
             return res.redirect('/')
         }else{
-            return res.render('login',{
+            return res.render('users/login',{
                 title : "Inicio de sesión",
                 errors : errors.mapped()
             })
