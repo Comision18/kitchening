@@ -80,5 +80,10 @@ module.exports = {
     logout : (req,res) => {
         req.session.destroy();
         return res.redirect('/')
+    },
+    list : (req,res) => {
+        return res.render('users/users',{
+            users : readJSON('users.json')
+        })
     }
 }

@@ -33,12 +33,24 @@
                   </div>
                   <div class="col-md-8">
                     <div class="card-body">
-                      <h5 class="card-title"><%= title %></h5>
-                      <p class="card-text"><%= description %></p>
-                      <div class="d-flex gap-2">
-                        <a class="btn btn-success" href="/courses/edit/<%= id %>">Editar</a>
-                        <a class="btn btn-danger" href="/courses/remove/<%= id %>">Eliminar</a>
+                      <div class="d-flex justify-content-between">
+                        <div class="d-flex flex-column">
+                          <h5 class="card-title"><%= title %></h5>
+                          <p class="text-muted">by <%= chef %></p>
+                        </div>
+                        
+                        <h3>$<%= price %></h3>
                       </div>
+                      <hr>
+                      <div class="d-flex flex-column align-items-end" style="height:300px">
+                        <p class="card-text mt-5"><%= description %></p>
+                        <button class="btn btn-dark mt-auto">Comprar</button>
+                      </div>
+                      
+                    
+                    <div>
+
+                    </div>
                     </div>
                   </div>
                 </div>

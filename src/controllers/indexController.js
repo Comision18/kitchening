@@ -12,5 +12,10 @@ module.exports = {
           newCourses,
           saleCourses
         });
-      }
+      },
+    admin : (req,res) => {
+      return res.render('dashboard',{
+        courses
+      })
+    }
 }

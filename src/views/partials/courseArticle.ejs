@@ -1,10 +1,13 @@
 <article class="home__main__section__article animate__animated">
     <div class="home__main__section__article--imagen">
-      <img class="home__main__section__article--imagen-product" src="/images/courses/<%= images.length ? images[0] : 'not-image.png' %>" alt="">
+      <a href="/courses/detail/<%= id %>">      <img class="home__main__section__article--imagen-product" src="/images/courses/<%= images.length ? images[0] : 'not-image.png' %>" alt="">
+      </a>
+
       <img class="home__main__section__article--imagen-sticker" src="/images/<%= sticker %> " alt="">
     </div>
-    <div class="home__main__section__article--contenido">
+    <div class="home__main__section__article--title">
       <h4><%= title %></h4>
-      <a href="/courses/detail/<%= id %>">ver más</a>
     </div>
+    
+
   </article>    

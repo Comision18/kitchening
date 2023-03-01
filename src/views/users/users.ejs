@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/head',{
+    title : 'Dashboard'
+}) %>
+
+  <body class="home">
+    <!-- encabezado -->
+    <%- include('../partials/headerAdmin') %>
+
+      <!-- principal -->
+      <main class="container">
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                              <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Rol</th>
+                                <th scope="col">Acciones</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                                <% users.forEach(({id, name,surname, email,rol}) => { %>
+                                    <tr>
+                                        <th scope="row"><%= id %></th>
+                                        <td><%= name %></td>
+                                        <td><%= surname %></td>
+                                        <td><%= email %></td>
+                                        <td><%= rol %></td>
+                                        <td>
+                                           <div class="d-flex gap-2">
+                                            <a class="btn btn-sm btn-primary" href="/users/detail/<%= id %>"><i class="far fa-eye"></i></a>
+                                            <a class="btn btn-sm btn-danger" href="/users/remove/<%= id %>"><i class="fas fa-trash"></i></a>
+                                           </div> 
+                                        </td>
+                                      </tr>
+                                <% }) %>
+                            
+                           
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+     
+     
+
+      </main>
+      <!-- pie de pagina -->
+
+
+
+  </body>
+
+</html>

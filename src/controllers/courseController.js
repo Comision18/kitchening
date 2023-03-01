@@ -187,8 +187,6 @@ module.exports = {
       })
 
     }
-
-
   },
   removeConfirm : (req,res) => {
     const courses = readJSON('courses.json')

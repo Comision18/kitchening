@@ -9,15 +9,23 @@
 
 .home__main__section__article{
     width:100%;
-    height: 50vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    background-color: rgba(255,255, 255, 0.7);
+    box-shadow: 5px 5px 10px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+   
+}
+
+.home__main__section__article--title{
+padding: 20px;
+color: var(--colorGris)
+   
 }
 
 .home__main__section__article--imagen{
     position: relative;
     overflow: hidden;
+    border-radius: 5px 5px  0 0;
 }
 
 .home__main__section__article--imagen-product{
@@ -47,16 +55,7 @@
     text-transform: uppercase;
     padding: 10px 0;
 }
-.home__main__section__article--contenido h4{
-    margin: 20px 0;
-}
 
-.home__main__section__article--contenido a{
-    display: inline-block;
-    margin: 20px 0;
-    background-color: var(--colorGris);
-    padding: 8px;
-}
 
 
 .home__main__section--courses {
@@ -93,7 +92,6 @@
     }
     .home__main__section__article{
         width: 32%;
-        height: 40vh;
     }
 
 }
@@ -104,7 +102,6 @@
     }
     .home__main__section__article{
         width: 23%;
-        height: 70vh;   
     }
 
 }

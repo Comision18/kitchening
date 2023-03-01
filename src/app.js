@@ -22,7 +22,7 @@ app
   .use(express.json())
   .use(express.urlencoded({ extended: false }))
   .use(cookieParser())
-  .use(express.static(path.join(__dirname, "public")))
+  .use(express.static(path.join(__dirname,"..", "public")))
   .use(methodOverride("_method"))
   .use(
     session({
