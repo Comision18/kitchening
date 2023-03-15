@@ -4,6 +4,8 @@ const { readJSON, writeJSON } = require("../data");
 const chefs = readJSON('chefs.json');
 const chefsSort = chefs.sort((a, b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0);
 
+const db = require('../database/models');
+
 module.exports = {
   list: (req, res) => {
 
