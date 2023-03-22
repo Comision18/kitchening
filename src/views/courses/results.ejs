@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/head',{
+    title : "Resultado de la búsqueda"
+}) %>
+
+  <body class="home">
+    <!-- encabezado -->
+    <%- include('../partials/header') %>
+
+      <!-- principal -->
+      <main class="home__main">
+     
+        <!-- productos -->
+        <section class="home__main__section--productos">
+          <% courses.forEach(({title,price,description,chef,images,id,sale,free,newest}) => { %>
+            <%- include('../partials/courseArticle',{
+              title,
+              images,
+              id,
+              sticker: newest ? 'img-nuevo.png' : sale ? "img-descuento.png" : "img-gratis.png"
+            }) %> 
+          <% }) %>
+         
+         
+        </section>
+           <!-- botón de whatsapp -->
+
+        <%- include('../partials/whatsApp') %>
+
+      </main>
+      <!-- pie de pagina -->
+
+      <%- include('../partials/footer') %>
+
+
+        <%- include('../partials/scripts') %>
+
+          <script src="/javascripts/home.js"></script>
+
+  </body>
+
+</html>

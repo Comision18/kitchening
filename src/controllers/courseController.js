@@ -211,6 +211,11 @@ module.exports = {
     /* guardar los cambios */
     writeJSON('courses.json', coursesModified);
     return res.redirect(`/courses/list`)   
+  },
+  search : (req,res) => {
+    return res.render('courses/results',{
+      courses : []
+    })
   }
 
      

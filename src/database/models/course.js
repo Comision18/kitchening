@@ -11,6 +11,11 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      Course.hasMany(models.Image,{
+        as : 'images',
+        foreignKey : 'courseId',
+        onDelete : 'cascade'
+      })
     }
   }
   Course.init({
