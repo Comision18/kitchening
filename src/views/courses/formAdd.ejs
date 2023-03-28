@@ -15,28 +15,43 @@
      <h2>Formulario: Agregar Curso</h2>
      <hr>
      <div class="row">
-        <div class="col-12 col-md-8 mx-auto">
+        <div class="col-12 col-md-10 col-lg-8 mx-auto">
             <div class="card shadow-lg">
                 <div class="card-body">
                     <form action="" class="row" method="POST" enctype="multipart/form-data">
-                        <div class="col-8 mb-3">
+                        <div class="col-12 col-md-6 mb-3">
                             <label for="title" class="form-label">Título</label>
                             <input type="text" class="form-control <%= locals.errors && errors.title ? 'is-invalid' : null%>" id="title" placeholder="Título del curso" name="title" value="<%= locals.old && old.title ? old.title : null %>">
                             <small class="text-danger ms-2"><%= locals.errors && errors.title ? errors.title.msg : null %></small>
                           </div>
-                          <div class="col-4 mb-3">
+                          <div class="col-6 col-md-3 mb-3">
                             <label for="price" class="form-label">Precio</label>
                             <input type="number" class="form-control  <%= locals.errors && errors.price ? 'is-invalid' : null%>" id="price" name="price" value="<%= locals.old && old.price ? old.price : null %>">
                             <small class="text-danger ms-2"><%= locals.errors && errors.price ? errors.price.msg : null %></small>
 
                           </div>
-                          <div class="col-12 mb-3">
+                          <div class="col-6 col-md-3 mb-3">
+                            <label for="price" class="form-label">Descuento</label>
+                            <input type="number" class="form-control  <%= locals.errors && errors.price ? 'is-invalid' : null%>" id="price" name="price" value="<%= locals.old && old.price ? old.price : null %>">
+                            <small class="text-danger ms-2"><%= locals.errors && errors.price ? errors.price.msg : null %></small>
+
+                          </div>
+                          <div class="col-12 col-md-6 mb-3">
                             <label for="chef" class="form-label">Chef</label>
                             <select name="chef" id="chef" class="form-control <%= locals.errors && errors.chef ? 'is-invalid' : null%>">
                                 <option value="" selected hidden>Seleccione...</option>
                                 <% chefs.forEach(({name}) => { %>
                                  <option value="<%= name %>" <%= locals.old && old.chef && old.chef === name ? 'selected' : null %>><%= name %></option>
                                 <% }) %>
+                            </select>
+                            <small class="text-danger ms-2"><%= locals.errors && errors.chef ? errors.chef.msg : null %></small>
+
+                          </div>
+                          <div class="col-12 col-md-6 mb-3">
+                            <label for="chef" class="form-label">Categoría</label>
+                            <select name="chef" id="chef" class="form-control <%= locals.errors && errors.chef ? 'is-invalid' : null%>">
+                                <option value="" selected hidden>Seleccione...</option>
+                              
                             </select>
                             <small class="text-danger ms-2"><%= locals.errors && errors.chef ? errors.chef.msg : null %></small>
 
@@ -48,34 +63,18 @@
                           </div>
                           <div class="col-12 mb-3">
                             <div class="d-flex justify-content-around">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="section" id="new" value="newest" <%= (locals.old && old.section === "newest") && 'checked' %>>
-                                    <label class="form-check-label" for="new">
-                                      Nuevo
-                                    </label>
-                                  </div>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="section" id="sale" value="sale" <%= (locals.old && old.section === "sale") && 'checked' %> >
-                                    <label class="form-check-label" for="sale">
-                                      Oferta
-                                    </label>
-                                  </div>
-                                  <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="section" id="free" value="free" <%= (locals.old && old.section === "free") && 'checked' %> >
-                                    <label class="form-check-label" for="free">
-                                      Gratis
-                                    </label>
-                                  </div>
+                              <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                <label class="form-check-label" for="flexSwitchCheckDefault">Gratuito</label>
+                              </div>
+                              <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                <label class="form-check-label" for="flexSwitchCheckChecked">Visible</label>
+                              </div>
                             </div>
-                            <small class="text-danger ms-2"><%= locals.errors && errors.section ? errors.section.msg : null %></small>
 
                           </div>
-                          <div class="col-3 mb-3 d-flex justify-content-center align-items-end">
-                            <div class="form-check form-switch">
-                              <input class="form-check-input" type="checkbox" role="switch" id="visible" name="visible" <%= (locals.old && old.visible) && 'checked' %>>
-                              <label class="form-check-label" for="visible">Visible</label>
-                            </div>
-                          </div>
+                       
                         
                           <div class="col-9 mb-3">
                             <label for="images" class="form-label">Imagenes</label>

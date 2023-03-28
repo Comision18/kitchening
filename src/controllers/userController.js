@@ -1,6 +1,7 @@
 const {validationResult} = require('express-validator');
 const { readJSON, writeJSON } = require("../data");
-const {hashSync} = require('bcryptjs')
+const {hashSync} = require('bcryptjs');
+const db = require('../database/models');
 
 module.exports = {
     register : (req,res) => {
@@ -13,23 +14,29 @@ module.exports = {
         const errors = validationResult(req);
 
         if(errors.isEmpty()){
-            const users = readJSON('users.json')
             const {name, surname, email, password}  = req.body;
 
-            const newUser = {
-                id: users.length ? users[users.length - 1].id + 1 : 1,
-                name : name.trim(),
-                surname : surname.trim(),
-                email : email.trim(),
-                password : hashSync(password,12),
-                rol : 'user'
-            }
+            db.Address.create()
+                .then( address => {
+                    db.User.create({
+                        name : name.trim(),
+                        surname : surname.trim(),
+                        email : email.trim(),
+                        password : hashSync(password, 10),
+                        rolId : 2,
+                        addressId : address.id
+                    }).then(({id, name, rolId}) => {
 
-            users.push(newUser);
-  
-            writeJSON('users.json', users);
-            return res.redirect('/users/login');
+                        req.session.userLogin = {
+                            id,
+                            name,
+                            rol : rolId
+                        };
+                        return res.redirect('/');
 
+                    })
+                })
+                .catch(error => console.log(error))
         }else{
             return res.render('users/register',{
                 title : "Registro de usuario",
@@ -49,19 +56,28 @@ module.exports = {
 
         if(errors.isEmpty()){
 
-            const {id, name, rol} = readJSON('users.json').find(user => user.email === req.body.email);
 
-            req.session.userLogin = {
-                id,
-                name,
-                rol
-            };
+            db.User.findOne({
+                where : {
+                    email : req.body.email
+                }
+            })
+            .then( ({id, name, rolId}) => {
 
-           if(req.body.remember){
-                res.cookie('userKitchening18',req.session.userLogin,{maxAge: 1000*60} )
-           }
+                req.session.userLogin = {
+                    id,
+                    name,
+                    rol : rolId
+                };
 
-            return res.redirect('/')
+                if(req.body.remember){
+                    res.cookie('userKitchening18',req.session.userLogin,{maxAge: 1000*60} )
+               }
+    
+                return res.redirect('/')
+            })
+            .catch(error => console.log(error))
+
         }else{
             return res.render('users/login',{
                 title : "Inicio de sesión",
@@ -82,8 +98,18 @@ module.exports = {
         return res.redirect('/')
     },
     list : (req,res) => {
-        return res.render('users/users',{
-            users : readJSON('users.json')
+
+        db.User.findAll({
+            include: ['address','rol']
         })
+            .then(users => {
+                return res.render('users/users',{
+                    users
+                })
+            })
+            .catch(error => console.log(error))
+
+
+       
     }
 }

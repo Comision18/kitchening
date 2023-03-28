@@ -19,7 +19,8 @@ module.exports = {
             tableName : "Courses"
           },
           key : 'id'
-        }
+        },
+        onDelete : 'cascade'
       },
       createdAt: {
         allowNull: false,

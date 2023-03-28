@@ -17,6 +17,6 @@ router
     .get('/profile',checkUserLogin, profile)
     .put('/update',update)
     .get('/logout',checkUserLogin,logout)
-    .get('/', checkUserAdmin, list)
+    .get('/', list)
 
 module.exports = router;

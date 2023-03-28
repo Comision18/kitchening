@@ -20,10 +20,10 @@
                 <div class="row g-0">
                   <div class="col-md-4">
                     <div class="d-flex flex-column gap-1">
-                      <img src="/images/courses/<%= images.length ? images[0] : 'not-image.png' %>" height="300px" class=" rounded-start" alt="..." id="imgMain" style="object-fit:cover;">
+                      <img src="/images/courses/<%= images.length ? images[0].name : 'not-image.png' %>" height="300px" class=" rounded-start" alt="..." id="imgMain" style="object-fit:cover;">
                       <div class="d-flex flex-row justify-content-between  flex-wrap gap-1">
                         <% images.forEach(image => { %>
-                          <img width="32%" src="/images/courses/<%= image ? image : 'not-image.png' %>" class="img-fluid" alt="..." style="object-fit: cover;" onclick="document.getElementById('imgMain').setAttribute('src',this.src)">
+                          <img width="32%" src="/images/courses/<%= image ? image.name : 'not-image.png' %>" class="img-fluid" alt="..." style="object-fit: cover;" onclick="document.getElementById('imgMain').setAttribute('src',this.src)">
 
                         <% }) %>
                        
@@ -36,7 +36,7 @@
                       <div class="d-flex justify-content-between">
                         <div class="d-flex flex-column">
                           <h5 class="card-title"><%= title %></h5>
-                          <p class="text-muted">by <%= chef %></p>
+                          <p class="text-muted">by <%= chef.name %></p>
                         </div>
                         
                         <h3>$<%= price %></h3>

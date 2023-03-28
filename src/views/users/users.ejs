@@ -23,18 +23,22 @@
                                 <th scope="col">Nombre</th>
                                 <th scope="col">Apellido</th>
                                 <th scope="col">Email</th>
-                                <th scope="col">Rol</th>
+                                <th scope="col">Admin</th>
                                 <th scope="col">Acciones</th>
                               </tr>
                             </thead>
                             <tbody>
-                                <% users.forEach(({id, name,surname, email,rol}) => { %>
+                                <% users.forEach(({id, name,surname, email,rolId}) => { %>
                                     <tr>
                                         <th scope="row"><%= id %></th>
                                         <td><%= name %></td>
                                         <td><%= surname %></td>
                                         <td><%= email %></td>
-                                        <td><%= rol %></td>
+                                        <td>
+                                          <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" <%= rolId == 1 && 'checked' %> <%= locals.userLogin.id === id &&'disabled' %>>
+                                          </div>  
+                                        </td>
                                         <td>
                                            <div class="d-flex gap-2">
                                             <a class="btn btn-sm btn-primary" href="/users/detail/<%= id %>"><i class="far fa-eye"></i></a>

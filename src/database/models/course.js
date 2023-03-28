@@ -15,7 +15,17 @@ module.exports = (sequelize, DataTypes) => {
         as : 'images',
         foreignKey : 'courseId',
         onDelete : 'cascade'
-      })
+      });
+
+      Course.belongsTo(models.Chef,{
+        as : 'chef',
+        foreignKey : 'chefId',
+      });
+
+      Course.belongsTo(models.Category,{
+        as : 'category',
+        foreignKey : 'categoryId',
+      });
     }
   }
   Course.init({
