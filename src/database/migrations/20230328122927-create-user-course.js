@@ -2,45 +2,27 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Courses', {
+    await queryInterface.createTable('UserCourses', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      title: {
-        type: Sequelize.STRING
-      },
-      price: {
-        type: Sequelize.INTEGER
-      },
-      discount: {
-        type: Sequelize.INTEGER
-      },
-      description: {
-        type: Sequelize.STRING(1000)
-      },
-      free: {
-        type: Sequelize.BOOLEAN
-      },
-      visible: {
-        type: Sequelize.BOOLEAN
-      },
-      chefId: {
+      userId: {
         type: Sequelize.INTEGER,
         references : {
-          model :{
-            tableName : "Chefs"
+          model : {
+            tableName : 'Users',
           },
           key : 'id'
         }
       },
-      categoryId: {
+      courseId: {
         type: Sequelize.INTEGER,
         references : {
-          model :{
-            tableName : "Categories"
+          model : {
+            tableName : 'Courses',
           },
           key : 'id'
         }
@@ -56,6 +38,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Courses');
+    await queryInterface.dropTable('UserCourses');
   }
 };
