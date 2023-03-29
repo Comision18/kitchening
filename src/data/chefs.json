@@ -2,77 +2,92 @@
     {
         "id" : 1,
         "name" : "Roberto Nishida",
-        "photo" : null
+        "photo" : "profesor-sushi.png",
+        "country" : "Japón"
     },
     {
         "id" : 2,
         "name" : "Guillermo Calabrese",
-        "photo" : null
+        "photo" : "profesor-carnes.png",
+        "country" : "Italia"
     },
     {
         "id" : 3,
         "name" : "Cubano Vega",
-        "photo" : null
+        "photo" : "profesor-cocteleria.png",
+        "country" : "Cuba"
     },
     {
         "id" : 4,
         "name" : "Mariano Martini",
-        "photo" : null
+        "photo" : "profesor-pastas.png",
+        "country" : "Argentina"
     },
     {
         "id" : 5,
         "name" : "Gustavo Nari",
-        "photo" : null
+        "photo" : "cara-nari.png",
+        "country" : "España"
     },
     {
         "id" : 6,
         "name" : "Hernán Pérez Velásquez",
-        "photo" : null
+        "photo" : "profesor-panaderia.png",
+        "country" : "Argentina"
     },
     {
         "id" : 7,
         "name" : "Borja Blazquez",
-        "photo" : null
+        "photo" : "profesor-espanola.png",
+        "country" : "España"
     },
     {
         "id" : 8,
         "name" : "Silvia Di Ciancio",
-        "photo" : null
+        "photo" : "profesora-saludable.png",
+        "country" : "Italia"
     },
     {
         "id" : 9,
         "name" : "Fabian Mahr",
-        "photo" : null
+        "photo" : "fabian.png",
+        "country" : "Turquía"
     },
     {
         "id" : 10,
         "name" : "Ariel Gravano",
-        "photo" : null
+        "photo" : "cara-gravano-posta.png",
+        "country" : "Argentina"
     },
     {
         "id" : 11,
         "name" : "Roberto Petersen",
-        "photo" : null
+        "photo" : "caraPetersen.png",
+        "country" : "EEUU"
     },
     {
         "id" : 12,
         "name" : "Mauro Massimino",
-        "photo" : null
+        "photo" : "caraMauro.png",
+        "country" : "Italia"
     },
     {
         "id" : 13,
         "name" : "Leandro Palmeiro",
-        "photo" : null
+        "photo" : "leandro-cara.png",
+        "country" : "Argentina"
     },
     {
         "id" : 14,
         "name" : "Olivier Falchi",
-        "photo" : null
+        "photo" : "profesor-francesa.png",
+        "country" : "Francia"
     },
     {
         "id" : 15,
         "name" : "Luis Badillo",
-        "photo" : null
+        "photo" : "profesor-mexicana.png",
+        "country" : "Mexico"
     }
 ]
 

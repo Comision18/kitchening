@@ -11,12 +11,12 @@
           <a href="/courses/list">cursos</a>
         </li>
         <li>
-          <a href="/buscar">buscar</a>
+          <a href="/courses/search">buscar</a>
         </li>
       </ul>
       <ul class="header__nav--user">
         <% if (locals.userLogin) { %>
-          <% if (userLogin.rol === "admin") { %>
+          <% if (userLogin.rol === 1) { %>
             <li>
               <a href="/admin">Dashboard</a>
             </li>

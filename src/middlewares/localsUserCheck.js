@@ -3,5 +3,9 @@ module.exports = (req,res,next) => {
         res.locals.userLogin = req.session.userLogin
     }
 
+    if(req.session.message){
+        res.locals.message = req.session.message
+    }
+
     next()
 }

@@ -4,25 +4,52 @@ const { readJSON, writeJSON } = require("../data");
 const chefs = readJSON('chefs.json');
 const chefsSort = chefs.sort((a, b) => a.name > b.name ? 1 : a.name < b.name ? -1 : 0);
 
+const db = require('../database/models');
+
 module.exports = {
   list: (req, res) => {
 
-    const courses = readJSON('courses.json')
+    db.Course.findAll({
+      where : {
+        visible : true
+      },
+      include : ['images']
+    })
+      .then(courses => {
+        return res.render("courses/list", {
+          title: "Lista de cursos",
+          courses
+        });
+      })
+      .catch(error => console.log(error))
 
-    return res.render("courses/list", {
-      title: "Lista de cursos",
-      courses: courses.filter(course => course.visible)
-    });
+   
   },
   detail: (req, res) => {
     const { id } = req.params;
-    const courses = readJSON('courses.json')    
-    const course = courses.find(course => course.id === +id);
+    
+    db.Course.findByPk(id,{
+      include : [
+        {
+          association : 'images',
+          attributes : ['name']
+        },
+        {
+          association : 'chef',
+          attributes : ['name']
+        },
+      ]
+    })
+      .then(course => {
+        //return res.send(course)
+        return res.render("courses/detail", {
+          title: "Detalle del curso",
+          ...course.dataValues,
+        });
+      })
+      .catch(error => console.log(error))
 
-    return res.render("courses/detail", {
-      title: "Detalle del curso",
-      ...course,
-    });
+  
   },
   add: (req, res) => {
     const chefs = readJSON('chefs.json');
@@ -209,6 +236,11 @@ module.exports = {
     /* guardar los cambios */
     writeJSON('courses.json', coursesModified);
     return res.redirect(`/courses/list`)   
+  },
+  search : (req,res) => {
+    return res.render('courses/results',{
+      courses : []
+    })
   }
 
      
