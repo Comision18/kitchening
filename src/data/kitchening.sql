@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `addresses`
+-- Table structure for table `Addresses`
 --
 
-DROP TABLE IF EXISTS `addresses`;
+DROP TABLE IF EXISTS `Addresses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `addresses` (
+CREATE TABLE `Addresses` (
   `id` int NOT NULL AUTO_INCREMENT,
   `address` varchar(255) DEFAULT NULL,
   `city` varchar(255) DEFAULT NULL,
@@ -35,23 +35,23 @@ CREATE TABLE `addresses` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `addresses`
+-- Dumping data for table `Addresses`
 --
 
-LOCK TABLES `addresses` WRITE;
-/*!40000 ALTER TABLE `addresses` DISABLE KEYS */;
-INSERT INTO `addresses` VALUES (1,'Arrowood 9718','Wilmington','Delaware',7317,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(2,'Victoria 4214','Zephyrhills','Florida',2251,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(3,'General Pico 10631','Loma Hermosa','Buenos Aires',1657,'2023-03-28 13:43:05','2023-03-29 14:57:54'),(4,NULL,NULL,NULL,NULL,'2023-03-28 13:47:36','2023-03-28 13:47:36'),(5,NULL,NULL,NULL,NULL,'2023-03-28 13:48:39','2023-03-28 13:48:39'),(6,NULL,NULL,NULL,NULL,'2023-03-29 12:42:29','2023-03-29 12:42:29');
-/*!40000 ALTER TABLE `addresses` ENABLE KEYS */;
+LOCK TABLES `Addresses` WRITE;
+/*!40000 ALTER TABLE `Addresses` DISABLE KEYS */;
+INSERT INTO `Addresses` VALUES (1,'Arrowood 9718','Wilmington','Delaware',7317,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(2,'Victoria 4214','Zephyrhills','Florida',2251,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(3,'General Pico 10631','Loma Hermosa','Buenos Aires',1657,'2023-03-28 13:43:05','2023-03-29 14:57:54'),(4,NULL,NULL,NULL,NULL,'2023-03-28 13:47:36','2023-03-28 13:47:36'),(5,NULL,NULL,NULL,NULL,'2023-03-28 13:48:39','2023-03-28 13:48:39'),(6,NULL,NULL,NULL,NULL,'2023-03-29 12:42:29','2023-03-29 12:42:29');
+/*!40000 ALTER TABLE `Addresses` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `carts`
+-- Table structure for table `Carts`
 --
 
-DROP TABLE IF EXISTS `carts`;
+DROP TABLE IF EXISTS `Carts`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `carts` (
+CREATE TABLE `Carts` (
   `id` int NOT NULL AUTO_INCREMENT,
   `quantity` int DEFAULT NULL,
   `courseId` int DEFAULT NULL,
@@ -61,28 +61,28 @@ CREATE TABLE `carts` (
   PRIMARY KEY (`id`),
   KEY `courseId` (`courseId`),
   KEY `orderId` (`orderId`),
-  CONSTRAINT `carts_ibfk_1` FOREIGN KEY (`courseId`) REFERENCES `courses` (`id`),
-  CONSTRAINT `carts_ibfk_2` FOREIGN KEY (`orderId`) REFERENCES `orders` (`id`)
+  CONSTRAINT `Carts_ibfk_1` FOREIGN KEY (`courseId`) REFERENCES `Courses` (`id`),
+  CONSTRAINT `Carts_ibfk_2` FOREIGN KEY (`orderId`) REFERENCES `Orders` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `carts`
+-- Dumping data for table `Carts`
 --
 
-LOCK TABLES `carts` WRITE;
-/*!40000 ALTER TABLE `carts` DISABLE KEYS */;
-/*!40000 ALTER TABLE `carts` ENABLE KEYS */;
+LOCK TABLES `Carts` WRITE;
+/*!40000 ALTER TABLE `Carts` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Carts` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `categories`
+-- Table structure for table `Categories`
 --
 
-DROP TABLE IF EXISTS `categories`;
+DROP TABLE IF EXISTS `Categories`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `categories` (
+CREATE TABLE `Categories` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
@@ -93,23 +93,23 @@ CREATE TABLE `categories` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `categories`
+-- Dumping data for table `Categories`
 --
 
-LOCK TABLES `categories` WRITE;
-/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (1,'Cocina',NULL,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(2,'Pastelería',NULL,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(3,'Panadería',NULL,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(4,'Vinos y bebidas',NULL,'2023-03-28 12:40:41','2023-03-28 12:40:41');
-/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+LOCK TABLES `Categories` WRITE;
+/*!40000 ALTER TABLE `Categories` DISABLE KEYS */;
+INSERT INTO `Categories` VALUES (1,'Cocina',NULL,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(2,'Pastelería',NULL,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(3,'Panadería',NULL,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(4,'Vinos y bebidas',NULL,'2023-03-28 12:40:41','2023-03-28 12:40:41');
+/*!40000 ALTER TABLE `Categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `chefs`
+-- Table structure for table `Chefs`
 --
 
-DROP TABLE IF EXISTS `chefs`;
+DROP TABLE IF EXISTS `Chefs`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `chefs` (
+CREATE TABLE `Chefs` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `photo` varchar(255) DEFAULT NULL,
@@ -122,23 +122,23 @@ CREATE TABLE `chefs` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `chefs`
+-- Dumping data for table `Chefs`
 --
 
-LOCK TABLES `chefs` WRITE;
-/*!40000 ALTER TABLE `chefs` DISABLE KEYS */;
-INSERT INTO `chefs` VALUES (1,'Roberto Nishida','profesor-sushi.png','Japón','2023-03-28 12:40:41',NULL,NULL),(2,'Guillermo Calabrese','profesor-carnes.png','Italia','2023-03-28 12:40:41',NULL,NULL),(3,'Cubano Vega','profesor-cocteleria.png','Cuba','2023-03-28 12:40:41',NULL,NULL),(4,'Mariano Martini','profesor-pastas.png','Argentina','2023-03-28 12:40:41',NULL,NULL),(5,'Gustavo Nari','cara-nari.png','España','2023-03-28 12:40:41',NULL,NULL),(6,'Hernán Pérez Velásquez','profesor-panaderia.png','Argentina','2023-03-28 12:40:41',NULL,NULL),(7,'Borja Blazquez','profesor-espanola.png','España','2023-03-28 12:40:41',NULL,NULL),(8,'Silvia Di Ciancio','profesora-saludable.png','Italia','2023-03-28 12:40:41',NULL,NULL),(9,'Fabian Mahr','fabian.png','Turquía','2023-03-28 12:40:41',NULL,NULL),(10,'Ariel Gravano','cara-gravano-posta.png','Argentina','2023-03-28 12:40:41',NULL,NULL),(11,'Roberto Petersen','caraPetersen.png','EEUU','2023-03-28 12:40:41',NULL,NULL),(12,'Mauro Massimino','caraMauro.png','Italia','2023-03-28 12:40:41',NULL,NULL),(13,'Leandro Palmeiro','leandro-cara.png','Argentina','2023-03-28 12:40:41',NULL,NULL),(14,'Olivier Falchi','profesor-francesa.png','Francia','2023-03-28 12:40:41',NULL,NULL),(15,'Luis Badillo','profesor-mexicana.png','Mexico','2023-03-28 12:40:41',NULL,NULL);
-/*!40000 ALTER TABLE `chefs` ENABLE KEYS */;
+LOCK TABLES `Chefs` WRITE;
+/*!40000 ALTER TABLE `Chefs` DISABLE KEYS */;
+INSERT INTO `Chefs` VALUES (1,'Roberto Nishida','profesor-sushi.png','Japón','2023-03-28 12:40:41',NULL,NULL),(2,'Guillermo Calabrese','profesor-carnes.png','Italia','2023-03-28 12:40:41',NULL,NULL),(3,'Cubano Vega','profesor-cocteleria.png','Cuba','2023-03-28 12:40:41',NULL,NULL),(4,'Mariano Martini','profesor-pastas.png','Argentina','2023-03-28 12:40:41',NULL,NULL),(5,'Gustavo Nari','cara-nari.png','España','2023-03-28 12:40:41',NULL,NULL),(6,'Hernán Pérez Velásquez','profesor-panaderia.png','Argentina','2023-03-28 12:40:41',NULL,NULL),(7,'Borja Blazquez','profesor-espanola.png','España','2023-03-28 12:40:41',NULL,NULL),(8,'Silvia Di Ciancio','profesora-saludable.png','Italia','2023-03-28 12:40:41',NULL,NULL),(9,'Fabian Mahr','fabian.png','Turquía','2023-03-28 12:40:41',NULL,NULL),(10,'Ariel Gravano','cara-gravano-posta.png','Argentina','2023-03-28 12:40:41',NULL,NULL),(11,'Roberto Petersen','caraPetersen.png','EEUU','2023-03-28 12:40:41',NULL,NULL),(12,'Mauro Massimino','caraMauro.png','Italia','2023-03-28 12:40:41',NULL,NULL),(13,'Leandro Palmeiro','leandro-cara.png','Argentina','2023-03-28 12:40:41',NULL,NULL),(14,'Olivier Falchi','profesor-francesa.png','Francia','2023-03-28 12:40:41',NULL,NULL),(15,'Luis Badillo','profesor-mexicana.png','Mexico','2023-03-28 12:40:41',NULL,NULL);
+/*!40000 ALTER TABLE `Chefs` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `courses`
+-- Table structure for table `Courses`
 --
 
-DROP TABLE IF EXISTS `courses`;
+DROP TABLE IF EXISTS `Courses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `courses` (
+CREATE TABLE `Courses` (
   `id` int NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
   `price` int DEFAULT NULL,
@@ -153,29 +153,29 @@ CREATE TABLE `courses` (
   PRIMARY KEY (`id`),
   KEY `chefId` (`chefId`),
   KEY `categoryId` (`categoryId`),
-  CONSTRAINT `courses_ibfk_1` FOREIGN KEY (`chefId`) REFERENCES `chefs` (`id`),
-  CONSTRAINT `courses_ibfk_2` FOREIGN KEY (`categoryId`) REFERENCES `categories` (`id`)
+  CONSTRAINT `Courses_ibfk_1` FOREIGN KEY (`chefId`) REFERENCES `Chefs` (`id`),
+  CONSTRAINT `Courses_ibfk_2` FOREIGN KEY (`categoryId`) REFERENCES `Categories` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `courses`
+-- Dumping data for table `Courses`
 --
 
-LOCK TABLES `courses` WRITE;
-/*!40000 ALTER TABLE `courses` DISABLE KEYS */;
-INSERT INTO `courses` VALUES (1,'SUSHI PROFESIONAL',10530,0,'Con una gran experiencia Roberto Nishida te enseña los secretos de las técnicas básicas en la elaboración del sushi, vas a descubrir la importancia de cada ingrediente para que realices una gran variedad de rolls, sashimis y niguiris.',0,1,1,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(2,'ABCD DE LA COCINA',9530,0,'Tu comida puede transformarse en platos de restaurante de la mano de Guillermo Calabrese que te enseñará a combinar ingredientes simples con productos gourmet para darle un sabor distinto a tus recetas.',1,1,2,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(3,'COCTELERÍA Y BEBIDAS',9720,0,'Si querés ser Bartender hay conocimientos que debes tener y el Cubano Vega te da la fórmula para que prepares los tragos y bebidas más pedidos.',1,1,3,4,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(4,'PANADERÍA CASERA',12530,0,'En este curso aprenderás todas las tecnicas básicas de la panadería casera y artesanal. En cada elaboración tendrás un soporte teórico y demostrativo para comprender el proceso que se realiza en cada producto, las diferentes formas y el paso a paso fundamental de las variedades más relevantes de la panadería.',0,1,9,3,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(5,'ALIMENTACIÓN SALUDABLE 1',9720,0,'Si querés comer rico y sano con estas recetas vas a aprender a combinar los ingredientes más nobles para crear platos que sean saludables y equilibrados.',0,1,8,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(6,'ESPECIAL CARNES',10530,0,'Como las carnes no son todas iguales te enseñamos a preparar las más básicas: ternera, cordero, cerdo y pollo. Para que puedas hacer cada uno de estos platos en su punto justo y disfrutes de la textura y jugosidad de cada tipo.',0,1,2,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(7,'COCINERO AFICIONADO 1',10530,0,'CEste curso online está orientado a todas aquellas personas que disfrutan de la gastronomía. Un curso en el cual aprenderán las bases de la cocina, aplicándolas en diferentes recetas todas las clases. Se  conjuga lo descontracturado de un curso para aficionado con las bases de la cocina.',1,1,13,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(8,'PASTELERÍA DE MESA DULCE',10530,0,'Si sos amante de lo dulce, Gustavo Nari te enseña paso a paso deliciosas recetas que no podés dejar de probar. Para paladares exquisitos que les gusta prepara una buena mesa disfrutando de lo mejor de la pastelería.',0,1,5,2,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(9,'PASTAS Y SALSAS',9720,0,'Para los amantes de la pasta esta es una oportunidad de aprender a realizar las recetas más conocidas de la cocina italiana, te enseñamos el secreto del amasado de las pastas frescas con las salsas más sabrosas.',0,1,4,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(10,'PANADERÍA DULCE',9720,0,'Para hacer en tu casa o para vender, podés aprender a preparar las mejores facturas con nuestro Profesor Hernán que te enseña los ingredientes y la técnica correcta de amasado para que siempre te salgan perfectas.',0,1,6,3,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(11,'COCINA ESPAÑOLA',10530,0,'Entre paellas y cazuelas, los platos típicos de España llegan a tu mesa. Borja Blazquez te enseña los secretos de las mejores recetas de esta región para compartir con familiares y amigos.',0,1,7,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(12,'ALIMENTACIÓN SALUDABLE II',9720,0,'En este curso la Licenciada en Nutrición y Cocinera, Silvia Di Ciandio, les enseñara recetas fáciles y nutritivas que incluyan proteínas, carbohidratos, grasas saludables, agua, vitaminas y minerales, combinados en los distintos platos para ayudar al cuerpo con una alimentación fuerte y saludable. (No es necesario haber realizado Alimentación Saludable I)',0,1,8,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(13,'ABC DE LOS POSTRES',10530,0,'Si querés disfrutar todos los días de los postres tradicionales ahora podés aprender con esta variedad de recetas y que siempre te salgan perfectos.',1,1,9,3,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(14,'CHOCOLATERÍA ARTESANAL',11178,0,'Descubrirás los secretos en el arte de la Chocolatería, el chef Ariel Gravano te enseña las técnicas para que puedas hacer recetas clásicas y modernas con chocolate. Podrás preparar delicias para disfrutar y compartir aprendiendo como un profesional.',1,1,10,3,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(15,'COCINA DE AUTOR',10530,0,'Para que puedas hacer pastas, pizzas y postres con un toque distinto, Roberto Petersen te enseña la forma fácil de darle un gusto especial a tus comidas preferidas.',0,1,11,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(16,'COCINA NATURAL',10530,0,'PSi estás buscando una nueva forma de alimentarte, más consciente y sana para tu cuerpo, este curso te ayudará a incorporar las recetas vegetarianas para lograrlo. Mauro Massimino, egresado del instituto Gato Dumas y dueño de la cadena de restaurantes Buenos Aires Verde, te enseña cómo utilizar ingredientes saludables en sabrosas preparaciones y estar en armonía con la naturaleza.',0,1,12,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(17,'COCINA FRANCESA',10530,0,'En este curso desarrollará las recetas más representativas y emblemáticas de la cocina clásica francesa, identificando los productos propios de esta cocina, según su interpretación y combinación de sabores en un menú; utilizando una conjugación de técnicas tradicionales y modernas. El profesor de este curso es el reconocido chef francés Olivier Falchi.',0,1,14,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(18,'COCINA MEXICANA',9720,0,'Luis Badillo nos trae desde México las recetas típicas para que aprendas de manera fácil a preparar tacos, quesadillas, tamales y tortillas con todo el sabor para renovar tu menú.',0,1,15,1,'2023-03-28 12:40:41','2023-03-28 12:40:41');
-/*!40000 ALTER TABLE `courses` ENABLE KEYS */;
+LOCK TABLES `Courses` WRITE;
+/*!40000 ALTER TABLE `Courses` DISABLE KEYS */;
+INSERT INTO `Courses` VALUES (1,'SUSHI PROFESIONAL',10530,0,'Con una gran experiencia Roberto Nishida te enseña los secretos de las técnicas básicas en la elaboración del sushi, vas a descubrir la importancia de cada ingrediente para que realices una gran variedad de rolls, sashimis y niguiris.',0,1,1,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(2,'ABCD DE LA COCINA',9530,0,'Tu comida puede transformarse en platos de restaurante de la mano de Guillermo Calabrese que te enseñará a combinar ingredientes simples con productos gourmet para darle un sabor distinto a tus recetas.',1,1,2,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(3,'COCTELERÍA Y BEBIDAS',9720,0,'Si querés ser Bartender hay conocimientos que debes tener y el Cubano Vega te da la fórmula para que prepares los tragos y bebidas más pedidos.',1,1,3,4,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(4,'PANADERÍA CASERA',12530,0,'En este curso aprenderás todas las tecnicas básicas de la panadería casera y artesanal. En cada elaboración tendrás un soporte teórico y demostrativo para comprender el proceso que se realiza en cada producto, las diferentes formas y el paso a paso fundamental de las variedades más relevantes de la panadería.',0,1,9,3,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(5,'ALIMENTACIÓN SALUDABLE 1',9720,0,'Si querés comer rico y sano con estas recetas vas a aprender a combinar los ingredientes más nobles para crear platos que sean saludables y equilibrados.',0,1,8,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(6,'ESPECIAL CARNES',10530,0,'Como las carnes no son todas iguales te enseñamos a preparar las más básicas: ternera, cordero, cerdo y pollo. Para que puedas hacer cada uno de estos platos en su punto justo y disfrutes de la textura y jugosidad de cada tipo.',0,1,2,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(7,'COCINERO AFICIONADO 1',10530,0,'CEste curso online está orientado a todas aquellas personas que disfrutan de la gastronomía. Un curso en el cual aprenderán las bases de la cocina, aplicándolas en diferentes recetas todas las clases. Se  conjuga lo descontracturado de un curso para aficionado con las bases de la cocina.',1,1,13,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(8,'PASTELERÍA DE MESA DULCE',10530,0,'Si sos amante de lo dulce, Gustavo Nari te enseña paso a paso deliciosas recetas que no podés dejar de probar. Para paladares exquisitos que les gusta prepara una buena mesa disfrutando de lo mejor de la pastelería.',0,1,5,2,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(9,'PASTAS Y SALSAS',9720,0,'Para los amantes de la pasta esta es una oportunidad de aprender a realizar las recetas más conocidas de la cocina italiana, te enseñamos el secreto del amasado de las pastas frescas con las salsas más sabrosas.',0,1,4,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(10,'PANADERÍA DULCE',9720,0,'Para hacer en tu casa o para vender, podés aprender a preparar las mejores facturas con nuestro Profesor Hernán que te enseña los ingredientes y la técnica correcta de amasado para que siempre te salgan perfectas.',0,1,6,3,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(11,'COCINA ESPAÑOLA',10530,0,'Entre paellas y cazuelas, los platos típicos de España llegan a tu mesa. Borja Blazquez te enseña los secretos de las mejores recetas de esta región para compartir con familiares y amigos.',0,1,7,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(12,'ALIMENTACIÓN SALUDABLE II',9720,0,'En este curso la Licenciada en Nutrición y Cocinera, Silvia Di Ciandio, les enseñara recetas fáciles y nutritivas que incluyan proteínas, carbohidratos, grasas saludables, agua, vitaminas y minerales, combinados en los distintos platos para ayudar al cuerpo con una alimentación fuerte y saludable. (No es necesario haber realizado Alimentación Saludable I)',0,1,8,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(13,'ABC DE LOS POSTRES',10530,0,'Si querés disfrutar todos los días de los postres tradicionales ahora podés aprender con esta variedad de recetas y que siempre te salgan perfectos.',1,1,9,3,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(14,'CHOCOLATERÍA ARTESANAL',11178,0,'Descubrirás los secretos en el arte de la Chocolatería, el chef Ariel Gravano te enseña las técnicas para que puedas hacer recetas clásicas y modernas con chocolate. Podrás preparar delicias para disfrutar y compartir aprendiendo como un profesional.',1,1,10,3,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(15,'COCINA DE AUTOR',10530,0,'Para que puedas hacer pastas, pizzas y postres con un toque distinto, Roberto Petersen te enseña la forma fácil de darle un gusto especial a tus comidas preferidas.',0,1,11,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(16,'COCINA NATURAL',10530,0,'PSi estás buscando una nueva forma de alimentarte, más consciente y sana para tu cuerpo, este curso te ayudará a incorporar las recetas vegetarianas para lograrlo. Mauro Massimino, egresado del instituto Gato Dumas y dueño de la cadena de restaurantes Buenos Aires Verde, te enseña cómo utilizar ingredientes saludables en sabrosas preparaciones y estar en armonía con la naturaleza.',0,1,12,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(17,'COCINA FRANCESA',10530,0,'En este curso desarrollará las recetas más representativas y emblemáticas de la cocina clásica francesa, identificando los productos propios de esta cocina, según su interpretación y combinación de sabores en un menú; utilizando una conjugación de técnicas tradicionales y modernas. El profesor de este curso es el reconocido chef francés Olivier Falchi.',0,1,14,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(18,'COCINA MEXICANA',9720,0,'Luis Badillo nos trae desde México las recetas típicas para que aprendas de manera fácil a preparar tacos, quesadillas, tamales y tortillas con todo el sabor para renovar tu menú.',0,1,15,1,'2023-03-28 12:40:41','2023-03-28 12:40:41');
+/*!40000 ALTER TABLE `Courses` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `images`
+-- Table structure for table `Images`
 --
 
-DROP TABLE IF EXISTS `images`;
+DROP TABLE IF EXISTS `Images`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `images` (
+CREATE TABLE `Images` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `courseId` int DEFAULT NULL,
@@ -183,28 +183,28 @@ CREATE TABLE `images` (
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `courseId` (`courseId`),
-  CONSTRAINT `images_ibfk_1` FOREIGN KEY (`courseId`) REFERENCES `courses` (`id`) ON DELETE CASCADE
+  CONSTRAINT `Images_ibfk_1` FOREIGN KEY (`courseId`) REFERENCES `Courses` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `images`
+-- Dumping data for table `Images`
 --
 
-LOCK TABLES `images` WRITE;
-/*!40000 ALTER TABLE `images` DISABLE KEYS */;
-INSERT INTO `images` VALUES (1,'1676658519148_courses_.jpg',1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(2,'1676658519145_courses_.jpg',1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(3,'1676658519142_courses_.jpg',1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(4,'1676659234345_courses_.jpg',2,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(5,'1676659234346_courses_.jpg',2,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(6,'1676659234348_courses_.jpg',2,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(7,'1676660318511_courses_.jpg',3,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(8,'1676660318513_courses_.jpg',3,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(9,'1676660318522_courses_.jpg',3,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(10,'panaderiaCasera.jpg',4,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(11,'saludable.jpg',5,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(12,'carnes.jpg',6,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(13,'aficionado1.jpg',7,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(14,'pasteleriaAficionado1.jpg',8,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(15,'pastas.jpg',9,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(16,'panaderiaDulce.jpg',10,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(17,'española.jpg',11,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(18,'saludable2.jpg',12,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(19,'abcPostres.jpg',13,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(20,'chocolateria.jpg',14,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(21,'cocinaAutor.jpg',15,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(22,'cocinaNatural.jpg',16,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(23,'1676655236854_courses_.jpg',17,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(24,'1676655236857_courses_.jpg',17,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(25,'1676655236858_courses_.jpg',17,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(26,'1676659338947_courses_.jpg',18,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(27,'1676659338949_courses_.jpg',18,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(28,'1676659338950_courses_.jpg',18,'2023-03-28 12:40:41','2023-03-28 12:40:41');
-/*!40000 ALTER TABLE `images` ENABLE KEYS */;
+LOCK TABLES `Images` WRITE;
+/*!40000 ALTER TABLE `Images` DISABLE KEYS */;
+INSERT INTO `Images` VALUES (1,'1676658519148_Courses_.jpg',1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(2,'1676658519145_Courses_.jpg',1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(3,'1676658519142_Courses_.jpg',1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(4,'1676659234345_Courses_.jpg',2,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(5,'1676659234346_Courses_.jpg',2,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(6,'1676659234348_Courses_.jpg',2,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(7,'1676660318511_Courses_.jpg',3,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(8,'1676660318513_Courses_.jpg',3,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(9,'1676660318522_Courses_.jpg',3,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(10,'panaderiaCasera.jpg',4,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(11,'saludable.jpg',5,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(12,'carnes.jpg',6,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(13,'aficionado1.jpg',7,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(14,'pasteleriaAficionado1.jpg',8,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(15,'pastas.jpg',9,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(16,'panaderiaDulce.jpg',10,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(17,'española.jpg',11,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(18,'saludable2.jpg',12,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(19,'abcPostres.jpg',13,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(20,'chocolateria.jpg',14,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(21,'cocinaAutor.jpg',15,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(22,'cocinaNatural.jpg',16,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(23,'1676655236854_Courses_.jpg',17,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(24,'1676655236857_Courses_.jpg',17,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(25,'1676655236858_Courses_.jpg',17,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(26,'1676659338947_Courses_.jpg',18,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(27,'1676659338949_Courses_.jpg',18,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(28,'1676659338950_Courses_.jpg',18,'2023-03-28 12:40:41','2023-03-28 12:40:41');
+/*!40000 ALTER TABLE `Images` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `orders`
+-- Table structure for table `Orders`
 --
 
-DROP TABLE IF EXISTS `orders`;
+DROP TABLE IF EXISTS `Orders`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `orders` (
+CREATE TABLE `Orders` (
   `id` int NOT NULL AUTO_INCREMENT,
   `date` datetime DEFAULT NULL,
   `total` int DEFAULT NULL,
@@ -213,27 +213,27 @@ CREATE TABLE `orders` (
   `updatedAt` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `userId` (`userId`),
-  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`)
+  CONSTRAINT `Orders_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `orders`
+-- Dumping data for table `Orders`
 --
 
-LOCK TABLES `orders` WRITE;
-/*!40000 ALTER TABLE `orders` DISABLE KEYS */;
-/*!40000 ALTER TABLE `orders` ENABLE KEYS */;
+LOCK TABLES `Orders` WRITE;
+/*!40000 ALTER TABLE `Orders` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Orders` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `rols`
+-- Table structure for table `Rols`
 --
 
-DROP TABLE IF EXISTS `rols`;
+DROP TABLE IF EXISTS `Rols`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `rols` (
+CREATE TABLE `Rols` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
@@ -243,13 +243,13 @@ CREATE TABLE `rols` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `rols`
+-- Dumping data for table `Rols`
 --
 
-LOCK TABLES `rols` WRITE;
-/*!40000 ALTER TABLE `rols` DISABLE KEYS */;
-INSERT INTO `rols` VALUES (1,'admin','2023-03-28 12:40:41','2023-03-28 12:40:41'),(2,'user','2023-03-28 12:40:41','2023-03-28 12:40:41');
-/*!40000 ALTER TABLE `rols` ENABLE KEYS */;
+LOCK TABLES `Rols` WRITE;
+/*!40000 ALTER TABLE `Rols` DISABLE KEYS */;
+INSERT INTO `Rols` VALUES (1,'admin','2023-03-28 12:40:41','2023-03-28 12:40:41'),(2,'user','2023-03-28 12:40:41','2023-03-28 12:40:41');
+/*!40000 ALTER TABLE `Rols` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -277,13 +277,13 @@ INSERT INTO `sequelizemeta` VALUES ('20230317132656-create-chef.js'),('202303171
 UNLOCK TABLES;
 
 --
--- Table structure for table `usercourses`
+-- Table structure for table `UserCourses`
 --
 
-DROP TABLE IF EXISTS `usercourses`;
+DROP TABLE IF EXISTS `UserCourses`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `usercourses` (
+CREATE TABLE `UserCourses` (
   `id` int NOT NULL AUTO_INCREMENT,
   `userId` int DEFAULT NULL,
   `courseId` int DEFAULT NULL,
@@ -292,28 +292,28 @@ CREATE TABLE `usercourses` (
   PRIMARY KEY (`id`),
   KEY `userId` (`userId`),
   KEY `courseId` (`courseId`),
-  CONSTRAINT `usercourses_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
-  CONSTRAINT `usercourses_ibfk_2` FOREIGN KEY (`courseId`) REFERENCES `courses` (`id`)
+  CONSTRAINT `UserCourses_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `Users` (`id`),
+  CONSTRAINT `UserCourses_ibfk_2` FOREIGN KEY (`courseId`) REFERENCES `Courses` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `usercourses`
+-- Dumping data for table `UserCourses`
 --
 
-LOCK TABLES `usercourses` WRITE;
-/*!40000 ALTER TABLE `usercourses` DISABLE KEYS */;
-/*!40000 ALTER TABLE `usercourses` ENABLE KEYS */;
+LOCK TABLES `UserCourses` WRITE;
+/*!40000 ALTER TABLE `UserCourses` DISABLE KEYS */;
+/*!40000 ALTER TABLE `UserCourses` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `users`
+-- Table structure for table `Users`
 --
 
-DROP TABLE IF EXISTS `users`;
+DROP TABLE IF EXISTS `Users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `users` (
+CREATE TABLE `Users` (
   `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(255) DEFAULT NULL,
   `surname` varchar(255) DEFAULT NULL,
@@ -327,19 +327,19 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   KEY `rolId` (`rolId`),
   KEY `addressId` (`addressId`),
-  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`rolId`) REFERENCES `rols` (`id`),
-  CONSTRAINT `users_ibfk_2` FOREIGN KEY (`addressId`) REFERENCES `addresses` (`id`)
+  CONSTRAINT `Users_ibfk_1` FOREIGN KEY (`rolId`) REFERENCES `Rols` (`id`),
+  CONSTRAINT `Users_ibfk_2` FOREIGN KEY (`addressId`) REFERENCES `Addresses` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `users`
+-- Dumping data for table `Users`
 --
 
-LOCK TABLES `users` WRITE;
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'Admin','Test','admin@test.com','$2a$10$Ks5TccrnzkRr7ooqNGOFXeyAzIsKnSAhU/LlSziv9vxJWZmXmNYyq',NULL,1,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(2,'User','Test','user@test.com','$2a$10$nz47uSaLwkFKzb5zB6i3JelE1EJoHeGOijcZ1M4F1h/c9qtQlVtca',NULL,2,2,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(3,'Eric','Mena','menaeric@hotmail.com','$2a$10$7yLydIBc76z9eKco6wKYNuJylhOkBKyZQrINuoyRwIMFhGBAWmOlS','1680101874679_users_.jpg',1,3,'2023-03-28 13:43:05','2023-03-29 14:57:54'),(4,'Juan','Gonzalez','juan@gonzalez.com','$2a$10$FYMhkbg1ELjt7iC.S9OM.uD.0sgCqbYNFxqsMo2AcCL/mlKbA13s.',NULL,2,4,'2023-03-28 13:47:36','2023-03-28 13:47:36'),(5,'Jose','Benavidez','jose@benavidez.com','$2a$10$yUqzLPDlnJGQBApZQic0XeOvB6RQYHDjifFtGR3R5ejAB.OYBmSr2',NULL,2,5,'2023-03-28 13:48:40','2023-03-28 13:48:40'),(6,'Lorenzo','Lamas','lorenzo@lamas.com','$2a$10$dsJ/j5tplFFHJy3IyQA48.sO1QN/97xhbieozcci8hSRZ7w1srLMa',NULL,2,6,'2023-03-29 12:42:29','2023-03-29 12:42:29');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+LOCK TABLES `Users` WRITE;
+/*!40000 ALTER TABLE `Users` DISABLE KEYS */;
+INSERT INTO `Users` VALUES (1,'Admin','Test','admin@test.com','$2a$10$Ks5TccrnzkRr7ooqNGOFXeyAzIsKnSAhU/LlSziv9vxJWZmXmNYyq',NULL,1,1,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(2,'User','Test','user@test.com','$2a$10$nz47uSaLwkFKzb5zB6i3JelE1EJoHeGOijcZ1M4F1h/c9qtQlVtca',NULL,2,2,'2023-03-28 12:40:41','2023-03-28 12:40:41'),(3,'Eric','Mena','menaeric@hotmail.com','$2a$10$7yLydIBc76z9eKco6wKYNuJylhOkBKyZQrINuoyRwIMFhGBAWmOlS','1680101874679_Users_.jpg',1,3,'2023-03-28 13:43:05','2023-03-29 14:57:54'),(4,'Juan','Gonzalez','juan@gonzalez.com','$2a$10$FYMhkbg1ELjt7iC.S9OM.uD.0sgCqbYNFxqsMo2AcCL/mlKbA13s.',NULL,2,4,'2023-03-28 13:47:36','2023-03-28 13:47:36'),(5,'Jose','Benavidez','jose@benavidez.com','$2a$10$yUqzLPDlnJGQBApZQic0XeOvB6RQYHDjifFtGR3R5ejAB.OYBmSr2',NULL,2,5,'2023-03-28 13:48:40','2023-03-28 13:48:40'),(6,'Lorenzo','Lamas','lorenzo@lamas.com','$2a$10$dsJ/j5tplFFHJy3IyQA48.sO1QN/97xhbieozcci8hSRZ7w1srLMa',NULL,2,6,'2023-03-29 12:42:29','2023-03-29 12:42:29');
+/*!40000 ALTER TABLE `Users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

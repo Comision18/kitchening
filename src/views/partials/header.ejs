@@ -2,10 +2,10 @@
 
     <a href="/"> <img id="logo" class="header__logo" src="/images/logo.jpg" alt=""></a>
 
-    <button class="header__hamburger">
+    <button class="header__hamburger" type="button" onclick="document.getElementById('nav').hidden = !document.getElementById('nav').hidden">
       <i class="fas fa-bars"></i>
     </button>
-    <nav class="header__nav">
+    <nav class="header__nav" id="nav">
       <ul class="header__nav--menu">
         <li>
           <a href="/courses/list">cursos</a>
