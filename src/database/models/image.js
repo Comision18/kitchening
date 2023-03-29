@@ -15,10 +15,11 @@ module.exports = (sequelize, DataTypes) => {
   }
   Image.init({
     name: DataTypes.STRING,
-    courseId: DataTypes.INTEGER
+    courseId: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Image',
+    tableName : 'images'
   });
   return Image;
 };
