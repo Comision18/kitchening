@@ -1,5 +1,5 @@
+const fs = require('fs');
 const {validationResult} = require('express-validator');
-const { readJSON, writeJSON } = require("../data");
 const {hashSync} = require('bcryptjs');
 const db = require('../database/models');
 
@@ -86,12 +86,68 @@ module.exports = {
         }
     },
     profile : (req,res) => {
-        return res.render('users/profile',{
-            title : "Perfil de usuario"
+        db.User.findByPk(req.session.userLogin.id,{
+            attributes : ['name','surname','email','image'],
+            include : [
+                {
+                    association : 'address',
+                    attributes : ['address','city','province','zipCode']
+                }
+            ],
+
         })
+            .then(user => {
+                return res.render('users/profile',{
+                    title : "Perfil de usuario",
+                    user
+                })
+            })
+            .catch(error => console.log(error))
+
+      
     },
     update : (req,res) => {
-        return res.send(req.body)
+
+        const {name, surname, address, city, province, zipCode} = req.body 
+        const {id} = req.session.userLogin;
+
+       db.User.findByPk(id)
+            .then(user => {
+                const addressUpdate = db.Address.update(
+                    {
+                        address : address ? address.trim() : null,
+                        city : city ? city.trim() : null,
+                        province: province ? province.trim() : null,
+                        zipCode : zipCode ? zipCode : null
+                    },
+                    {
+                        where : {
+                            id : user.addressId
+                        }
+                    }
+                )
+                const userUpdate = db.User.update(
+                    {
+                        name : name.trim(),
+                        surname : surname.trim(),
+                        image : req.file ? req.file.filename : user.image
+                    },
+                    {
+                        where : {
+                            id
+                        }
+                    }
+                )
+
+                Promise.all(([addressUpdate, userUpdate]))
+                    .then( ()=> {
+
+                        (req.file && fs.existsSync('public/images/users/' + user.image)) && fs.unlinkSync('public/images/users/' + user.image)
+
+                        req.session.message = "Datos actualizados"
+                        return res.redirect('/users/profile')
+                    })
+            }).catch(error => console.log(error))
     },
     logout : (req,res) => {
         req.session.destroy();

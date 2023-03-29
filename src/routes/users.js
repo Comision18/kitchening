@@ -5,6 +5,7 @@ const {register,login,profile, processRegister, processLogin, update, logout, li
 const checkUser = require('../middlewares/checkUser');
 const checkUserAdmin = require('../middlewares/checkUserAdmin');
 const checkUserLogin = require('../middlewares/checkUserLogin');
+const { uploadUserImage } = require('../middlewares/upload');
 const { registerUserValidator, loginUserValidator } = require('../validations');
 
 /* /users */
@@ -15,7 +16,7 @@ router
     .get('/login',checkUser, login)
     .post('/login',loginUserValidator,processLogin)
     .get('/profile',checkUserLogin, profile)
-    .put('/update',update)
+    .put('/update',uploadUserImage.single('image'),update)
     .get('/logout',checkUserLogin,logout)
     .get('/', list)
 
