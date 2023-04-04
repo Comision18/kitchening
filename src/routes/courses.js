@@ -11,11 +11,10 @@ const courseValidator = require('../validations/courseValidator');
 router
     .get('/list',list)
     .get('/detail/:id',detail)
-    .get('/add',checkUserAdmin, add)
+    .get('/add', checkUserAdmin,add)
     .post('/add',uploadCoursesImages, courseValidator, store)
-    .get('/edit/:id', checkUserAdmin, edit)
+    .get('/edit/:id',checkUserAdmin,  edit)
     .put('/update/:id',uploadCoursesImages, courseValidator, update)
-    .get('/remove/:id', checkUserAdmin, removeConfirm)
     .delete('/remove/:id',remove)
     .get('/search',search)
 

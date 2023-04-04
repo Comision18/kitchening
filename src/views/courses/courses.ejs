@@ -22,26 +22,36 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Curso</th>
                                 <th scope="col">Precio</th>
-                                <th scope="col">Chef</th>
+                                <th scope="col">Visible</th>
+                                <th scope="col">Gratis</th>
                                 <th scope="col">Acciones</th>
 
                               </tr>
                             </thead>
                             <tbody>
-                                <% courses.forEach(({id, title,price,chef}) => { %>
+                                <% courses.forEach(({id, title,price,visible, free}) => { %>
                                     <tr>
                                         <th scope="row"><%= id %></th>
                                         <td><%= title %></td>
                                         <td><%= price %></td>
-                                        <td><%= chef %></td>
+                                        <td>
+                                          <div class="form-check form-switch">
+                                            <input class="form-check-input" name="visible" type="checkbox" role="switch" id="flexSwitchCheckChecked" <%= visible && 'checked' %>>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div class="form-check form-switch">
+                                            <input class="form-check-input" name="free" type="checkbox" role="switch" id="flexSwitchCheckChecked" <%= free && 'checked' %>>
+                                          </div>
+                                        </td>
                                         <td>
                                            <div class="d-flex gap-2">
                                             <a class="btn btn-sm btn-primary" href="/courses/detail/<%= id %>"><i class="far fa-eye"></i></a>
                                             <a class="btn btn-sm btn-success" href="/courses/edit/<%= id %>"><i class="far fa-edit"></i></a>
-                                            <a class="btn btn-sm btn-danger" href="/courses/remove/<%= id %>"><i class="fas fa-trash"></i></a>
                                            </div> 
                                         </td>
                                       </tr>
+
                                 <% }) %>
                             
                            

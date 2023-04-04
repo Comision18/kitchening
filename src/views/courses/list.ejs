@@ -12,12 +12,12 @@
      
         <!-- productos -->
         <section class="home__main__section--productos">
-          <% courses.forEach(({title,price,description,chef,images,id,sale,free,newest}) => { %>
+          <% courses.forEach(({title,price,discount, description,chef,images,id,free}) => { %>
             <%- include('../partials/courseArticle',{
               title,
               images,
               id,
-              sticker: newest ? 'img-nuevo.png' : sale ? "img-descuento.png" : "img-gratis.png"
+              sticker: free ?  "img-gratis.png" : discount !== 0 ? "img-descuento.png"  : null
             }) %> 
           <% }) %>
          

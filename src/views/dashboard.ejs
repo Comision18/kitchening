@@ -15,33 +15,86 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    <div class="card-body">
+                    <div class="card-body table-responsive">
                         <table class="table">
                             <thead>
                               <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Curso</th>
                                 <th scope="col">Precio</th>
-                                <th scope="col">Chef</th>
+                                <th scope="col">Visible</th>
+                                <th scope="col">Gratis</th>
                                 <th scope="col">Acciones</th>
 
                               </tr>
                             </thead>
                             <tbody>
-                                <% courses.forEach(({id, title,price,chef}) => { %>
+                                <% courses.forEach(({id, description, title,price,visible, free, images,chef}) => { %>
                                     <tr>
                                         <th scope="row"><%= id %></th>
                                         <td><%= title %></td>
                                         <td><%= price %></td>
-                                        <td><%= chef %></td>
+                                        <td>
+                                          <div class="form-check form-switch">
+                                            <input class="form-check-input" name="visible" type="checkbox" role="switch" id="flexSwitchCheckChecked" <%= visible && 'checked' %>>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div class="form-check form-switch">
+                                            <input class="form-check-input" name="free" type="checkbox" role="switch" id="flexSwitchCheckChecked" <%= free && 'checked' %>>
+                                          </div>
+                                        </td>
                                         <td>
                                            <div class="d-flex gap-2">
-                                            <a class="btn btn-sm btn-primary" href="/courses/detail/<%= id %>"><i class="far fa-eye"></i></a>
+                                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#showDetail<%= id %>"><i class="far fa-eye"></i></button>
                                             <a class="btn btn-sm btn-success" href="/courses/edit/<%= id %>"><i class="far fa-edit"></i></a>
-                                            <a class="btn btn-sm btn-danger" href="/courses/remove/<%= id %>"><i class="fas fa-trash"></i></a>
-                                           </div> 
+                                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#warningDelete<%= id %>"><i class="fas fa-trash"></i></button>
+                                          </div> 
                                         </td>
                                       </tr>
+                                      <!-- Modal -->
+                                        <div class="modal fade" id="showDetail<%= id %>" tabindex="-1" aria-labelledby="showDetail<%= id %>Label" aria-hidden="true">
+                                          <div class="modal-dialog modal-fullscreen">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                              </div>
+                                              <div class="modal-body">
+                                                <%- include('./partials/contentDetail',{
+                                                  images,
+                                                  title,
+                                                  chef,
+                                                  price,
+                                                  description,
+                                                  disabled : true
+                                                }) %>
+                                              </div>
+                                             
+
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                        <div class="modal fade" id="warningDelete<%= id %>" tabindex="-1" aria-labelledby="warningDelete<%= id %>Label" aria-hidden="true">
+                                          <div class="modal-dialog">
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <h5 class="modal-title text-danger" id="exampleModalLabel">ADVERTENCIA</h5>
+                                              </div>
+                                              <div class="modal-body">
+                                                <h5 class="text-center">¿Estas seguro que querés eliminar el curso: <b><%= title %></b> ?</h5>
+                                                <p class="text-center">No podrás revertir los cambios</p>
+                                              </div>
+                                              <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                                <form action="/courses/remove/<%= id %>?_method=DELETE" method="POST">
+                                                <button type="submit" class="btn btn-danger">Sí, eliminalo</button>
+                                              </form>
+
+                                              </div>
+                                            </div>
+                                          </div>
+                                        </div>
                                 <% }) %>
                             
                            
@@ -57,7 +110,7 @@
       </main>
       <!-- pie de pagina -->
 
-
+      <%- include('./partials/scripts') %>
 
   </body>
 
