@@ -165,7 +165,8 @@ module.exports = {
             })
             .catch(error => console.log(error))
 
-
-       
+    },
+    destroy : (req,res) => {
+        return res.send('Proximamente....')
     }
 }
