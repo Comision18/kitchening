@@ -1,4 +1,3 @@
-const courses = require("../data/courses.json");
 const { Op } = require("sequelize");
 
 const db = require("../database/models");
@@ -36,8 +35,24 @@ module.exports = {
       .catch((error) => console.log(error));
   },
   admin: (req, res) => {
-    return res.render("dashboard", {
-      courses,
-    });
+    db.Course.findAll({
+      include : [
+        {
+          association : 'images',
+          attributes : ['primary','name']
+        },
+        {
+          association : 'chef',
+          attributes : ['name']
+        }
+      ]
+    })
+      .then(courses => {
+        return res.render("dashboard", {
+          courses,
+        });
+      })
+      .catch(error => console.log(error))
+ 
   },
 };

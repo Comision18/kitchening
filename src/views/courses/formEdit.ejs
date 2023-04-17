@@ -30,26 +30,28 @@
                             <small class="text-danger ms-2"><%= locals.errors && errors.price ? errors.price.msg : null %></small>
                           </div>
                           <div class="col-6 col-md-3 mb-3">
-                            <label for="price" class="form-label">Descuento</label>
-                            <input type="number" class="form-control  <%= locals.errors && errors.price ? 'is-invalid' : null%>" id="price" name="price" value="<%= locals.old && old.price ? old.price : null %>">
-                            <small class="text-danger ms-2"><%= locals.errors && errors.price ? errors.price.msg : null %></small>
+                            <label for="discount" class="form-label">Descuento</label>
+                            <input type="number" class="form-control  <%= locals.errors && errors.discount ? 'is-invalid' : null%>" id="discount" name="discount" value="<%= locals.old && old.discount ? old.discount : discount %>">
+                            <small class="text-danger ms-2"><%= locals.errors && errors.discount ? errors.discount.msg : null %></small>
                           </div>
                           <div class="col-12 col-md-6 mb-3">
                             <label for="chef" class="form-label">Chef</label>
                             <select name="chef" id="chef" class="form-control">
-                                <% chefs.forEach(({name}) => { %>
-                                 <option value="<%= name %>" <%= chef === name && 'selected' %> ><%= name %></option>
+                                <% chefs.forEach(({name, id}) => { %>
+                                 <option value="<%= id %>" <%= id === chefId && 'selected' %> ><%= name %></option>
                                 <% }) %>
                             </select>
                             <small class="text-danger ms-2"><%= locals.errors && errors.chef ? errors.chef.msg : null %></small>
                           </div>
                           <div class="col-12 col-md-6 mb-3">
-                            <label for="chef" class="form-label">Categoría</label>
-                            <select name="chef" id="chef" class="form-control <%= locals.errors && errors.chef ? 'is-invalid' : null%>">
+                            <label for="category" class="form-label">Categoría</label>
+                            <select name="category" id="category" class="form-control <%= locals.errors && errors.category ? 'is-invalid' : null%>">
                                 <option value="" selected hidden>Seleccione...</option>
-                              
+                                <% categories.forEach(({name, id}) => { %>
+                                  <option value="<%= id %>" <%= id === categoryId && 'selected' %> ><%= name %></option>
+                                 <% }) %>
                             </select>
-                            <small class="text-danger ms-2"><%= locals.errors && errors.chef ? errors.chef.msg : null %></small>
+                            <small class="text-danger ms-2"><%= locals.errors && errors.category ? errors.category.msg : null %></small>
 
                           </div>
                           <div class="col-12 mb-3">
@@ -60,22 +62,30 @@
                           <div class="col-12 mb-3">
                             <div class="d-flex justify-content-around">
                               <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                <input class="form-check-input" name="free" type="checkbox" role="switch" id="flexSwitchCheckDefault" <%= free && 'checked' %>>
                                 <label class="form-check-label" for="flexSwitchCheckDefault">Gratuito</label>
                               </div>
                               <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                <input class="form-check-input" name="visible" type="checkbox" role="switch" id="flexSwitchCheckChecked" <%= visible && 'checked' %>>
                                 <label class="form-check-label" for="flexSwitchCheckChecked">Visible</label>
                               </div>
                             </div>
                             </div>
                            
                         
-                          <div class="col-9 mb-3">
+                          <div class="col-12 mb-3">
                             <label for="images" class="form-label">Imágenes</label>
+                            <div class="d-flex flex-wrap justify-content-center gap-2 mb-2">
+                              <% images.forEach(image => { %>
+                                <div class="d-flex flex-column gap-2">
+                                  <label style="cursor: pointer;" for="image<%= image.id %>"><img src="/images/courses/<%= image.name %>" width="100px" alt=""></label> 
+                                  <input value="<%= image.id %>" id="image<%= image.id %>" type="radio" <%= image.primary && 'checked' %> name="primary">
+                                </div>
+                              <% }) %>
+                            </div>
+
                             <input type="file" class="form-control" id="images" name="images" multiple/>
                             <small class="text-danger ms-2"><%= locals.errors && errors.images ? errors.images.msg : null %></small>
-
                           </div>
                           <div class="d-flex justify-content-end">
                             <button type="submit" class="btn btn-dark">Actualizar curso</button>

@@ -35,7 +35,8 @@ module.exports = (sequelize, DataTypes) => {
     description: DataTypes.TEXT,
     free: DataTypes.BOOLEAN,
     visible: DataTypes.BOOLEAN,
-    chefId: DataTypes.INTEGER
+    chefId: DataTypes.INTEGER,
+    categoryId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Course',
