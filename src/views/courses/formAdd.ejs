@@ -41,7 +41,7 @@
                             <select name="chef" id="chef" class="form-control <%= locals.errors && errors.chef ? 'is-invalid' : null%>">
                                 <option value="" selected hidden>Seleccione...</option>
                                 <% chefs.forEach(({name, id}) => { %>
-                                 <option value="<%= id %>" <%= locals.old && old.chef && old.chef === name ? 'selected' : null %>><%= name %></option>
+                                 <option value="<%= id %>" <%= locals.old && old.chef && +old.chef === id ? 'selected' : null %>><%= name %></option>
                                 <% }) %>
                             </select>
                             <small class="text-danger ms-2"><%= locals.errors && errors.chef ? errors.chef.msg : null %></small>
@@ -52,7 +52,7 @@
                             <select name="category" id="category" class="form-control <%= locals.errors && errors.category ? 'is-invalid' : null%>">
                                 <option value="" selected hidden>Seleccione...</option>
                                 <% categories.forEach(({name, id}) => { %>
-                                  <option value="<%= id %>" <%= locals.old && old.category && old.category === name ? 'selected' : null %>><%= name %></option>
+                                  <option value="<%= id %>" <%= locals.old && old.category && +old.category === id ? 'selected' : null %>><%= name %></option>
                                  <% }) %>
                             </select>
                             <small class="text-danger ms-2"><%= locals.errors && errors.category ? errors.category.msg : null %></small>

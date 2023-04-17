@@ -1,12 +1,9 @@
 const fs = require("fs");
+const {differenceInDays} = require('date-fns')
 const { validationResult } = require("express-validator");
 const { readJSON, writeJSON } = require("../data");
-const chefs = readJSON("chefs.json");
-const chefsSort = chefs.sort((a, b) =>
-  a.name > b.name ? 1 : a.name < b.name ? -1 : 0
-);
-
 const db = require("../database/models");
+const { log } = require("console");
 
 module.exports = {
   list: (req, res) => {
@@ -20,6 +17,7 @@ module.exports = {
         return res.render("courses/list", {
           title: "Lista de cursos",
           courses,
+          differenceInDays
         });
       })
       .catch((error) => console.log(error));
@@ -255,6 +253,7 @@ module.exports = {
                        } */
           })
         })
+
       }).catch(error => console.log(error))
 
 
@@ -295,17 +294,35 @@ module.exports = {
         .catch((error) => console.log(error));
     }
   },
-  remove: (req, res) => {
-    const courses = readJSON("courses.json");
+  remove: async (req, res) => {
 
     const id = req.params.id;
-    const coursesModified = courses.filter((course) => course.id !== +id);
+    
+    const course = await db.Course.findByPk(id,{
+      include : {all :true}
+    });
 
-    //console.log(coursesModified);
+    db.Comment.destroy({
+      where : {
+        courseId : id
+      }
+    }).then( () => {
+      db.Course.destroy({
+        where : {
+          id
+        }
+      })
+        .then(() => {
+          console.log(course.images);
+          course && course.images.forEach((image) => {
+            fs.existsSync(`./public/images/courses/${image.name}`) &&
+              fs.unlinkSync(`./public/images/courses/${image.name}`);
+          });
 
-    /* guardar los cambios */
-    writeJSON("courses.json", coursesModified);
-    return res.redirect(`/courses/list`);
+          return res.redirect(`/admin`);
+        })
+    }).catch(error => console.log(error))
+
   },
   search: (req, res) => {
     return res.render("courses/results", {

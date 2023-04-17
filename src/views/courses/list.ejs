@@ -12,12 +12,13 @@
      
         <!-- productos -->
         <section class="home__main__section--productos">
-          <% courses.forEach(({title,price,discount, description,chef,images,id,free}) => { %>
+          <% courses.forEach(({title,price,discount, description,chef,images,id,free,createdAt}) => { %>
             <%- include('../partials/courseArticle',{
               title,
               images,
               id,
-              sticker: free ?  "img-gratis.png" : discount !== 0 ? "img-descuento.png"  : null
+              sticker: free ?  "img-gratis.png" : discount !== 0 ? "img-descuento.png"  : null,
+              days : differenceInDays(Date.now(),new Date(createdAt))
             }) %> 
           <% }) %>
          
