@@ -39,11 +39,11 @@ module.exports = {
     })
       .then((course) => {
         //return res.send(course)
-        return res.render("courses/detail", {
+        return course ? res.render("courses/detail", {
           title: "Detalle del curso",
           ...course.dataValues,
           imgPrimary: course.images.find((image) => image.primary),
-        });
+        }) : res.render('upsss');
       })
       .catch((error) => console.log(error));
   },
