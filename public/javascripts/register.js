@@ -22,6 +22,28 @@ const checkedFields = () => {
   }
 };
 
+const verifyEmail = async (email) => {
+    try {
+
+        let response = await fetch("/api/users/verify-email",{
+            method: "POST",
+            body : JSON.stringify({
+                email : email
+            }),
+            headers : {
+                "Content-Type" : "application/json"
+            }
+        });
+
+        let result = await response.json();
+
+       return result.data.existUser
+        
+    } catch (error) {
+        console.error
+    }
+}
+
 let regExLetter = /^[A-Z]+$/i;
 let regExEmail =
   /^(([^<>()\[\]\.,;:\s@\”]+(\.[^<>()\[\]\.,;:\s@\”]:+)*)|(\”.+\”))@(([^<>()[\]\.,;:\s@\”]+\.)+[^<>()[\]\.,;:\s@\”]{2,})$/;
@@ -75,7 +97,7 @@ $("surname").addEventListener("focus", function (e) {
   cleanError("error-surname", e);
 });
 
-$("email").addEventListener("blur", function (e) {
+$("email").addEventListener("blur", async function (e) {
   switch (true) {
     case !this.value.trim():
       msgError("error-email", "El email es obligatorio", e);
@@ -83,7 +105,9 @@ $("email").addEventListener("blur", function (e) {
     case !regExEmail.test(this.value.trim()):
       msgError("error-email", "Tiene que ser un email válido", e);
       break;
-
+    case await verifyEmail(this.value.trim()) :
+        msgError("error-email", "El email ya se encuentra registrado",e)
+    break
     default:
       this.classList.add("is-valid");
       checkedFields();

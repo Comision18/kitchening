@@ -9,8 +9,11 @@ module.exports = {
 
             return res.status(200).json({
                 ok : true,
-                count,
-                courses
+                data : {
+                    count,
+                    courses
+                }
+               
             })
             
         } catch (error) {
@@ -38,7 +41,9 @@ module.exports = {
 
             return res.status(200).json({
                 ok : true,
-                course
+                data : {
+                    course
+                }
             })
             
         } catch (error) {

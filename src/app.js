@@ -49,6 +49,7 @@ app
 /* apis */
 app
   .use("/api/courses",require('./routes/api/coursesApi'))
+  .use("/api/users",require('./routes/api/usersApi'))
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
