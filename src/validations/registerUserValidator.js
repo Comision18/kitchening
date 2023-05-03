@@ -1,5 +1,7 @@
 const {check, body} = require('express-validator');
 const db = require('../database/models');
+let regExPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,12}$/; //mayuscula, numero y 6 a 12 caracteres
+
 module.exports = [
     check('name')
         .notEmpty().withMessage('El nombre es obligatorio').bail()
@@ -39,10 +41,12 @@ module.exports = [
 
     check('password')
         .notEmpty().withMessage('La contraseña es obligatoria').bail()
-        .isLength({
-            min: 6,
-            max : 12
-        }).withMessage('La contraseña debe tener entre 6 y 12 caracteres'),
+        .custom((value, {req})=> {
+            if(!regExPass.test(value.trim())){
+                return false
+            }
+            return true
+        }).withMessage('Debe tener una mayúscula, una minúscula y un número. Min: 6 y máx: 12'),
     
     body('password2')
         .notEmpty().withMessage('Debes confirmar tu contraseña').bail()
