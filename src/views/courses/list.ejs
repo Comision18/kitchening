@@ -9,18 +9,21 @@
 
       <!-- principal -->
       <main class="home__main">
-     
+        
+        <div>
+          <%- include('../partials/paginator') %>
+        </div>
         <!-- productos -->
-        <section class="home__main__section--productos">
-          <% courses.forEach(({title,price,discount, description,chef,images,id,free,createdAt}) => { %>
-            <%- include('../partials/courseArticle',{
+        <section class="home__main__section--productos" id="container-courses-card">
+          <%# courses.forEach(({title,price,discount, description,chef,images,id,free,createdAt}) => { %>
+            <%# include('../partials/courseArticle',{
               title,
               images,
               id,
               sticker: free ?  "img-gratis.png" : discount !== 0 ? "img-descuento.png"  : null,
               days : differenceInDays(Date.now(),new Date(createdAt))
             }) %> 
-          <% }) %>
+          <%# }) %>
          
          
         </section>
@@ -37,6 +40,7 @@
         <%- include('../partials/scripts') %>
 
           <script src="/javascripts/home.js"></script>
+          <script src="/javascripts/paginator.js"></script>
 
   </body>
 
