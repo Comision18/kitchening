@@ -1,15 +1,17 @@
 const $ = (el) => document.querySelector(el);
 const btnPrev = $("#btn-prev");
 const btnNext = $("#btn-next");
+const selectLimit = $("#select-limit");
 const containerItemsPage = $("#container-items-page");
 const containerCoursesCard = $("#container-courses-card");
 
 let pageActive = 1;
 const apiGetCourses = "http://localhost:3000/api/courses";
 
-
-const getCourses = ({ page = 1 } = {}) =>
-  fetch(`${apiGetCourses}?page=${page}`).then((res) => res.json());
+const getCourses = ({ page = 1, limit = 6 } = {}) =>
+  fetch(`${apiGetCourses}?page=${page}&limit=${limit}`).then((res) =>
+    res.json()
+  );
 
 const paintCourses = (courses) => {
   containerCoursesCard.innerHTML = "";
@@ -39,12 +41,8 @@ const paintCourses = (courses) => {
 
 const getPage = async (page) => {
   pageActive = page;
-  const {
-    data: { pages, currentPage, courses },
-  } = await getCourses({ page });
-  paintCourses(courses);
-  paintItemsPage({ numberPages: pages, itemActive: currentPage });
-  statusPrevAndNext({ currentPage, pages });
+  const { data } = await getCourses({ page, limit: selectLimit.value });
+  visualImpact(data);
 };
 
 const paintItemsPage = ({ numberPages, itemActive }) => {
@@ -72,32 +70,37 @@ const statusPrevAndNext = ({ currentPage, pages }) => {
   }
 };
 
+const visualImpact = async ({ pages, currentPage, courses }) => {
+  paintCourses(courses);
+  paintItemsPage({ numberPages: pages, itemActive: currentPage });
+  statusPrevAndNext({ currentPage, pages });
+};
+
 window.addEventListener("load", async () => {
   try {
-    const {
-      data: { pages, currentPage, courses },
-    } = await getCourses();
-    paintCourses(courses);
-    paintItemsPage({ numberPages: pages, itemActive: currentPage });
-    statusPrevAndNext({ currentPage, pages });
+    const { data } = await getCourses();
+    visualImpact(data);
+
+    const limitsValid = [6, 9, 12, 20];
+
+    limitsValid.forEach((limitValid) => {
+      selectLimit.innerHTML += `
+       <option value="${limitValid}">${limitValid} cursos</option>
+    `;
+    });
   } catch (error) {
     console.log(error);
   }
 });
 
-const handleEventPrevNext = (
-  btnElement,
-  { isNext = false } = {}
-) => {
+const handleEventPrevNext = (btnElement, { isNext = false } = {}) => {
   btnElement.addEventListener("click", async () => {
     try {
-      const {
-        data: { pages, currentPage, courses },
-      } = await getCourses({ page: isNext ? ++pageActive : --pageActive });
-
-      paintCourses(courses);
-      paintItemsPage({ numberPages: pages, itemActive: currentPage });
-      statusPrevAndNext({ currentPage, pages });
+      const { data } = await getCourses({
+        page: isNext ? ++pageActive : --pageActive,
+        limit: selectLimit.value,
+      });
+      visualImpact(data);
     } catch (error) {
       console.log(error);
     }
@@ -106,6 +109,11 @@ const handleEventPrevNext = (
 
 handleEventPrevNext(btnNext, { isNext: true });
 handleEventPrevNext(btnPrev);
+
+selectLimit.addEventListener("change", async ({ target }) => {
+  const { data } = await getCourses({ page: pageActive, limit: target.value });
+  visualImpact(data);
+});
 
 /* btnNext.addEventListener("click", async () => {
   try {
