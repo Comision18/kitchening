@@ -10,7 +10,7 @@ module.exports = {
       const { count, courses, pages } = await getAllCourses(req, {
         withPagination,
         page,
-        limit,
+        limit: +limit,
       });
 
       let data = {
