@@ -129,7 +129,7 @@ $("password").addEventListener("blur", function (e) {
     case !regExPass2.test(this.value.trim()):
       msgError(
         "error-password",
-        "Debe ser entre 6 y 12 caracteres y tener una mayúscula, una minúscula y un número",
+        "Debe ser entre 6 y 12 caracteres y tener una mayúscula, una minúscula, carácter especial y un número",
         e
       );
       break;
