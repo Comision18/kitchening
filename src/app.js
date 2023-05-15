@@ -6,14 +6,19 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const methodOverride = require("method-override");
 const session = require("express-session");
+const passport = require('passport')
+const { loginGoogleInitialize } = require('./services/googleServices');
+
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const authRouter = require("./routes/auth")
 const coursesRouter = require("./routes/courses");
 const localsUserCheck = require("./middlewares/localsUserCheck");
 const cookieCheck = require("./middlewares/cookieCheck");
 
 const app = express();
+loginGoogleInitialize()
 
 // view engine setup
 app.set("views", path.join(__dirname, "views")).set("view engine", "ejs");
@@ -38,13 +43,16 @@ app
     req.session.message = null
     next()
   })
+  .use(passport.initialize())
+  .use(passport.session())
 
 
 /* rutas */
 app
   .use("/", indexRouter) //http://localhost:3000/
   .use("/users", usersRouter) //http://localhost:3000/users
-  .use("/courses", coursesRouter); // http:localhost:3000/courses
+  .use("/courses", coursesRouter) // http:localhost:3000/courses
+  .use('/auth', authRouter) // http:localhost:3000/auth
 
 /* apis */
 app
