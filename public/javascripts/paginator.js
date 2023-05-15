@@ -111,32 +111,6 @@ handleEventPrevNext(btnNext, { isNext: true });
 handleEventPrevNext(btnPrev);
 
 selectLimit.addEventListener("change", async ({ target }) => {
-  const { data } = await getCourses({ page: pageActive, limit: target.value });
+  const { data } = await getCourses({ page: 1, limit: target.value });
   visualImpact(data);
 });
-
-/* btnNext.addEventListener("click", async () => {
-  try {
-    const {
-      data: { pages, currentPage, courses },
-    } = await getCourses({ page: ++pageActive });
-    paintCourses(courses);
-    paintItemsPage({ numberPages: pages, itemActive: currentPage });
-    statusPrevAndNext({ currentPage, pages });
-  } catch (error) {
-    console.log(error);
-  }
-}); */
-
-/* btnPrev.addEventListener("click", async () => {
-  try {
-    const {
-      data: { pages, currentPage, courses },
-    } = await getCourses({ page: --pageActive });
-    paintCourses(courses);
-    paintItemsPage({ numberPages: pages, itemActive: currentPage });
-    statusPrevAndNext({ currentPage, pages });
-  } catch (error) {
-    console.log(error);
-  }
-}); */
