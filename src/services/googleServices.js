@@ -10,11 +10,11 @@ const strategyConfig = new OAuth2Strategy(
     clientID,
     clientSecret,
     callbackURL,
-    scope: ["profile"],
+    scope: ["profile","email"],
   },
   (accessToken, refreshToken, profile, done) => {
     console.log(profile)
-
+    
     done(null, profile)
   }
 );
