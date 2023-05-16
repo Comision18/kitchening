@@ -6,7 +6,7 @@ const containerItemsPage = $("#container-items-page");
 const containerCoursesCard = $("#container-courses-card");
 
 let pageActive = 1;
-const apiGetCourses = "http://localhost:3000/api/courses";
+const apiGetCourses = "https://kitchening-rii9.onrender.com/api/courses";
 
 const getCourses = ({ page = 1, limit = 6 } = {}) =>
   fetch(`${apiGetCourses}?page=${page}&limit=${limit}`).then((res) =>

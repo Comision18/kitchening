@@ -6,7 +6,7 @@
     "start": "node ./src/bin/www",
     "watch": "node --watch ./src/bin/www",
     "nodemon": "nodemon ./src/bin/www",
-    "db:create": "npm i & sequelize db:create & sequelize db:drop & sequelize db:create & sequelize db:migrate & sequelize db:seed:all",
+    "db:create": "sequelize db:create & sequelize db:drop & sequelize db:create & sequelize db:migrate & sequelize db:seed:all",
     "db:reset": "sequelize db:migrate:undo:all & sequelize db:migrate & sequelize db:seed:all"
   },
   "dependencies": {
