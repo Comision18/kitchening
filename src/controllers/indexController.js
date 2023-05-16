@@ -4,6 +4,7 @@ const db = require("../database/models");
 
 module.exports = {
   home: (req, res) => {
+    console.log(req.session?.userLogin)
     const newCourses = db.Course.findAll({
       order: [["createdAt", "DESC"]],
       limit: 4,
