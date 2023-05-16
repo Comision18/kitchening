@@ -42,9 +42,9 @@ app
 
 /* rutas */
 app
-  .use("/", indexRouter) //http://localhost:3000/
-  .use("/users", usersRouter) //http://localhost:3000/users
-  .use("/courses", coursesRouter); // http:localhost:3000/courses
+  .use("/", indexRouter)
+  .use("/users", usersRouter)
+  .use("/courses", coursesRouter)
 
 /* apis */
 app
