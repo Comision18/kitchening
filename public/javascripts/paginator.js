@@ -5,6 +5,8 @@ const selectLimit = $("#select-limit");
 const containerItemsPage = $("#container-items-page");
 const containerCoursesCard = $("#container-courses-card");
 
+
+
 let pageActive = 1;
 const apiGetCourses = "https://kitchening-rii9.onrender.com/api/courses";
 
