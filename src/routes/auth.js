@@ -1,13 +1,11 @@
 const passport = require("passport");
-const {
-  loginAndRegisterGoogle,
-  loginAndRegisterFacebook,
-} = require("../controllers/authController");
+const { loginAndRegisterGoogle, loginAndRegisterFacebook } = require("../controllers/authController");
 
 const router = require("express").Router();
 
-passport.serializeUser((user, done) => done(null, user));
-passport.deserializeUser((user, done) => done(null, user));
+passport.serializeUser((user,done) => done(null,user))
+passport.deserializeUser((user,done) => done(null,user))
+
 
 /* /auth */
 router
@@ -18,12 +16,7 @@ router
     loginAndRegisterGoogle
   )
 
-  .get(
-    "/login/facebook",
-    passport.authenticate("facebook", {
-      scope: ["user_friends", "manage_pages"],
-    })
-  )
+  .get("/login/facebook", passport.authenticate("facebook"))
   .get(
     "/facebook/callback",
     passport.authenticate("facebook", { failureRedirect: "/users/login" }),
