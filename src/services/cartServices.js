@@ -1,6 +1,13 @@
 const { Op } = require("sequelize");
 const db = require("../database/models");
-
+const configReload = {
+  include: [
+    {
+      association: "cart",
+      include: ["images"],
+    },
+  ],
+};
 module.exports = mtd = {
   getOrder: async ({ userId }) => {
     if (!userId) {
@@ -20,14 +27,22 @@ module.exports = mtd = {
           },
         ],
       },
-      default: {
+      defaults: {
         userId,
       },
+      ...configReload,
     });
-
+    order.total = mtd.calcTotal(order);
+    await order.save();
     return order;
   },
   getCart: async ({ courseId, orderId }) => {
+    if (!courseId || !orderId) {
+      throw {
+        status: 400,
+        message: "Debes enviar el orderId y courseId",
+      };
+    }
     return db.Cart.findOrCreate({
       where: {
         [Op.and]: [
@@ -86,12 +101,11 @@ module.exports = mtd = {
 
     const order = await mtd.getOrder({ userId });
 
-    await db.Cart.destroy({
+    return db.Cart.destroy({
       where: {
         orderId: order.id,
       },
     });
-    return order.reload({ include: { all: true } });
   },
   addQuantity: async ({ courseId, userId }) => {
     const order = await mtd.getOrder({ userId });
@@ -109,7 +123,12 @@ module.exports = mtd = {
       ++cartItem.quantity;
       await cartItem.save();
     }
-    return order.reload({ include: { all: true } });
+
+    const orderReload = await order.reload(configReload);
+    order.total = mtd.calcTotal(orderReload);
+
+    await order.save();
+    return order;
   },
   minQuantity: async ({ courseId, userId }) => {
     const order = await mtd.getOrder({ userId });
@@ -137,7 +156,11 @@ module.exports = mtd = {
       await cartItem.save();
     }
 
-    return order.reload({ include: { all: true } });
+    const orderReload = await order.reload(configReload);
+    order.total = mtd.calcTotal(orderReload);
+
+    await order.save();
+    return order;
   },
   saveStatusOrder: async ({ statusOrder, userId }) => {
     const order = await mtd.getOrder({ userId });
@@ -150,5 +173,13 @@ module.exports = mtd = {
     order.status = statusOrder;
     await order.save();
     return order.reload({ include: { all: true } });
+  },
+  calcTotal: (order) => {
+    return order.cart.length
+      ? order.cart.reduce(
+          (acum, product) => (acum += product.Cart.quantity * product.price),
+          0
+        )
+      : 0;
   },
 };

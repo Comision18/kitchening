@@ -6,11 +6,13 @@ const {
   addCourse,
   removeCourse,
   lessQuantityCourse,
+  getOrderPending,
 } = require("../../controllers/api/cartApiController");
 
 /* /api/cart */
 
 router
+  .get("/getOrderPending", getOrderPending)
   .post("/add", addCourse)
   .post("/remove", removeCourse)
   .post("/clear", clearCart)

@@ -15,7 +15,7 @@ const getCourses = ({ page = 1, limit = 6 } = {}) =>
 
 const paintCourses = (courses) => {
   containerCoursesCard.innerHTML = "";
-  courses.forEach(({ id, images, title, free, discount }) => {
+  courses.forEach(({ id, images, title, free, discount,price }) => {
     const imgPrimary = images.find(({ primary }) => true);
     const template = `
       <article class="home__main__section__article animate__animated">
@@ -32,6 +32,10 @@ const paintCourses = (courses) => {
       </div>
       <div class="home__main__section__article--title">
         <h4>${title}</h4>
+        <div class="d-flex justify-content-between">
+        <p class="text-success fs-4">$${price}</p>
+        <button class="btn btn-success" onclick="window.addCourseToCart(${id})">ADD CART</button>
+        </div>
       </div>
   </article>    
       `;
@@ -114,3 +118,4 @@ selectLimit.addEventListener("change", async ({ target }) => {
   const { data } = await getCourses({ page: 1, limit: target.value });
   visualImpact(data);
 });
+

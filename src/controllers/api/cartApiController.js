@@ -10,69 +10,86 @@ const {
   saveStatusOrder,
 } = require("../../services/cartServices");
 
+const configReload = {
+  include: [
+    {
+      association: "cart",
+      include: ["images"],
+    },
+  ],
+};
+
 module.exports = {
   addCourse: async (req, res) => {
     try {
-      const { userId, courseId } = req.body;
+      const { courseId } = req.body;
+      const { id } = req.session.userLogin;
       const order = await getOrder({
-        userId,
+        userId: id,
       });
       await createCourseInCart({ courseId, orderId: order.id });
-      const orderReload = await order.reload({
-        include: { all: true },
-      });
-
-      sendSuccessResponse(res, { data: orderReload.cart });
+      sendSuccessResponse(res);
     } catch (error) {
       sendErrorResponse(res, error);
     }
   },
   removeCourse: async (req, res) => {
     try {
-      const { userId, courseId } = req.body;
-      const order = await getOrder({ userId });
+      const { id } = req.session.userLogin;
+      const { courseId } = req.body;
+      const order = await getOrder({ userId: id });
       await removeCourseInCart({
         courseId,
         orderId: order.id,
       });
-      const orderReload = await order.reload({ include: { all: true } });
-      sendSuccessResponse(res, { data: orderReload.cart });
+      sendSuccessResponse(res);
     } catch (error) {
       sendErrorResponse(res, error);
     }
   },
   clearCart: async (req, res) => {
     try {
-      const { userId } = req.body;
-      const order = await removeAllCoursesInCart({ userId });
-
-      sendSuccessResponse(res, { data: order.cart });
+      const { id } = req.session.userLogin;
+      await removeAllCoursesInCart({ userId: id });
+      sendSuccessResponse(res);
     } catch (error) {
       sendErrorResponse(res, error);
     }
   },
   moreQuantityCourse: async (req, res) => {
     try {
-      const { userId, courseId } = req.body;
-      const order = await addQuantity({ userId, courseId });
-      sendSuccessResponse(res, { data: order.cart });
+      const { id } = req.session?.userLogin;
+      const { courseId } = req.body;
+      await addQuantity({ userId: id, courseId });
+      sendSuccessResponse(res);
     } catch (error) {
       sendErrorResponse(res, error);
     }
   },
   lessQuantityCourse: async (req, res) => {
     try {
-      const { userId, courseId } = req.body;
-      const order = await minQuantity({ userId, courseId });
-      sendSuccessResponse(res, { data: order?.cart });
+      const { id } = req.session.userLogin;
+      const { courseId } = req.body;
+      await minQuantity({ userId: id, courseId });
+      sendSuccessResponse(res);
     } catch (error) {
       sendErrorResponse(res, error);
     }
   },
   statusOrder: async (req, res) => {
     try {
-      const { statusOrder, userId } = req.body;
-      const order = await saveStatusOrder({ statusOrder, userId });
+      const { id } = req.session.userLogin;
+      const { statusOrder } = req.body;
+      await saveStatusOrder({ statusOrder, userId: id });
+      sendSuccessResponse(res);
+    } catch (error) {
+      sendErrorResponse(res, error);
+    }
+  },
+  getOrderPending: async (req, res) => {
+    try {
+      const { id } = req.session.userLogin;
+      const order = await getOrder({ userId: id });
       sendSuccessResponse(res, { data: order });
     } catch (error) {
       sendErrorResponse(res, error);
