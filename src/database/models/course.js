@@ -29,6 +29,13 @@ module.exports = (sequelize, DataTypes) => {
         as : 'category',
         foreignKey : 'categoryId',
       });
+
+      Course.belongsToMany(models.Order, {
+        through: "Carts",
+        foreignKey: "courseId",
+        otherKey: "orderId",
+        as: "cart",
+      });
     }
   }
   Course.init({
