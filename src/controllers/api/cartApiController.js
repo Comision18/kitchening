@@ -19,8 +19,8 @@ module.exports = {
   addProduct: async (req, res) => {
     try {
       const { courseId } = req.body;
-      // const { id } = req.session.userLogin;
-      await createProductInCart({ userId: 3, courseId });
+      const { id } = req.session.userLogin;
+      await createProductInCart({ userId: id, courseId });
       sendSuccessResponse(res);
     } catch (error) {
       sendErrorResponse(res, error);
@@ -39,9 +39,9 @@ module.exports = {
   moreQuantity: async (req, res) => {
     try {
       const { courseId } = req.body;
-      // const { id } = req.session.userLogin;
-      const order = await moreQuantityFromProduct({ userId: 3, courseId });
-      sendSuccessResponse(res,{data:order});
+      const { id } = req.session.userLogin;
+      await moreQuantityFromProduct({ userId: id, courseId });
+      sendSuccessResponse(res);
     } catch (error) {
       sendErrorResponse(res, error);
     }

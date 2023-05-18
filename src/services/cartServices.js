@@ -37,7 +37,6 @@ module.exports = mtd = {
     });
     return order;
   },
-
   createProductInCart: async ({ userId, courseId }) => {
     if (!userId || !courseId) {
       throw {
@@ -65,7 +64,6 @@ module.exports = mtd = {
 
     return mtd.removeCart({ orderId: order.id, courseId });
   },
-
   moreQuantityFromProduct: async ({ userId, courseId }) => {
     if (!userId || !courseId) {
       throw {
