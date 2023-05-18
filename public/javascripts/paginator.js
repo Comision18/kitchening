@@ -36,7 +36,7 @@ const paintCourses = (courses) => {
         <h4>${title}</h4>
         <div class="d-flex justify-content-between">
         <p class="text-success fs-4">$${price}</p>
-        <button class="btn btn-success" onclick="window.addCourseToCart(${id})">ADD CART</button>
+        <button class="btn btn-success" onclick="addCourseToCart(${id})">ADD CART</button>
         </div>
       </div>
   </article>    
@@ -121,3 +121,30 @@ selectLimit.addEventListener("change", async ({ target }) => {
   visualImpact(data);
 });
 
+
+const addCourseToCart = async (courseId) => {
+  try {
+    const res = await fetch(`https://kitchening-rii9.onrender.com/api/cart/add`, {
+      method: "POST",
+      body: JSON.stringify({
+        courseId,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const { ok } = await res.json();
+
+    if (!ok) {
+      return (location.href = "/users/login");
+    }
+    Swal.fire({
+      icon: "success",
+      title: "Producto agregado al carrito",
+      showConfirmButton: false,
+      timer: 800,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};

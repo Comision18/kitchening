@@ -44,15 +44,16 @@
           </div>
         </section>
         <!-- productos -->
-        <h2>Ultimos agregados</h2>
+        <h2>Últimos agregados</h2>
         <hr>
         <section class="home__main__section--productos">
                <!-- producto -->
-               <% newCourses.forEach(({title,description,images,id}) => { %>
+               <% newCourses.forEach(({title,description,images,id,price}) => { %>
                 <%- include('./partials/courseArticle',{
                   title,
                   images,
                   id,
+                  price,
                   sticker: 'img-nuevo.png'
                 }) %> 
                <% }) %>
@@ -61,18 +62,19 @@
         <hr>
         <section class="home__main__section--productos">
                <!-- producto -->
-               <% saleCourses.forEach(({title,description,images,id}) => { %>
+               <% saleCourses.forEach(({title,description,images,id,price}) => { %>
                 <%- include('./partials/courseArticle',{
                   title,
                   images,
                   id,
+                  price,
                   sticker: 'img-descuento.png'
                 }) %> 
                <% }) %>
         </section>
         <section class="home__main__section--courses">
           <div class="glider-contain">
-            <div class="glider">
+            <div class="glider my-4">
               <% courses.forEach(({title,images,id}) => { %>
                 <a href="/courses/detail/<%= id %>">
                   <div class="card carousel-courses-item" style="height: 40vh;">

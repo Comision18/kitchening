@@ -8,5 +8,9 @@
     </div>
     <div class="home__main__section__article--title">
       <h4><%= title %></h4>
+      <div class="d-flex justify-content-between">
+        <p class="text-success fs-4">$<%= price %></p>
+        <button class="btn btn-success" onclick="addCourseToCart('<%= id %>')">ADD CART</button>
+        </div>
     </div>
 </article>    

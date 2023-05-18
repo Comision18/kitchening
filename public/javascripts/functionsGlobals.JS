@@ -1,4 +1,4 @@
-window.addCourseToCart = async (courseId) => {
+/* const addCourseToCart = async (courseId) => {
   try {
     const res = await fetch(`https://kitchening-rii9.onrender.com/api/cart/add`, {
       method: "POST",
@@ -21,6 +21,6 @@ window.addCourseToCart = async (courseId) => {
       timer: 800,
     });
   } catch (error) {
-    console.log("error");
+    console.log(error);
   }
-};
+}; */
