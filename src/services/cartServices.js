@@ -28,6 +28,9 @@ module.exports = mtd = {
       include: [
         {
           association: "cart",
+          through: {
+            attributes: ["quantity"],
+          },
           include: ["images"],
         },
       ],
@@ -45,9 +48,88 @@ module.exports = mtd = {
 
     const order = await mtd.getOrder({ userId });
 
-    await mtd.createCart({ orderId: order.id, courseId });
+    await mtd.getCart({ orderId: order.id, courseId });
+
+    const orderReload = await order.reload({ include: { all: true } });
+    order.total = mtd.calcTotal(orderReload);
+    await order.save();
   },
-  createCart: ({ orderId, courseId }) => {
-    return db.Cart.create({ orderId, courseId });
+  removeProductFromCart: async ({ userId, courseId }) => {
+    if (!userId || !courseId) {
+      throw {
+        ok: false,
+        message: "Debes ingresar el userId y courseId",
+      };
+    }
+    const order = await mtd.getOrder({ userId });
+
+    return mtd.removeCart({ orderId: order.id, courseId });
+  },
+
+  moreQuantityFromProduct: async ({ userId, courseId }) => {
+    if (!userId || !courseId) {
+      throw {
+        ok: false,
+        message: "Debes ingresar el userId y courseId",
+      };
+    }
+
+    const order = await mtd.getOrder({ userId });
+
+    const [cart, isCreated] = await mtd.getCart({
+      orderId: order.id,
+      courseId,
+    });
+
+    if (!isCreated) {
+      cart.quantity++;
+      await cart.save();
+    }
+
+    const orderReload = await order.reload({ include: { all: true } });
+    order.total = mtd.calcTotal(orderReload);
+    await order.save();
+
+    return order;
+  },
+  removeCart: ({ orderId, courseId }) => {
+    db.Cart.destroy({
+      where: {
+        [Op.and]: [
+          {
+            orderId,
+          },
+          {
+            courseId,
+          },
+        ],
+      },
+    });
+  },
+  getCart: ({ orderId, courseId }) => {
+    return db.Cart.findOrCreate({
+      // [cart, isCreated]
+      where: {
+        [Op.and]: [
+          {
+            orderId,
+          },
+          {
+            courseId,
+          },
+        ],
+      },
+      defaults: {
+        orderId,
+        courseId,
+      },
+    });
+  },
+  calcTotal: ({ cart }) => {
+    return cart.reduce((acum, { price, Cart, discount }) => {
+      const priceCalc = discount ? price - (price * discount) / 100 : price;
+      acum += priceCalc * Cart.quantity;
+      return acum;
+    }, 0);
   },
 };

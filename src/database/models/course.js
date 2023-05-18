@@ -31,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       Course.belongsToMany(models.Order, {
-        through: "Carts",
+        through: "Cart",
         foreignKey: "courseId",
         otherKey: "orderId",
         as: "cart",
