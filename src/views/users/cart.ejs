@@ -2,6 +2,7 @@
 <html lang="en">
 
 <%- include('../partials/head') %>
+<<<<<<< HEAD
 <style>
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
@@ -18,12 +19,36 @@ input[type=number] { -moz-appearance:textfield; }
   color:white;
 }
 </style>
+=======
+  <style>
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type=number] {
+      -moz-appearance: textfield;
+    }
+
+    .btn-clear {
+      transition: background-color 200ms, color 200ms;
+    }
+
+    .btn-clear:hover {
+      background-color: rgb(240, 184, 184);
+      color: white;
+    }
+  </style>
+
+>>>>>>> implementCart-part2
   <body class="cart">
     <!-- encabezado -->
     <%- include('../partials/header') %>
 
       <!-- principal -->
       <main class="container">
+<<<<<<< HEAD
         
         <div class="row">
           <div class="col-12">
@@ -51,6 +76,27 @@ input[type=number] { -moz-appearance:textfield; }
                 </p>
               </div>
            
+=======
+
+        <div class="row position-relative">
+
+          <div id="card-container" class="col-8">
+          </div>
+
+          <div class="card col-4 my-5 position-sticky" style="height:fit-content;top:20px">
+            <div class="card-body my-2 d-flex flex-column gap-2">
+              <button class="btn w-100 btn-danger" id="clear-cart">Vaciar Carrito</button>
+              <button class="btn w-100 btn-success" id="btn-buy">Comprar</button>
+              <a href="/courses/list" class="btn w-100 btn-dark">Seguir mirando</a>
+              <div class="text-end fs-3" >
+                <span >
+                  Total:
+                </span>
+                <output id="show-total">
+                  0
+                </output>
+              </div>
+>>>>>>> implementCart-part2
             </div>
           </div>
 
@@ -64,6 +110,10 @@ input[type=number] { -moz-appearance:textfield; }
         <%- include('../partials/scripts') %>
 
           <script src="/javascripts/home.js"></script>
+<<<<<<< HEAD
+=======
+          <script src="/javascripts/cart.js"></script>
+>>>>>>> implementCart-part2
 
   </body>
 
