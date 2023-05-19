@@ -19,9 +19,16 @@ module.exports = (sequelize, DataTypes) => {
         as: "rol",
       });
 
-      this.hasMany(models.Order,{
+      User.hasMany(models.Order,{
         foreignKey:'userId',
         as:'orders'
+      })
+
+      User.belongsToMany(models.Course, {
+        foreignKey: 'userId',
+        otherKey:'courseId',
+        through: 'favorites',
+        as:'coursesFavorites'
       })
     }
   }
