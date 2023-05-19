@@ -62,7 +62,13 @@ module.exports = mtd = {
     }
     const order = await mtd.getOrder({ userId });
 
-    return mtd.removeCart({ orderId: order.id, courseId });
+
+
+    await mtd.removeCart({ orderId: order.id, courseId });
+
+    const orderReload = await order.reload({ include: { all: true } });
+    order.total = mtd.calcTotal(orderReload);
+    await order.save();
   },
   moreOrLessQuantityFromProduct: async ({
     userId,
@@ -87,7 +93,9 @@ module.exports = mtd = {
       if (action === "more") {
         cart.quantity++;
       } else {
-        cart.quantity--;
+        if(cart.quantity > 1){
+          cart.quantity--;
+        }
       }
       await cart.save();
     }
@@ -108,9 +116,13 @@ module.exports = mtd = {
 
     const order = await mtd.getOrder({ userId });
 
-    return db.Cart.destroy({
+    await db.Cart.destroy({
       where: { orderId: order.id },
     });
+
+    const orderReload = await order.reload({ include: { all: true } });
+    order.total = mtd.calcTotal(orderReload);
+    await order.save();
   },
   modifyStatusFromOrder: async ({ userId, status }) => {
     if (!userId || !status) {

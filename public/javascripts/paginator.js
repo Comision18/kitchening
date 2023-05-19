@@ -5,6 +5,8 @@ const selectLimit = $("#select-limit");
 const containerItemsPage = $("#container-items-page");
 const containerCoursesCard = $("#container-courses-card");
 
+const URL_API_SERVER = "http://localhost:3000/api";
+
 let pageActive = 1;
 const apiGetCourses = "http://localhost:3000/api/courses";
 
@@ -15,7 +17,14 @@ const getCourses = ({ page = 1, limit = 6 } = {}) =>
 
 const paintCourses = (courses) => {
   containerCoursesCard.innerHTML = "";
-  courses.forEach(({ id, images, title, free, discount }) => {
+  courses.forEach(({ id, images, title, free, discount, price }) => {
+    const priceWithDiscount = discount
+      ? price - (price * discount) / 100
+      : price;
+    const priceFormatARG = priceWithDiscount.toLocaleString("es-AR", {
+      style: "currency",
+      currency: "ARS",
+    });
     const imgPrimary = images.find(({ primary }) => true);
     const template = `
       <article class="home__main__section__article animate__animated">
@@ -32,6 +41,13 @@ const paintCourses = (courses) => {
       </div>
       <div class="home__main__section__article--title">
         <h4>${title}</h4>
+        <div class="d-flex gap-3">
+        <p class="fs-4 text-success">${priceFormatARG} ${
+      discount ? `<span class="text-danger">${discount}% OFF</span>` : ""
+    } </p>
+        </div>
+        <button class="btn btn-success w-100" onclick="addProductToCart(${id})">Agregar a carrito</button>
+        
       </div>
   </article>    
       `;
@@ -114,3 +130,29 @@ selectLimit.addEventListener("change", async ({ target }) => {
   const { data } = await getCourses({ page: 1, limit: target.value });
   visualImpact(data);
 });
+
+const addProductToCart = async (id) => {
+  try {
+    const objCourseId = {
+      courseId: id,
+    };
+    const { ok } = await fetch(`${URL_API_SERVER}/cart/addProduct`, {
+      method: "POST",
+      body: JSON.stringify(objCourseId),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
+
+    await Swal.fire({
+      title: ok ? "Producto agregado al carrito" : "Debes iniciar sesión",
+      icon: ok ? "success" : "warning",
+      showConfirmButton: false,
+      timer: 1200,
+    });
+
+    !ok && (location.href = "/users/login");
+  } catch (error) {
+    console.log(error);
+  }
+};

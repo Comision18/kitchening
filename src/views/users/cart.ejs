@@ -3,16 +3,6 @@
 
 <%- include('../partials/head') %>
   <style>
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-
     .btn-clear {
       transition: background-color 200ms, color 200ms;
     }
@@ -32,32 +22,7 @@
 
         <div class="row position-relative">
 
-          <div id="card-container" class="col-8">
-
-            <!-- COURSE TEMPLATE CARD -->
-            <div class="card col-12 col-lg-10 my-5">
-              <div class="card-body row">
-                
-                <img class="col-4" style="object-fit: contain;" src="https://wpdirecto.com/wp-content/uploads/2017/08/alt-de-una-imagen.png" alt="">
-                <div class="col-8 position-relative">
-                  <button class="fs-5 p-0 border-0 bg-transparent position-absolute text-danger " style="top:-3px;right:10px"><i style="padding:2px" class="rounded-circle btn-clear far fa-times-circle"></i></button>
-  
-                  <h5 class="card-title">Special title treatment</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sapiente, exercitationem!</p>
-                  <p class="d-flex align-items-center gap-2">
-                    <label for="">Cantidad </label>
-                    <button class="btn btn-light">-</button>
-                    <output style="width:50px"  class="form-control text-center">
-                      1
-                    </output>
-                    <button class="btn btn-light">+</button>
-                    <a href="#" class="btn btn-outline-dark">Ver más</a>
-                  </p>
-                </div>
-             
-              </div>
-            </div>
-
+          <div id="cards-container" class="col-8">
           </div>
 
           <div class="card col-4 my-5 position-sticky" style="height:fit-content;top:20px">
@@ -69,7 +34,7 @@
                 <span >
                   Total:
                 </span>
-                <output id="show-total">
+                <output id="output-total">
                   0
                 </output>
               </div>
