@@ -30,12 +30,19 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey : 'categoryId',
       });
 
-      Course.belongsToMany(models.Order, {
-        through: "Cart",
-        foreignKey: "courseId",
-        otherKey: "orderId",
-        as: "cart",
-      });
+      Course.belongsToMany(models.Order,{
+        foreignKey:'courseId',
+        otherKey:'orderId',
+        through:'Cart',
+        as:'cart'
+      })
+
+      Course.belongsToMany(models.User, {
+        foreignKey: 'courseId',
+        otherKey:'userId',
+        through: 'favorites',
+        as:'usersFavorites'
+      })
     }
   }
   Course.init({
