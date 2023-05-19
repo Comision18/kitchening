@@ -64,7 +64,11 @@ module.exports = mtd = {
 
     return mtd.removeCart({ orderId: order.id, courseId });
   },
-  moreQuantityFromProduct: async ({ userId, courseId }) => {
+  moreOrLessQuantityFromProduct: async ({
+    userId,
+    courseId,
+    action = "more",
+  }) => {
     if (!userId || !courseId) {
       throw {
         ok: false,
@@ -80,7 +84,11 @@ module.exports = mtd = {
     });
 
     if (!isCreated) {
-      cart.quantity++;
+      if (action === "more") {
+        cart.quantity++;
+      } else {
+        cart.quantity--;
+      }
       await cart.save();
     }
 
@@ -89,6 +97,32 @@ module.exports = mtd = {
     await order.save();
 
     return order;
+  },
+  clearAllProductFromCart: async ({ userId }) => {
+    if (!userId) {
+      throw {
+        ok: false,
+        message: "Debes ingresar el userId",
+      };
+    }
+
+    const order = await mtd.getOrder({ userId });
+
+    return db.Cart.destroy({
+      where: { orderId: order.id },
+    });
+  },
+  modifyStatusFromOrder: async ({ userId, status }) => {
+    if (!userId || !status) {
+      throw {
+        ok: false,
+        message: "Debes ingresar el userId y status",
+      };
+    }
+
+    const order = await mtd.getOrder({ userId });
+    order.status = status
+    return order.save()
   },
   removeCart: ({ orderId, courseId }) => {
     db.Cart.destroy({

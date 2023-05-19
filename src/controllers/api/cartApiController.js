@@ -4,7 +4,9 @@ const {
   getOrder,
   createProductInCart,
   removeProductFromCart,
-  moreQuantityFromProduct,
+  moreOrLessQuantityFromProduct,
+  clearAllProductFromCart,
+  modifyStatusFromOrder,
 } = require("../../services/cartServices");
 module.exports = {
   getOrderPending: async (req, res) => {
@@ -40,13 +42,43 @@ module.exports = {
     try {
       const { courseId } = req.body;
       const { id } = req.session.userLogin;
-      await moreQuantityFromProduct({ userId: id, courseId });
+      await moreOrLessQuantityFromProduct({ userId: id, courseId });
       sendSuccessResponse(res);
     } catch (error) {
       sendErrorResponse(res, error);
     }
   },
-  lessQuantity: (req, res) => {},
-  clearCart: (req, res) => {},
-  statusOrder: (req, res) => {},
+  lessQuantity: async (req, res) => {
+    try {
+      const { courseId } = req.body;
+      const { id } = req.session.userLogin;
+      await moreOrLessQuantityFromProduct({
+        userId: id,
+        courseId,
+        action: "less",
+      });
+      sendSuccessResponse(res);
+    } catch (error) {
+      sendErrorResponse(res, error);
+    }
+  },
+  clearCart: async (req, res) => {
+    try {
+      const { id } = req.session.userLogin;
+      await clearAllProductFromCart({ userId: id });
+      sendSuccessResponse(res);
+    } catch (error) {
+      sendErrorResponse(res, error);
+    }
+  },
+  statusOrder: async (req, res) => {
+    try {
+      const { status } = req.body;
+      const { id } = req.session.userLogin;
+      await modifyStatusFromOrder({ userId: id, status });
+      sendSuccessResponse(res);
+    } catch (error) {
+      sendErrorResponse(res, error);
+    }
+  },
 };
