@@ -3,21 +3,20 @@
 
 <%- include('../partials/head') %>
 
-  <body class="home">
+  <body class="home" data-idUser="<%= locals.userLogin?.id %>">
     <!-- encabezado -->
     <%- include('../partials/header') %>
 
       <!-- principal -->
-      <main class="home__main">
-        
+      <main class="home__main" >
         <div class="d-flex align-items-start gap-2 justify-content-center">
           <%- include('../partials/paginator') %>
-          <%- include('../partials/selectLimit') %>
+            <%- include('../partials/selectLimit') %>
         </div>
         <!-- productos -->
-        <section class="home__main__section--productos" id="container-courses-card">      
+        <section class="home__main__section--productos" id="container-courses-card">
         </section>
-           <!-- botón de whatsapp -->
+        <!-- botón de whatsapp -->
 
         <%- include('../partials/whatsApp') %>
 

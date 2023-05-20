@@ -164,4 +164,9 @@ module.exports = {
       title: "Carrito de compras",
     });
   },
+  favorites: (req,res) => {
+    return res.render("users/favorites", {
+      title: "Favoritos",
+    });
+  }
 };

@@ -1,5 +1,6 @@
 const { Op } = require("sequelize");
 const db = require("../database/models");
+const { literalQueryUrlImage } = require("../helpers");
 
 module.exports = mtd = {
   addOrRemoveToFavorite: async ({ userId, courseId }) => {
@@ -12,13 +13,18 @@ module.exports = mtd = {
 
     const [favorite, isCreatedFavorite] = await db.Favorite.findOrCreate({
       where: { [Op.and]: [{ userId }, { courseId }] },
+      defaults: {
+        userId,
+        courseId,
+      },
     });
 
     if (!isCreatedFavorite) {
       await favorite.destroy();
     }
+    return { isRemove: !isCreatedFavorite };
   },
-  getUserWithFavorites: async ({ userId }) => {
+  getUserWithFavorites: async ({ userId, req }) => {
     if (!userId) {
       throw {
         status: 400,
@@ -30,7 +36,16 @@ module.exports = mtd = {
       include: [
         {
           association: "coursesFavorites",
-          include: ["images"],
+          include: [
+            {
+              association: "images",
+              /* attributes: {
+                include: [
+                  literalQueryUrlImage(req, "courses", "name", "urlImage"),
+                ],
+              }, */
+            },
+          ],
         },
       ],
     };

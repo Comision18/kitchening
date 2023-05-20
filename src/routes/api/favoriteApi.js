@@ -1,11 +1,12 @@
 const router = require("express").Router();
-const {toggleProductFavorite
+const {toggleProductFavorite, getProductsFavorites
 } = require("../../controllers/api/favoritesApiController");
 
 /* /api/favorite */
 
 router
-  .get("/toggle", toggleProductFavorite)
+  .get("/", getProductsFavorites)
+  .put("/toggle", toggleProductFavorite)
 
 
 module.exports = router;

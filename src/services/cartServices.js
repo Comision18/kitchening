@@ -1,42 +1,87 @@
 const { Op } = require("sequelize");
 const db = require("../database/models");
 
-module.exports = mtd = {
-  getOrder: async ({ userId }) => {
-    if (!userId) {
-      throw {
-        ok: false,
-        message: "Debes ingresar el userId",
-      };
-    }
+const getOrder = async ({ userId }) => {
+  if (!userId) {
+    throw {
+      ok: false,
+      message: "Debes ingresar el userId",
+    };
+  }
 
-    const [order] = await db.Order.findOrCreate({
-      where: {
-        [Op.and]: [
-          {
-            userId,
-          },
-          {
-            status: "pending",
-          },
-        ],
-      },
-      defaults: {
-        // order  --> cart  --> courses  -->  images
-        userId,
-      },
-      include: [
+  const [order] = await db.Order.findOrCreate({
+    where: {
+      [Op.and]: [
         {
-          association: "cart",
-          through: {
-            attributes: ["quantity"],
-          },
-          include: ["images"],
+          userId,
+        },
+        {
+          status: "pending",
         },
       ],
-    });
-    return order;
-  },
+    },
+    defaults: {
+      // order  --> cart  --> courses  -->  images
+      userId,
+    },
+    include: [
+      {
+        association: "cart",
+        through: {
+          attributes: ["quantity"],
+        },
+        include: ["images"],
+      },
+    ],
+  });
+  return order;
+};
+
+const calcTotal = ({ cart }) => {
+  return cart.reduce((acum, { price, Cart, discount }) => {
+    const priceCalc = discount ? price - (price * discount) / 100 : price;
+    acum += priceCalc * Cart.quantity;
+    return acum;
+  }, 0);
+};
+
+const getCart = ({ orderId, courseId }) => {
+  return db.Cart.findOrCreate({
+    // [cart, isCreated]
+    where: {
+      [Op.and]: [
+        {
+          orderId,
+        },
+        {
+          courseId,
+        },
+      ],
+    },
+    defaults: {
+      orderId,
+      courseId,
+    },
+  });
+};
+
+const removeCart = ({ orderId, courseId }) => {
+  return db.Cart.destroy({
+    where: {
+      [Op.and]: [
+        {
+          orderId,
+        },
+        {
+          courseId,
+        },
+      ],
+    },
+  });
+};
+
+module.exports = {
+  getOrder,
   createProductInCart: async ({ userId, courseId }) => {
     if (!userId || !courseId) {
       throw {
@@ -45,12 +90,12 @@ module.exports = mtd = {
       };
     }
 
-    const order = await mtd.getOrder({ userId });
+    const order = await getOrder({ userId });
 
-    await mtd.getCart({ orderId: order.id, courseId });
+    await getCart({ orderId: order.id, courseId });
 
     const orderReload = await order.reload({ include: { all: true } });
-    order.total = mtd.calcTotal(orderReload);
+    order.total = calcTotal(orderReload);
     await order.save();
   },
   removeProductFromCart: async ({ userId, courseId }) => {
@@ -60,14 +105,12 @@ module.exports = mtd = {
         message: "Debes ingresar el userId y courseId",
       };
     }
-    const order = await mtd.getOrder({ userId });
+    const order = await getOrder({ userId });
 
-
-
-    await mtd.removeCart({ orderId: order.id, courseId });
+    await removeCart({ orderId: order.id, courseId });
 
     const orderReload = await order.reload({ include: { all: true } });
-    order.total = mtd.calcTotal(orderReload);
+    order.total = calcTotal(orderReload);
     await order.save();
   },
   moreOrLessQuantityFromProduct: async ({
@@ -82,9 +125,9 @@ module.exports = mtd = {
       };
     }
 
-    const order = await mtd.getOrder({ userId });
+    const order = await getOrder({ userId });
 
-    const [cart, isCreated] = await mtd.getCart({
+    const [cart, isCreated] = await getCart({
       orderId: order.id,
       courseId,
     });
@@ -93,7 +136,7 @@ module.exports = mtd = {
       if (action === "more") {
         cart.quantity++;
       } else {
-        if(cart.quantity > 1){
+        if (cart.quantity > 1) {
           cart.quantity--;
         }
       }
@@ -101,7 +144,7 @@ module.exports = mtd = {
     }
 
     const orderReload = await order.reload({ include: { all: true } });
-    order.total = mtd.calcTotal(orderReload);
+    order.total = calcTotal(orderReload);
     await order.save();
 
     return order;
@@ -114,14 +157,14 @@ module.exports = mtd = {
       };
     }
 
-    const order = await mtd.getOrder({ userId });
+    const order = await getOrder({ userId });
 
     await db.Cart.destroy({
       where: { orderId: order.id },
     });
 
     const orderReload = await order.reload({ include: { all: true } });
-    order.total = mtd.calcTotal(orderReload);
+    order.total = calcTotal(orderReload);
     await order.save();
   },
   modifyStatusFromOrder: async ({ userId, status }) => {
@@ -132,48 +175,8 @@ module.exports = mtd = {
       };
     }
 
-    const order = await mtd.getOrder({ userId });
-    order.status = status
-    return order.save()
-  },
-  removeCart: ({ orderId, courseId }) => {
-    db.Cart.destroy({
-      where: {
-        [Op.and]: [
-          {
-            orderId,
-          },
-          {
-            courseId,
-          },
-        ],
-      },
-    });
-  },
-  getCart: ({ orderId, courseId }) => {
-    return db.Cart.findOrCreate({
-      // [cart, isCreated]
-      where: {
-        [Op.and]: [
-          {
-            orderId,
-          },
-          {
-            courseId,
-          },
-        ],
-      },
-      defaults: {
-        orderId,
-        courseId,
-      },
-    });
-  },
-  calcTotal: ({ cart }) => {
-    return cart.reduce((acum, { price, Cart, discount }) => {
-      const priceCalc = discount ? price - (price * discount) / 100 : price;
-      acum += priceCalc * Cart.quantity;
-      return acum;
-    }, 0);
+    const order = await getOrder({ userId });
+    order.status = status;
+    return order.save();
   },
 };

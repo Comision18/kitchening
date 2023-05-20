@@ -25,6 +25,7 @@ module.exports = {
       await createProductInCart({ userId: id, courseId });
       sendSuccessResponse(res);
     } catch (error) {
+      console.log(error)
       sendErrorResponse(res, error);
     }
   },
