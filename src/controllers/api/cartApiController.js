@@ -1,46 +1,62 @@
 const sendErrorResponse = require("../../helpers/sendErrorResponse");
 const sendSuccessResponse = require("../../helpers/sendSuccessResponse");
 const {
-  createCourseInCart,
   getOrder,
-  removeCourseInCart,
-  removeAllCoursesInCart,
-  addQuantity,
-  minQuantity,
-  saveStatusOrder,
+  createProductInCart,
+  removeProductFromCart,
+  moreOrLessQuantityFromProduct,
+  clearAllProductFromCart,
+  modifyStatusFromOrder,
 } = require("../../services/cartServices");
-
-const configReload = {
-  include: [
-    {
-      association: "cart",
-      include: ["images"],
-    },
-  ],
-};
-
 module.exports = {
-  addCourse: async (req, res) => {
+  getOrderPending: async (req, res) => {
+    try {
+      const { id } = req.session.userLogin;
+      const order = await getOrder({ userId: id });
+      sendSuccessResponse(res, { data: order });
+    } catch (error) {
+      sendErrorResponse(res, error);
+    }
+  },
+  addProduct: async (req, res) => {
     try {
       const { courseId } = req.body;
       const { id } = req.session.userLogin;
-      const order = await getOrder({
-        userId: id,
-      });
-      await createCourseInCart({ courseId, orderId: order.id });
+      await createProductInCart({ userId: id, courseId });
+      sendSuccessResponse(res);
+    } catch (error) {
+      console.log(error)
+      sendErrorResponse(res, error);
+    }
+  },
+  removeProduct: async (req, res) => {
+    try {
+      const { courseId } = req.body;
+      const { id } = req.session.userLogin;
+      await removeProductFromCart({ userId: id, courseId });
       sendSuccessResponse(res);
     } catch (error) {
       sendErrorResponse(res, error);
     }
   },
-  removeCourse: async (req, res) => {
+  moreQuantity: async (req, res) => {
     try {
-      const { id } = req.session.userLogin;
       const { courseId } = req.body;
-      const order = await getOrder({ userId: id });
-      await removeCourseInCart({
+      const { id } = req.session.userLogin;
+      await moreOrLessQuantityFromProduct({ userId: id, courseId });
+      sendSuccessResponse(res);
+    } catch (error) {
+      sendErrorResponse(res, error);
+    }
+  },
+  lessQuantity: async (req, res) => {
+    try {
+      const { courseId } = req.body;
+      const { id } = req.session.userLogin;
+      await moreOrLessQuantityFromProduct({
+        userId: id,
         courseId,
-        orderId: order.id,
+        action: "less",
       });
       sendSuccessResponse(res);
     } catch (error) {
@@ -50,27 +66,7 @@ module.exports = {
   clearCart: async (req, res) => {
     try {
       const { id } = req.session.userLogin;
-      await removeAllCoursesInCart({ userId: id });
-      sendSuccessResponse(res);
-    } catch (error) {
-      sendErrorResponse(res, error);
-    }
-  },
-  moreQuantityCourse: async (req, res) => {
-    try {
-      const { id } = req.session?.userLogin;
-      const { courseId } = req.body;
-      await addQuantity({ userId: id, courseId });
-      sendSuccessResponse(res);
-    } catch (error) {
-      sendErrorResponse(res, error);
-    }
-  },
-  lessQuantityCourse: async (req, res) => {
-    try {
-      const { id } = req.session.userLogin;
-      const { courseId } = req.body;
-      await minQuantity({ userId: id, courseId });
+      await clearAllProductFromCart({ userId: id });
       sendSuccessResponse(res);
     } catch (error) {
       sendErrorResponse(res, error);
@@ -78,19 +74,10 @@ module.exports = {
   },
   statusOrder: async (req, res) => {
     try {
+      const { status } = req.body;
       const { id } = req.session.userLogin;
-      const { statusOrder } = req.body;
-      await saveStatusOrder({ statusOrder, userId: id });
+      await modifyStatusFromOrder({ userId: id, status });
       sendSuccessResponse(res);
-    } catch (error) {
-      sendErrorResponse(res, error);
-    }
-  },
-  getOrderPending: async (req, res) => {
-    try {
-      const { id } = req.session.userLogin;
-      const order = await getOrder({ userId: id });
-      sendSuccessResponse(res, { data: order });
     } catch (error) {
       sendErrorResponse(res, error);
     }

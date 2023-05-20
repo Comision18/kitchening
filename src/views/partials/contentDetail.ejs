@@ -31,7 +31,8 @@
                      <hr>
                      <div class="d-flex flex-column align-items-end" style="height:300px">
                        <p class="card-text mt-5"><%= description %></p>
-                       <button class="btn btn-dark mt-auto" <%= locals.disabled && 'disabled' %>>Comprar</button>
+                       <button class="btn btn-dark mt-auto" data-id="<%= id %>" id="btn-addCart" <%= locals.disabled && 'disabled' %>>Comprar</button>
+                     
                      </div>
                      
                    

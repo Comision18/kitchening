@@ -9,16 +9,16 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Order.belongsTo(models.User, {
-        foreignKey: "userId",
-        as: "user",
-      });
-
-      Order.belongsToMany(models.Course, {
+      this.belongsToMany(models.Course, {
+        through: "Cart",
         foreignKey: "orderId",
         otherKey: "courseId",
-        through: "Cart",
         as: "cart",
+      });
+
+      this.belongsTo(models.User, {
+        foreignKey: "userId",
+        as: "user",
       });
     }
   }
@@ -26,17 +26,17 @@ module.exports = (sequelize, DataTypes) => {
     {
       date: { type: DataTypes.DATE, defaultValue: new Date() },
       total: { type: DataTypes.INTEGER, defaultValue: 0 },
+      userId: DataTypes.INTEGER,
       status: {
         type: DataTypes.STRING,
         defaultValue: "pending",
         validate: {
           isIn: {
-            args: [["cancelled", "completed", "pending"]],
-            msg: 'Los valores validos son ["cancelled", "completed", "pending"]',
+            args: [["pending", "completed", "canceled"]],
+            msg: "Los valores validos son pending, completed o canceled",
           },
         },
       },
-      userId: DataTypes.INTEGER,
     },
     {
       sequelize,

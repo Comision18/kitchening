@@ -1,233 +1,266 @@
 const $ = (el) => document.querySelector(el);
-const cardContainer = $("#card-container");
+const cardsContainer = $("#cards-container");
 const clearCart = $("#clear-cart");
-const showTotal = $("#show-total");
 const btnBuy = $("#btn-buy");
-const SERVER_URL = "https://kitchening-rii9.onrender.com";
+const outputTotal = $("#output-total");
+const URL_API_SERVER = "https://kitchening-rii9.onrender.com/api";
 
-const pintarTotal = (n) => {
-  n$ = n
-    ? n.toLocaleString("es-AR", { style: "currency", currency: "ARS" })
-    : 0;
-  showTotal.textContent = n$;
+const getOrder = () => {
+  return fetch(`${URL_API_SERVER}/cart/getOrderPending`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((res) => res.json());
 };
 
-clearCart.addEventListener("click", async () => {
-  Swal.fire({
-    title: "¿Estas seguro de vaciar el carrito?",
-    showCancelButton: true,
-    confirmButtonText: "Vaciar",
-    cancelButtonText: "Cancelar",
-  }).then(async (result) => {
-    if (result.isConfirmed) {
-      const { ok } = await fetch(`${SERVER_URL}/api/cart/clear`, {
-        method: "POST",
-      }).then((res) => res.json());
-      ok ? pintarProducts([]) : null;
-      ok ? pintarTotal(0) : null;
-    }
+const convertFormatPeso = (n) =>
+  n.toLocaleString("es-AR", {
+    style: "currency",
+    currency: "ARS",
   });
-});
 
-const pintarProducts = (products) => {
-  cardContainer.innerHTML = "";
-  console.log("products", products);
-  products.length &&
-    products?.forEach(
-      ({ id, price, discount, title, description, images, Cart }) => {
-        const priceCalc = discount ? price - (price * discount) / 100 : price;
+const paintProducts = ({ products }) => {
+  cardsContainer.innerHTML = "";
+  if (products.length) {
+    products.forEach(
+      ({ title, description, images, Cart, id, price, discount }) => {
+        const priceWithDiscount = discount
+          ? price - (price * discount) / 100
+          : price;
+        const priceFormatARG = convertFormatPeso(priceWithDiscount);
         const template = `
-    <div class="card my-5">
-    <div class="card-body row">
-      <img class="col-4" style="object-fit: contain;"
-        src="/images/courses/${images[0].name}">
-        <div class="col-8">
-        
-      <button onclick="removeProductFromCart(${id})" class="fs-5 p-0 border-0 bg-transparent position-absolute text-danger"
-        style="top:3px;right:10px"><i style="padding:2px"
-          class="rounded-circle btn-clear far fa-times-circle"></i></button>
-
-        <h5 class="card-title">${title}</h5>
-        <p class="card-text text-truncate">${description}</p>
-        <p class="card-text text-success">${priceCalc} ${
-          discount ? `<small>${discount}%OFF</small>` : ""
+              <!-- COURSE TEMPLATE CARD -->
+              <div class="card col-12 col-lg-8 my-5">
+                <div class="card-body row">
+                  
+                  <img class="col-4" style="width:150px" style="object-fit: contain;" src="/images/courses/${
+                    images[0].name
+                  }" alt="">
+                  <div class="col-8 position-relative">
+                    <button onclick="removeProductToCart(${id})" class="fs-5 p-0 border-0 bg-transparent position-absolute text-danger " style="top:-3px;right:10px"><i style="padding:2px" class="rounded-circle btn-clear far fa-times-circle"></i></button>
+    
+                    <h5 class="card-title">${title}</h5>
+                    <p class="card-text text-truncate">${description}</p>
+                    <p class="card-text">${priceFormatARG}${
+          discount
+            ? `<span class="text-danger mx-3">${discount}% OFF</span>`
+            : ""
         }</p>
-        <p class="d-flex align-items-center gap-2">
-          <button onclick="lessQuantity(${id})" class="btn btn-light">-</button>
-          <output style="width:50px" class="form-control text-center">
-            ${Cart.quantity}
-          </output>
-          <button class="btn btn-light" onclick="moreQuantity(${id})">+</button>
-          <a href="/courses/detail/${id}" class="btn btn-outline-dark">Ver más</a>
-        </p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-    `;
-        cardContainer.innerHTML += template;
+                    <p class="d-flex align-items-center gap-2">
+                      <label for=""></label>
+                      <button onclick="lessProduct(${id},${
+          Cart.quantity
+        })" class="btn btn-light">-</button>
+                      <output style="width:50px"  class="form-control text-center">
+                        ${Cart.quantity}
+                      </output>
+                      <button onclick="moreProduct(${id})" class="btn btn-light">+</button>
+                      <a href="/courses/detail/${id}" class="btn btn-outline-dark">Ver más</a>
+                    </p>
+                  </div>
+               
+                </div>
+              </div>
+      `;
+        cardsContainer.innerHTML += template;
       }
     );
+    return;
+  }
+  cardsContainer.innerHTML = "<h1>No existen productos en el carrito</h1>";
 };
 
-const getOrder = async () => {
-  const res = await fetch(`${SERVER_URL}/api/cart/getOrderPending`, {
-    headers: { "Content-Type": "application/json" },
-  });
-
-  return res.json();
+const paintTotal = (n) => {
+  outputTotal.textContent = convertFormatPeso(n);
 };
 
 window.addEventListener("load", async () => {
   try {
-    const {
-      ok,
-      data: { total, cart },
-    } = await getOrder();
-    console.log({ total, cart });
-    ok ? pintarProducts(cart) : null;
-    ok ? pintarTotal(total) : null;
+    const { ok, data } = await getOrder();
+    if (ok) {
+      paintProducts({ products: data.cart });
+      paintTotal(data.total);
+    }
+
+    console.log({ ok, data });
   } catch (error) {
     console.log(error);
   }
 });
 
-const removeProductFromCart = async (courseId) => {
-  try {
-    Swal.fire({
-      title: "¿Estas seguro de eliminar del carrito este producto?",
-      showCancelButton: true,
-      confirmButtonText: "Quitar",
-      CancelButtonText: "Cancelar",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        const res = await fetch(`${SERVER_URL}/api/cart/remove`, {
-          method: "POST",
-          body: JSON.stringify({
-            courseId,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const { ok } = await res.json();
+const moreProduct = async (id) => {
+  const objCourseId = {
+    courseId: id,
+  };
+  const { ok } = await fetch(`${URL_API_SERVER}/cart/moreQuantity`, {
+    method: "PUT",
+    body: JSON.stringify(objCourseId),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  }).then((res) => res.json());
 
-        const {
-          data: { cart, total },
-        } = await getOrder();
+  if (ok) {
+    const { ok, data } = await getOrder();
+    if (ok) {
+      paintProducts({ products: data.cart });
+      paintTotal(data.total);
+    }
+  }
+};
+
+const lessProduct = async (id, quantity) => {
+  const objCourseId = {
+    courseId: id,
+  };
+
+  if (quantity > 1) {
+    const { ok } = await fetch(`${URL_API_SERVER}/cart/lessQuantity`, {
+      method: "PUT",
+      body: JSON.stringify(objCourseId),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
+
+    if (ok) {
+      const { ok, data } = await getOrder();
+      if (ok) {
+        paintProducts({ products: data.cart });
+        paintTotal(data.total);
+      }
+    }
+  }
+};
+
+const removeProductToCart = async (id) => {
+  try {
+    const result = await Swal.fire({
+      title: "¿Estas seguro de quitar el producto?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Quitar",
+    });
+
+    if (result.isConfirmed) {
+      const objCourseId = {
+        courseId: id,
+      };
+      const { ok } = await fetch(`${URL_API_SERVER}/cart/removeProduct`, {
+        method: "DELETE",
+        body: JSON.stringify(objCourseId),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((res) => res.json());
+
+      if (ok) {
+        const { ok, data } = await getOrder();
+        if (ok) {
+          paintProducts({ products: data.cart });
+          paintTotal(data.total);
+        }
 
         Swal.fire({
-          title: ok ? "Producto eliminado" : "Upss ocurrió un error",
-          icon: ok ? "success" : "warning",
-          timer: 1000,
+          title: "Producto eliminado del carrito",
+          icon: "success",
           showConfirmButton: false,
+          timer: 800,
         });
-        pintarProducts(cart);
-        pintarTotal(total);
       }
-    });
+    }
   } catch (error) {
     console.log(error);
   }
 };
 
-const moreQuantity = async (courseId) => {
+clearCart.addEventListener("click", async () => {
   try {
-    await fetch(`${SERVER_URL}/api/cart/more`, {
-      method: "POST",
-      body: JSON.stringify({
-        courseId,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const result = await Swal.fire({
+      title: "¿Estas seguro de borrar todo el carrito?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Quitar",
     });
-    const {
-      ok,
-      data: { cart, total },
-    } = await getOrder();
-    ok ? pintarProducts(cart) : null;
-    ok ? pintarTotal(total) : null;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
-const lessQuantity = async (courseId) => {
-  try {
-    await fetch(`${SERVER_URL}/api/cart/less`, {
-      method: "POST",
-      body: JSON.stringify({
-        courseId,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const {
-      ok,
-      data: { cart, total },
-    } = await getOrder();
-    ok ? pintarProducts(cart) : null;
-    ok ? pintarTotal(total) : null;
+    if (result.isConfirmed) {
+      const { ok } = await fetch(`${URL_API_SERVER}/cart/clearCart`, {
+        method: "DELETE",
+      }).then((res) => res.json());
+
+      if (ok) {
+        const { ok, data } = await getOrder();
+
+        if (ok) {
+          paintProducts({ products: data.cart });
+          paintTotal(data.total);
+        }
+
+        Swal.fire({
+          title: "Proceso completado",
+          icon: "success",
+          showConfirmButton: false,
+          timer: 1400,
+        })
+      }
+    }
   } catch (error) {
-    console.log(error);
+    console.log(error)
   }
-};
+});
 
 btnBuy.addEventListener("click", async () => {
-  Swal.fire({
-    title: "¿Quieres concretar la orden?",
+  const result = await Swal.fire({
+    title: "¿Estas seguro realizar la compra?",
     icon: "info",
     showCancelButton: true,
-    confirmButtonText: "Comprar",
-    cancelButtonText: "Cancelar",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      let timerInterval;
-      Swal.fire({
-        title: "¿Completando la venta?",
-        text: "Espere mientras se procesa la venta",
-        timer: 6000,
-        timerProgressBar: true,
-        showCancelButton: true,
-        cancelButtonText: "Cancelar proceso",
-        didOpen: () => {
-          Swal.showLoading();
-          const b = Swal.getHtmlContainer().querySelector("b");
-          timerInterval = setInterval(() => {
-            b.textContent = Swal.getTimerLeft();
-          }, 200);
-        },
-        willClose: () => {
-          clearInterval(timerInterval);
-        },
-      }).then(async (result) => {
-        if (result.dismiss === Swal.DismissReason.timer) {
-          const res = await fetch(`${SERVER_URL}/api/cart/status`, {
-            method: "POST",
-            body: JSON.stringify({
-              statusOrder: "completed",
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-          const { ok } = await res.json();
-
-          Swal.fire({
-            title: ok
-              ? "Gracias por su compra"
-              : "Hubo un problema en la compra",
-            icon: ok ? "success" : "error",
-            showConfirmButton: false,
-            timer: 2000,
-          }).then(() => {
-            location.href = "/";
-          });
-        }
-      });
-    }
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Confirmar",
   });
+
+  if (result.isConfirmed) {
+    const { ok } = await fetch(`${URL_API_SERVER}/cart/statusOrder`, {
+      method: "PUT",
+      body: JSON.stringify({ status: "completed" }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
+
+    let timerInterval;
+    const result = await Swal.fire({
+      title: "Procesando la compra",
+      text: "Esperar mientras se realiza la compra",
+      timer: 5000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const b = Swal.getHtmlContainer().querySelector("b");
+        timerInterval = setInterval(() => {
+          b.textContent = Swal.getTimerLeft();
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    });
+
+    if (result.dismiss === Swal.DismissReason.timer) {
+      
+      await Swal.fire({
+        title: ok ? "Gracias por su compra" : "Upss hubo error",
+        icon: ok ? 'success': 'error',
+        showConfirmButton:false,
+        timer:1000
+      })
+
+      ok && (location.href = "/")
+
+    }
+  }
 });

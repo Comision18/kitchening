@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/head') %>
+
+  <body class="favorites d-flex flex-column justify-content-between h-100">
+    <!-- encabezado -->
+    <%- include('../partials/header') %>
+
+      <!-- principal -->
+      <main class="container">
+          <div id="cards-container" class="row gap-2 justify-content-center">
+          </div>     
+      </main>
+
+      <%- include('../partials/footer') %>
+
+
+        <%- include('../partials/scripts') %>
+
+          <script src="/javascripts/home.js"></script>
+          <script src="/javascripts/favorites.js"></script>
+
+  </body>
+
+</html>

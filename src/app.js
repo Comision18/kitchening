@@ -55,13 +55,14 @@ app
   .use("/users", usersRouter) //http://localhost:3000/users
   .use("/courses", coursesRouter) // http:localhost:3000/courses
   .use('/auth', authRouter) // http:localhost:3000/auth
-
-/* apis */
-app
+  
+  /* apis */
+  app
   .use("/api/courses",require('./routes/api/coursesApi'))
   .use("/api/users",require('./routes/api/usersApi'))
   .use("/api/cart",require('./routes/api/cartApi'))
-
+  .use('/api/favorites', require('./routes/api/favoriteApi'))
+  
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

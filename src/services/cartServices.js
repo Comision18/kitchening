@@ -1,185 +1,182 @@
 const { Op } = require("sequelize");
 const db = require("../database/models");
-const configReload = {
-  include: [
-    {
-      association: "cart",
-      include: ["images"],
-    },
-  ],
-};
-module.exports = mtd = {
-  getOrder: async ({ userId }) => {
-    if (!userId) {
-      throw {
-        status: 400,
-        message: "Debes enviar el userId",
-      };
-    }
-    const [order] = await db.Order.findOrCreate({
-      where: {
-        [Op.and]: [
-          {
-            status: "pending",
-          },
-          {
-            userId,
-          },
-        ],
-      },
-      defaults: {
-        userId,
-      },
-      ...configReload,
-    });
-    order.total = mtd.calcTotal(order);
-    await order.save();
-    return order;
-  },
-  getCart: async ({ courseId, orderId }) => {
-    if (!courseId || !orderId) {
-      throw {
-        status: 400,
-        message: "Debes enviar el orderId y courseId",
-      };
-    }
-    return db.Cart.findOrCreate({
-      where: {
-        [Op.and]: [
-          {
-            courseId,
-          },
-          { orderId },
-        ],
-      },
-      defaults: {
-        courseId,
-        orderId,
-      },
-    });
-  },
-  createCourseInCart: ({ courseId, orderId }) => {
-    if (!orderId || !courseId) {
-      throw {
-        status: 400,
-        message: "Debes enviar el courseId y el orderId",
-      };
-    }
 
-    return db.Cart.create({
+const getOrder = async ({ userId }) => {
+  if (!userId) {
+    throw {
+      ok: false,
+      message: "Debes ingresar el userId",
+    };
+  }
+
+  const [order] = await db.Order.findOrCreate({
+    where: {
+      [Op.and]: [
+        {
+          userId,
+        },
+        {
+          status: "pending",
+        },
+      ],
+    },
+    defaults: {
+      // order  --> cart  --> courses  -->  images
+      userId,
+    },
+    include: [
+      {
+        association: "cart",
+        through: {
+          attributes: ["quantity"],
+        },
+        include: ["images"],
+      },
+    ],
+  });
+  return order;
+};
+
+const calcTotal = ({ cart }) => {
+  return cart.reduce((acum, { price, Cart, discount }) => {
+    const priceCalc = discount ? price - (price * discount) / 100 : price;
+    acum += priceCalc * Cart.quantity;
+    return acum;
+  }, 0);
+};
+
+const getCart = ({ orderId, courseId }) => {
+  return db.Cart.findOrCreate({
+    // [cart, isCreated]
+    where: {
+      [Op.and]: [
+        {
+          orderId,
+        },
+        {
+          courseId,
+        },
+      ],
+    },
+    defaults: {
       orderId,
       courseId,
-    });
-  },
-  removeCourseInCart: ({ courseId, orderId }) => {
-    if (!orderId || !courseId) {
+    },
+  });
+};
+
+const removeCart = ({ orderId, courseId }) => {
+  return db.Cart.destroy({
+    where: {
+      [Op.and]: [
+        {
+          orderId,
+        },
+        {
+          courseId,
+        },
+      ],
+    },
+  });
+};
+
+module.exports = {
+  getOrder,
+  createProductInCart: async ({ userId, courseId }) => {
+    if (!userId || !courseId) {
       throw {
-        status: 400,
-        message: "Debes enviar el courseId y el orderId",
+        ok: false,
+        message: "Debes ingresar el userId y courseId",
       };
     }
-    return db.Cart.destroy({
-      where: {
-        [Op.and]: [
-          {
-            courseId,
-          },
-          {
-            orderId,
-          },
-        ],
-      },
-    });
+
+    const order = await getOrder({ userId });
+
+    await getCart({ orderId: order.id, courseId });
+
+    const orderReload = await order.reload({ include: { all: true } });
+    order.total = calcTotal(orderReload);
+    await order.save();
   },
-  removeAllCoursesInCart: async ({ userId }) => {
+  removeProductFromCart: async ({ userId, courseId }) => {
+    if (!userId || !courseId) {
+      throw {
+        ok: false,
+        message: "Debes ingresar el userId y courseId",
+      };
+    }
+    const order = await getOrder({ userId });
+
+    await removeCart({ orderId: order.id, courseId });
+
+    const orderReload = await order.reload({ include: { all: true } });
+    order.total = calcTotal(orderReload);
+    await order.save();
+  },
+  moreOrLessQuantityFromProduct: async ({
+    userId,
+    courseId,
+    action = "more",
+  }) => {
+    if (!userId || !courseId) {
+      throw {
+        ok: false,
+        message: "Debes ingresar el userId y courseId",
+      };
+    }
+
+    const order = await getOrder({ userId });
+
+    const [cart, isCreated] = await getCart({
+      orderId: order.id,
+      courseId,
+    });
+
+    if (!isCreated) {
+      if (action === "more") {
+        cart.quantity++;
+      } else {
+        if (cart.quantity > 1) {
+          cart.quantity--;
+        }
+      }
+      await cart.save();
+    }
+
+    const orderReload = await order.reload({ include: { all: true } });
+    order.total = calcTotal(orderReload);
+    await order.save();
+
+    return order;
+  },
+  clearAllProductFromCart: async ({ userId }) => {
     if (!userId) {
       throw {
-        status: 400,
-        message: "Debes enviar el userId",
+        ok: false,
+        message: "Debes ingresar el userId",
       };
     }
 
-    const order = await mtd.getOrder({ userId });
+    const order = await getOrder({ userId });
 
-    return db.Cart.destroy({
-      where: {
-        orderId: order.id,
-      },
-    });
-  },
-  addQuantity: async ({ courseId, userId }) => {
-    const order = await mtd.getOrder({ userId });
-    if (!courseId) {
-      throw {
-        status: 400,
-        message: "Debes enviar el courseId",
-      };
-    }
-    const [cartItem, isCreated] = await mtd.getCart({
-      courseId,
-      orderId: order.id,
-    });
-    if (!isCreated) {
-      ++cartItem.quantity;
-      await cartItem.save();
-    }
-
-    const orderReload = await order.reload(configReload);
-    order.total = mtd.calcTotal(orderReload);
-
-    await order.save();
-    return order;
-  },
-  minQuantity: async ({ courseId, userId }) => {
-    const order = await mtd.getOrder({ userId });
-    if (!courseId) {
-      throw {
-        status: 400,
-        message: "Debes enviar el courseId",
-      };
-    }
-    const cartItem = await db.Cart.findOne({
-      where: {
-        [Op.and]: [
-          {
-            courseId,
-          },
-          { orderId: order.id },
-        ],
-      },
+    await db.Cart.destroy({
+      where: { orderId: order.id },
     });
 
-    if (cartItem?.quantity === 1) {
-      await mtd.removeCourseInCart({ courseId, orderId: order.id });
-    } else if (cartItem?.quantity > 1) {
-      --cartItem.quantity;
-      await cartItem.save();
-    }
-
-    const orderReload = await order.reload(configReload);
-    order.total = mtd.calcTotal(orderReload);
-
+    const orderReload = await order.reload({ include: { all: true } });
+    order.total = calcTotal(orderReload);
     await order.save();
-    return order;
   },
-  saveStatusOrder: async ({ statusOrder, userId }) => {
-    const order = await mtd.getOrder({ userId });
-    if (!statusOrder) {
+  modifyStatusFromOrder: async ({ userId, status }) => {
+    if (!userId || !status) {
       throw {
-        status: 400,
-        message: "Debes enviar el statusOrder",
+        ok: false,
+        message: "Debes ingresar el userId y status",
       };
     }
-    order.status = statusOrder;
-    await order.save();
-    return order.reload({ include: { all: true } });
-  },
-  calcTotal: (order) => {
-    return order.cart.length
-      ? order.cart.reduce(
-          (acum, product) => (acum += product.Cart.quantity * product.price),
-          0
-        )
-      : 0;
+
+    const order = await getOrder({ userId });
+    order.status = status;
+    return order.save();
   },
 };

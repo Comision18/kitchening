@@ -13,10 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Cart.init(
     {
-      quantity: {
-        type: DataTypes.INTEGER,
-        defaultValue: 1,
-      },
+      quantity: { type: DataTypes.INTEGER, defaultValue: 1 },
       courseId: DataTypes.INTEGER,
       orderId: DataTypes.INTEGER,
     },

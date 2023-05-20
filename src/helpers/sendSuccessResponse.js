@@ -1,7 +1,3 @@
-module.exports = (res, { status = 200, data, otherProps = {} } = {}) => {
-  res.status(status).json({
-    ok: true,
-    data,
-    ...otherProps,
-  });
+module.exports = (res, { data, ...props } = {}) => {
+  res.status(200).json({ ok: true, data, ...props });
 };
