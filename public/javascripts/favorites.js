@@ -26,7 +26,7 @@ const paintProducts = ({ products }) => {
         <a href="/courses/detail/${id}">      
           <div style="background-image: url('${
             imgPrimary.name
-              ? `http://localhost:3000/images/courses/${imgPrimary.name}`
+              ? `https://kitchening-rii9.onrender.com/api/images/courses/${imgPrimary.name}`
               : "images/courses/not-image.png"
           }');" class="home__main__section__article--imagen-product">
         </div>
@@ -55,7 +55,7 @@ const paintProducts = ({ products }) => {
            <i onclick="toggleProductFavorite(${id}, event)" class="text-primary p-0 border-0 bg-transparent position-absolute fs-5 fas fa-star" style="top:10px;right:10px"></i>
       <div class="card-body d-flex gap-2 align-items-center justify-content-center">
         
-        <img style="width:120px;height:120px" style="object-fit:contain;" src="http://localhost:3000/images/courses/${
+        <img style="width:120px;height:120px" style="object-fit:contain;" src="https://kitchening-rii9.onrender.com/api/images/courses/${
           images[0].name
         }" alt="">
         <div class="">
