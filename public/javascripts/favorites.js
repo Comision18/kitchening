@@ -55,7 +55,7 @@ const paintProducts = ({ products }) => {
            <i onclick="toggleProductFavorite(${id}, event)" class="text-primary p-0 border-0 bg-transparent position-absolute fs-5 fas fa-star" style="top:10px;right:10px"></i>
       <div class="card-body d-flex gap-2 align-items-center justify-content-center">
         
-        <img style="width:120px;height:120px" style="object-fit:contain;" src="https://kitchening-rii9.onrender.com/api/images/courses/${
+        <img style="width:120px;height:120px" style="object-fit:contain;" src="/images/courses/${
           images[0].name
         }" alt="">
         <div class="">
