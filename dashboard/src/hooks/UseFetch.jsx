@@ -1,9 +1,8 @@
-export const UseFecth = async (endpoint, method = 'GET', data, token) => {
+export const UseFetch = async (endpoint, method = 'GET', data, token) => {
 
-    const apiURLBase = process.env.REACT_APP_API_URL_BASE;
+    const apiURLBase = import.meta.env.VITE_API_URL_BASE
 
     const url = apiURLBase + endpoint // enpoint = "/courses"
-
     let response;
 
     try {
@@ -23,6 +22,7 @@ export const UseFecth = async (endpoint, method = 'GET', data, token) => {
         }
     
         let result = await response.json();
+
 
         return result;
         

@@ -1,8 +1,7 @@
 import React from "react";
 import { ContentRowMovies } from "./ContentRowMovies";
 import { LastMovieInDb } from "./LastMovieInDb";
-import { GenresInDb } from "./GenresInDb";
-import { Metric } from "./Metric";
+import { CategoriesInDb } from "./CategoriesInDb";
 
 export const ContentRowTop = () => {
   return (
@@ -17,7 +16,7 @@ export const ContentRowTop = () => {
       <div className="row">
         <LastMovieInDb />
 
-        <GenresInDb />
+        <CategoriesInDb />
       </div>
     </div>
   );

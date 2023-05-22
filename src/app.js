@@ -6,7 +6,8 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const methodOverride = require("method-override");
 const session = require("express-session");
-const passport = require('passport')
+const passport = require('passport');
+const cors = require('cors');
 const { loginGoogleInitialize } = require('./services/googleServices');
 const { loginFacebookInitialize } = require('./services/facebookServices');
 
@@ -39,6 +40,7 @@ app
       saveUninitialized : true
     })
   )
+  .use(cors())
   .use(cookieCheck) //cargo en session lo que hay en la cookie
   .use(localsUserCheck) //cargo en locals lo que hay en session
   .use((req,res,next) => {
@@ -60,6 +62,8 @@ app
 app
   .use("/api/courses",require('./routes/api/coursesApi'))
   .use("/api/users",require('./routes/api/usersApi'))
+  .use("/api/categories",require('./routes/api/categoriesApi'))
+  .use("/api",require('./routes/api/mainApi'))
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
