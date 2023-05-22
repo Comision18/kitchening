@@ -9,11 +9,15 @@ module.exports = {
           {
             association: "images",
             attributes: {
-              exclude: ["createdAt", "updatedAt", "id", "courseId", "name"],
+              exclude: ["createdAt", "updatedAt", "id", "courseId", "name","chefId"],
               include: [
                 literalQueryUrlImage(req, "courses", "name", "urlImage"),
               ],
             },
+          
+          },
+          {
+            association : "chef"
           },
         ],
         attributes: {

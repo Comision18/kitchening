@@ -17,7 +17,7 @@ export const CategoriesInDb = () => {
           categories,
         });
       })
-      .catch((error) => console.error);
+      .catch(() => console.error);
   }, []);
 
   return (
