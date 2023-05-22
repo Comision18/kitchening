@@ -18,6 +18,18 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "rolId",
         as: "rol",
       });
+
+      User.hasMany(models.Order,{
+        foreignKey:'userId',
+        as:'orders'
+      })
+
+      User.belongsToMany(models.Course, {
+        foreignKey: 'userId',
+        otherKey:'courseId',
+        through: 'favorites',
+        as:'coursesFavorites'
+      })
     }
   }
   User.init(

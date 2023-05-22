@@ -159,4 +159,14 @@ module.exports = {
   destroy: (req, res) => {
     return res.send("Proximamente....");
   },
+  cart: (req, res) => {
+    return res.render("users/cart", {
+      title: "Carrito de compras",
+    });
+  },
+  favorites: (req,res) => {
+    return res.render("users/favorites", {
+      title: "Favoritos",
+    });
+  }
 };

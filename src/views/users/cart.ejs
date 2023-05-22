@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<%- include('../partials/head') %>
+  <style>
+    .btn-clear {
+      transition: background-color 200ms, color 200ms;
+    }
+
+    .btn-clear:hover {
+      background-color: rgb(240, 184, 184);
+      color: white;
+    }
+  </style>
+
+  <body class="cart">
+    <!-- encabezado -->
+    <%- include('../partials/header') %>
+
+      <!-- principal -->
+      <main class="container">
+
+        <div class="row position-relative">
+
+          <div id="cards-container" class="col-8">
+          </div>
+
+          <!-- TEMPLATE CARD COURSE -->
+          <div class="card col-4 my-5 position-sticky" style="height:fit-content;top:20px">
+            <div class="card-body my-2 d-flex flex-column gap-2">
+              <button class="btn w-100 btn-danger" id="clear-cart">Vaciar Carrito</button>
+              <button class="btn w-100 btn-success" id="btn-buy">Comprar</button>
+              <a href="/courses/list" class="btn w-100 btn-dark">Seguir mirando</a>
+              <div class="text-end fs-3" >
+                <span >
+                  Total:
+                </span>
+                <output id="output-total">
+                  0
+                </output>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+
+
+      <%- include('../partials/footer') %>
+
+
+        <%- include('../partials/scripts') %>
+
+          <script src="/javascripts/home.js"></script>
+          <script src="/javascripts/cart.js"></script>
+
+  </body>
+
+</html>

@@ -2,7 +2,10 @@ const db = require("../database/models");
 const { literalQueryUrlImage, literalQueryUrl } = require("../helpers");
 
 module.exports = {
-  getAllCourses: async (req, { withPagination = "false", page = 1, limit = 6 }) => {
+  getAllCourses: async (
+    req,
+    { withPagination = "false", page = 1, limit = 6 }
+  ) => {
     try {
       let options = {
         include: [
@@ -11,10 +14,14 @@ module.exports = {
             attributes: {
               exclude: ["createdAt", "updatedAt", "id", "courseId", "name"],
               include: [
-                literalQueryUrlImage(req, "courses", "name", "urlImage"),
+                literalQueryUrlImage(req, "courses", "images.name", "urlImage"),
               ],
             },
           },
+
+       {
+            association: "usersFavorites",
+          }, 
         ],
         attributes: {
           include: [literalQueryUrl(req, "courses", "Course.id")],
@@ -33,7 +40,7 @@ module.exports = {
         return {
           courses: docs,
           pages,
-          count: total
+          count: total,
         };
       }
 
