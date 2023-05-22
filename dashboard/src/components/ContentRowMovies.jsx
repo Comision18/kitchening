@@ -26,8 +26,40 @@ export const ContentRowMovies = () => {
 
   useEffect(() => {
     // el pedido por fetch
+
+      fetch('http://localhost:3000/api/metrics')
+        .then(response => {
+          return response.json()
+        })
+        .then(({ok, data}) => {
+          if(ok){
+            const {totalCourses,totalChefs,totalUsers} = data;
+            setState({
+              ...state,
+              courses : {
+                ...state.courses,
+                value : totalCourses
+              },
+              chefs : {
+                ...state.chefs,
+                value : totalChefs
+              },
+              users : {
+                ...state.users,
+                value : totalUsers
+              }
+            })
+          }
+          
+        })
+
+        .catch(error => console.error)
+      
+   
    
   }, []);
+
+
  
   return (
   <div className="row">

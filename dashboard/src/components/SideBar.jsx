@@ -1,5 +1,6 @@
 import React from "react";
 import logo from '../assets/logo-DH.png'
+import { Link } from "react-router-dom";
 
 export const SideBar = () => {
   return (
@@ -7,9 +8,9 @@ export const SideBar = () => {
       className="navbar-nav bg-gradient-secondary sidebar sidebar-dark accordion"
       id="accordionSidebar"
     >
-      <a
+      <Link
         className="sidebar-brand d-flex align-items-center justify-content-center"
-        href="/"
+        to="/"
       >
         <div className="sidebar-brand-icon">
           <img
@@ -18,40 +19,46 @@ export const SideBar = () => {
             alt="Digital House"
           />
         </div>
-      </a>
+      </Link>
 
       <hr className="sidebar-divider my-0" />
 
       <li className="nav-item active">
         <a className="nav-link" href="/">
           <i className="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard - DH movies</span>
+          <span>Dashboard - Kitchening</span>
         </a>
       </li>
 
       <hr className="sidebar-divider" />
 
-      <div className="sidebar-heading">Actions</div>
+      <div className="sidebar-heading">Navegación</div>
 
       <li className="nav-item">
-        <a className="nav-link collapsed" href="/">
+        <Link className="nav-link collapsed" to="/">
           <i className="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
-        </a>
+          <span>Home</span>
+        </Link>
       </li>
 
       <li className="nav-item">
-        <a className="nav-link" href="/">
+        <Link className="nav-link" to="/courses">
           <i className="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span>
-        </a>
+          <span>Cursos</span>
+        </Link>
       </li>
 
       <li className="nav-item">
-        <a className="nav-link" href="/">
+        <Link className="nav-link" to="/chefs">
           <i className="fas fa-fw fa-table"></i>
-          <span>Tables</span>
-        </a>
+          <span>Chefs</span>
+        </Link>
+      </li>
+      <li className="nav-item">
+        <Link className="nav-link" to="/users">
+          <i className="fas fa-fw fa-table"></i>
+          <span>Usuarios</span>
+        </Link>
       </li>
 
       <hr className="sidebar-divider d-none d-md-block" />

@@ -83,4 +83,19 @@ module.exports = {
       };
     }
   },
+  getCountCourses : async () => {
+    try {
+
+      const totalCourses = await db.Course.count();
+
+      return totalCourses
+      
+    } catch (error) {
+      console.log(error);
+      throw {
+        status: 500,
+        message: error.message,
+      };
+    }
+  }
 };
