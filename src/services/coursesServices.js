@@ -11,7 +11,7 @@ module.exports = {
             attributes: {
               exclude: ["createdAt", "updatedAt", "id", "courseId", "name","chefId"],
               include: [
-                literalQueryUrlImage(req, "courses", "name", "urlImage"),
+                literalQueryUrlImage(req, "courses", "images.name", "urlImage"),
               ],
             },
           
