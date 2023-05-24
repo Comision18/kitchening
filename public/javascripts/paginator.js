@@ -54,7 +54,7 @@ const paintCourses = (courses) => {
         <div class="d-flex justify-content-between align-items-center">
           <button class="btn btn-success" onclick="addProductToCart(${id})">Comprar</button>
           <i style="cursor:${idUser ? 'pointer' : 'initial'}" onclick="toggleProductFavorite(${id},event)" class="text-primary fs-4 ${
-        usersFavorites.length && usersFavorites[0]?.id == idUser ? "fas" : "far"
+        usersFavorites.some(({id}) => id == idUser) ? "fas" : "far"
       } fa-star"></i>
         </div>
         <!-- <i class="fas fa-star"></i> -->
