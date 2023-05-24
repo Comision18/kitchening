@@ -19,6 +19,9 @@ module.exports = {
           {
             association : "chef"
           },
+          {
+            association: "usersFavorites"
+          }
         ],
         attributes: {
           include: [literalQueryUrl(req, "courses", "Course.id")],

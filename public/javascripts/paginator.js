@@ -4,6 +4,7 @@ const btnNext = $("#btn-next");
 const selectLimit = $("#select-limit");
 const containerItemsPage = $("#container-items-page");
 const containerCoursesCard = $("#container-courses-card");
+const userId = document.body.getAttribute("data-userId");
 
 const URL_API_SERVER = "http://localhost:3000/api";
 
@@ -16,8 +17,9 @@ const getCourses = ({ page = 1, limit = 6 } = {}) =>
   );
 
 const paintCourses = (courses) => {
+  console.log(courses)
   containerCoursesCard.innerHTML = "";
-  courses.forEach(({ id, images, title, free, discount, price }) => {
+  courses.forEach(({ id, images, title, free, discount, price, usersFavorites }) => {
     const priceWithDiscount = discount
       ? price - (price * discount) / 100
       : price;
@@ -46,7 +48,10 @@ const paintCourses = (courses) => {
       discount ? `<span class="text-danger">${discount}% OFF</span>` : ""
     } </p>
         </div>
+        <div class="d-flex justify-content-between gap-2 align-items-center">
         <button class="btn btn-success w-100" onclick="addProductToCart(${id})">Agregar a carrito</button>
+        <i class="text-primary p-0 border-0 bg-transparent fs-5 ${usersFavorites.some(({id}) => id === +userId) ? "fas" : "far"} fa-star" style="cursor:pointer" onclick="toggleFavorite(${id},event)"></i>
+        </div>
         
       </div>
   </article>    
@@ -152,6 +157,49 @@ const addProductToCart = async (id) => {
     });
 
     !ok && (location.href = "/users/login");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getFavorites = () => {
+  return fetch(`${URL_API_SERVER}/favorites`).then((res) => res.json());
+};
+
+const toggleFavorite = async (id, { target }) => {
+  try {
+    if (!userId) {
+      await Swal.fire({
+        title: "Debes Iniciar Sesión",
+        icon: "info",
+        timer: 1000,
+        showConfirmButton: false,
+      });
+      location.href = "/users/login";
+      return;
+    }
+
+    const objCourseId = {
+      courseId: id,
+    };
+    const {
+      ok,
+      data: { isRemove },
+    } = await fetch(`${URL_API_SERVER}/favorites/toggle`, {
+      method: "POST",
+      body: JSON.stringify(objCourseId),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then((res) => res.json());
+
+    if (!isRemove) {
+      target.classList.add("fas");
+      target.classList.remove("far");
+    } else {
+      target.classList.add("far");
+      target.classList.remove("fas");
+    }
   } catch (error) {
     console.log(error);
   }

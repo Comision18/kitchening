@@ -61,7 +61,7 @@ app
   .use("/api/courses", require("./routes/api/coursesApi"))
   .use("/api/users", require("./routes/api/usersApi"))
   .use("/api/cart", require("./routes/api/cartApi"))
-  .use("/api/favorite", require("./routes/api/favoriteApi"))
+  .use("/api/favorites", require("./routes/api/favoriteApi"))
   .use("/api/categories", require("./routes/api/categoriesApi"))
   .use("/api", require("./routes/api/mainApi"));
 

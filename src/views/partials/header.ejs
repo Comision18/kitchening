@@ -18,7 +18,10 @@
         <% if (locals.userLogin) { %>
           <% if (userLogin.rol === 1) { %>
             <li>
-              <a href="/admin">Dashboard</a>
+              <a href="http:localhost:5157">Dashboard React</a>
+            </li>
+            <li>
+              <a href="/admin">Dashboard integrado</a>
             </li>
           <% } %>
           <li>
@@ -29,6 +32,9 @@
           </li>
           <li>
             <a href="/users/cart">Carrito</a>
+          </li>
+          <li>
+            <a href="/users/favorites">Favoritos</a>
           </li>
         <% }else{ %>
         <li>

@@ -13,6 +13,11 @@ module.exports = {
       include: [
         {
           association: "coursesFavorites",
+          include: [
+            {
+              association: "images",
+            },
+          ],
         },
       ],
     };
@@ -39,12 +44,14 @@ module.exports = {
         ],
       },
       defaults: { userId, courseId },
-    }
+    };
 
     const [favorite, isCreated] = await db.Favorite.findOrCreate(config);
 
-    if(!isCreated) {
-      await favorite.destroy()
+    if (!isCreated) {
+      await favorite.destroy();
     }
+
+    return !isCreated;
   },
 };
