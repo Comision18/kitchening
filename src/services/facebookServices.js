@@ -9,7 +9,9 @@ const strategyConfig = new FacebookStrategy(
   {
     clientID,
     clientSecret,
-    callbackURL
+    callbackURL,
+    profileFields: ['id', 'displayName', 'photos', 'email'],
+    enableProof: true
   },
   (accessToken, refreshToken, profile, done) => {
     console.log(profile)
