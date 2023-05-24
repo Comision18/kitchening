@@ -50,6 +50,7 @@ module.exports = {
       provider,
       photos: [{ value: image }],
       id: socialId,
+      displayName
     } = req.session.passport.user;
     const [name, surname] = displayName.split(" ");
     try {
