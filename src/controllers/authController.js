@@ -5,7 +5,7 @@ module.exports = {
     const {
       provider,
       photos: [{ value: picture }],
-      emails: [{value: email}],
+      emails: [{ value: email }],
       _json: { sub: googleId, given_name: name, family_name: surname },
     } = req.session.passport.user;
 
@@ -33,7 +33,7 @@ module.exports = {
       req.session.userLogin = {
         id,
         name,
-        rol: rolId
+        rol: rolId,
       };
 
       res.cookie("userKitchening18", req.session.userLogin, {
@@ -46,27 +46,25 @@ module.exports = {
     }
   },
   loginAndRegisterFacebook: async (req, res) => {
-    res.json(req.session.passport.user)
-   /*  const {
+    const {
       provider,
-      photos: [{ value: picture }],
-      emails: [{value: email}],
-      _json: { sub: googleId, given_name: name, family_name: surname },
+      photos: [{ value: image }],
+      id: socialId,
     } = req.session.passport.user;
-
+    const [name, surname] = displayName.split(" ");
     try {
       const address = await db.Address.create();
       const [{ id, rolId }, isCreate] = await db.User.findOrCreate({
         where: {
-          socialId: googleId,
+          socialId,
         },
         defaults: {
           name,
           surname,
-          email,
-          image: picture,
+          email: "user@facebook.com",
+          image,
           addressId: address.id,
-          socialId: googleId,
+          socialId,
           socialProvider: provider,
         },
       });
@@ -78,7 +76,7 @@ module.exports = {
       req.session.userLogin = {
         id,
         name,
-        rol: rolId
+        rol: rolId,
       };
 
       res.cookie("userKitchening18", req.session.userLogin, {
@@ -88,6 +86,6 @@ module.exports = {
       res.redirect("/users/profile");
     } catch (error) {
       console.log(error);
-    } */
+    }
   },
 };
