@@ -21,9 +21,9 @@ module.exports = {
   },
   getProductsFavorites: async (req, res) => {
     try {
-      // const { id } = req.session.userLogin;
+      const { id } = req.session.userLogin;
       const { coursesFavorites } = await getUserWithFavorites({
-        userId: 3,
+        userId: id,
         req,
       });
       console.log(coursesFavorites[0].images);
