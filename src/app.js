@@ -63,7 +63,8 @@ app
   .use("/api/users", require("./routes/api/usersApi"))
   .use("/api/categories", require("./routes/api/categoriesApi"))
   .use("/api/cart", require("./routes/api/cartApi"))
-  .use("/api/favorites", require("./routes/api/favoriteApi"));
+  .use("/api/favorites", require("./routes/api/favoriteApi"))
+  .use("/api/chefs", require("./routes/api/chefsApi"))
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

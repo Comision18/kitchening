@@ -2,7 +2,21 @@ const db = require('../database/models');
 
 module.exports = {
     getAllChefs : async () => {
-
+      try {
+        const { count, rows: chefs } = await db.Chef.findAndCountAll({
+          order : [['name']]
+        });
+        return {
+          chefs,
+          count,
+        };
+      } catch (error) {
+        console.log(error);
+        throw {
+          status: 500,
+          message: error.message,
+        };
+      }
     },
     getChefById : async () => {
 
