@@ -39,12 +39,20 @@ export const Courses = () => {
     .catch(() => console.error)
   }
 
+  const handleAdd = (formdata) => {
+    UseFetch('/courses','POST',formdata)
+      .then(({ok,data}) => {
+        ok &&
+        console.log(data);
+      })
+  }
+
   return (
     <div className="container">
       <div className="card">
         <div className="card-body">
           <div className="row">
-            <div className="col-12 col-md-7">
+            <div className="col-12 col-lg-7">
               <CoursesTable 
               courses = {state.courses}
               pages = {state.pages}
@@ -52,8 +60,8 @@ export const Courses = () => {
               handleGetPage = {handleGetPage}
               />
             </div>
-            <div className="col-12 col-md-5">
-              <CourseAdd />
+            <div className="col-12 col-lg-5">
+              <CourseAdd handleAdd={handleAdd}/>
             </div>
           </div>
         </div>

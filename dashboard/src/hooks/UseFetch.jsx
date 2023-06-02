@@ -1,4 +1,6 @@
-export const UseFetch = async (endpoint, method = 'GET', data, token) => {
+export const UseFetch = async (endpoint, method = 'GET', data, token = "") => {
+
+    console.log(data);
 
     const apiURLBase = import.meta.env.VITE_API_URL_BASE
 
@@ -9,13 +11,12 @@ export const UseFetch = async (endpoint, method = 'GET', data, token) => {
         if(method === 'GET'){
             response = await fetch(url)
         }
-    
         if(method === 'POST'){
+         
             response = await fetch(url,{
                 method : 'POST',
-                body : JSON.stringify(data),
+                body : data,
                 headers :{
-                    'Content-Type' : 'application/json',
                     Athorization : token
                 }
             })
