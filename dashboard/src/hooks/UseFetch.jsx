@@ -1,7 +1,5 @@
 export const UseFetch = async (endpoint, method = 'GET', data, token = "") => {
 
-    console.log(data);
-
     const apiURLBase = import.meta.env.VITE_API_URL_BASE
 
     const url = apiURLBase + endpoint // enpoint = "/courses"
@@ -11,12 +9,22 @@ export const UseFetch = async (endpoint, method = 'GET', data, token = "") => {
         if(method === 'GET'){
             response = await fetch(url)
         }
-        if(method === 'POST'){
+        
+        if(method === 'POST' || method=== 'PATCH'){
          
             response = await fetch(url,{
-                method : 'POST',
+                method : method,
                 body : data,
                 headers :{
+                    Athorization : token
+                }
+            })
+        }
+
+        if(method === 'DELETE'){
+            response = await fetch(url,{
+                method,
+                headers : {
                     Athorization : token
                 }
             })

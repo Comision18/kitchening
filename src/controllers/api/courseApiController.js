@@ -2,6 +2,7 @@ const {
   getAllCourses,
   getCourseById,
   storeCourse,
+  updateCourse,
 } = require("../../services/coursesServices");
 
 module.exports = {
@@ -71,10 +72,32 @@ module.exports = {
     }
   },
   store : async (req,res) => {
-    console.log(req.body)
     try {
       const course = await storeCourse(req);
 
+      return res.status(200).json({
+        ok : true,
+        data : {
+          course
+        }
+      })
+      
+    } catch (error) {
+      console.log(error);
+      return res.status(error.status || 500).json({
+        ok: false,
+        error: {
+          status: error.status || 500,
+          message: error.message || "Upss, hubo un error",
+        },
+      });
+    }
+  },
+  update : async (req,res) => {
+    try {
+      console.log(req.body)
+
+      const course = await updateCourse(req);
       return res.status(200).json({
         ok : true,
         data : {

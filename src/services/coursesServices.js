@@ -164,9 +164,55 @@ const storeCourse = async (req) => {
   }
 };
 
+const updateCourse = async (req) => {
+  try {
+
+    const {
+      title,
+      price,
+      discount,
+      description,
+      chefId,
+      categoryId,
+      visible,
+      free,
+    } = req.body;
+
+    await db.Course.update(
+      {
+        title : title.trim(),
+        price,
+        discount,
+        description : description.trim(),
+        chefId,
+        categoryId,
+        visible,
+        free,
+      },
+      {
+        where : {
+          id : req.params.id
+        }
+      }
+    )
+
+    const course = await getCourseById(req,req.params.id);
+
+    return course
+    
+  } catch (error) {
+    console.log(error);
+    throw {
+      status: 500,
+      message: error.message,
+    };
+  }
+}
+
 module.exports = {
   getAllCourses,
   getCourseById,
   getCountCourses,
   storeCourse,
+  updateCourse
 };

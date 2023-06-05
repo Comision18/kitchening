@@ -5,7 +5,7 @@ import { useFormik } from "formik";
 import validate from "../../validations/courseAddValidator";
 import { CourseAddImage } from "./CourseAddImage";
 
-export const CourseAdd = ({handleAdd}) => {
+export const CourseAdd = ({ handleAdd }) => {
   const [categories, setCategories] = useState([]);
   const [chefs, setChefs] = useState([]);
 
@@ -34,17 +34,18 @@ export const CourseAdd = ({handleAdd}) => {
       description: "",
       free: false,
       visible: false,
-      image_1 : null,
-      image_2 : null,
-      image_3: null
+      image_1: null,
+      image_2: null,
+      image_3: null,
     },
     validate,
     onSubmit: (values) => {
       let data = new FormData();
       for (const key in values) {
-        data.append(key, values[key])
+        data.append(key, values[key]);
       }
-      handleAdd(data)
+      handleAdd(data);
+      formik.handleReset();
     },
   });
 
@@ -219,16 +220,30 @@ export const CourseAdd = ({handleAdd}) => {
         <div className="col-12 mb-3">
           <label htmlFor="">Imagenes</label>
           <div className="d-flex align-items-center justify-content-around">
-          <CourseAddImage file={formik.values.image_1} setFieldValue={formik.setFieldValue} name={'image_1'} main={true}/>
-          <CourseAddImage file={formik.values.image_2} setFieldValue={formik.setFieldValue} name={'image_2'} main={false}/>
-          <CourseAddImage file={formik.values.image_3} setFieldValue={formik.setFieldValue} name={'image_3'} main={false}/>
+            <CourseAddImage
+              file={formik.values.image_1}
+              setFieldValue={formik.setFieldValue}
+              name={"image_1"}
+              main={true}
+            />
+            <CourseAddImage
+              file={formik.values.image_2}
+              setFieldValue={formik.setFieldValue}
+              name={"image_2"}
+              main={false}
+            />
+            <CourseAddImage
+              file={formik.values.image_3}
+              setFieldValue={formik.setFieldValue}
+              name={"image_3"}
+              main={false}
+            />
           </div>
         </div>
         <div className="col-12 mb-3">
-        <hr />
+          <hr />
 
           <div className="d-flex align-items-center justify-content-end">
-           
             <button className="btn btn-dark mx-2 " onClick={formik.handleReset}>
               Limpiar
             </button>
@@ -245,6 +260,5 @@ export const CourseAdd = ({handleAdd}) => {
 };
 
 CourseAdd.propTypes = {
-  handleAdd : PropTypes.func
+  handleAdd: PropTypes.func,
 };
-
