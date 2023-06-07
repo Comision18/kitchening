@@ -3,6 +3,7 @@ const {
   getCourseById,
   storeCourse,
   updateCourse,
+  deleteCourse,
 } = require("../../services/coursesServices");
 
 module.exports = {
@@ -102,6 +103,29 @@ module.exports = {
         ok : true,
         data : {
           course
+        }
+      })
+      
+    } catch (error) {
+      console.log(error);
+      return res.status(error.status || 500).json({
+        ok: false,
+        error: {
+          status: error.status || 500,
+          message: error.message || "Upss, hubo un error",
+        },
+      });
+    }
+  },
+  destroy : async (req,res) => {
+    try {
+
+      const result = await deleteCourse(req);
+
+      return res.status(200).json({
+        ok : true,
+        data : {
+          result
         }
       })
       

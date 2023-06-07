@@ -51,6 +51,9 @@ export const CourseEdit = ({handleEdit, editCourse, handleUpdate}) => {
             image_1 :image_1 ? image_1.urlImage : null,
             image_2 : image_2 ? image_2.urlImage : null,
             image_3: image_3  ? image_3.urlImage : null,
+            image_1_id :image_1 ? image_1.id : null,
+            image_2_id : image_2 ? image_2.id : null,
+            image_3_id: image_3  ? image_3.id : null,
           },
           validate,
           onSubmit : (values) => {
@@ -81,7 +84,10 @@ export const CourseEdit = ({handleEdit, editCourse, handleUpdate}) => {
 
         formik.setFieldValue("image_1",image_1 ? image_1.urlImage : null);
         formik.setFieldValue("image_2",image_2 ? image_2.urlImage : null);
-        formik.setFieldValue("image_3",image_3 ? image_3.urlImage : null)
+        formik.setFieldValue("image_3",image_3 ? image_3.urlImage : null);
+        formik.setFieldValue("image_1_id",image_1 ? image_1.id : null);
+        formik.setFieldValue("image_2_id",image_2 ? image_2.id : null);
+        formik.setFieldValue("image_3_id",image_3 ? image_3.id : null);
         
     }, [editCourse]);
   return (

@@ -1,3 +1,4 @@
+const fs = require('fs');
 const db = require("../database/models");
 const { literalQueryUrlImage, literalQueryUrl } = require("../helpers");
 
@@ -73,7 +74,7 @@ const getCourseById = async (req, id) => {
         {
           association: "images",
           attributes: {
-            exclude: ["createdAt", "updatedAt", "id", "courseId", "name"],
+            exclude: ["createdAt", "updatedAt", "courseId", "name"],
             include: [
               literalQueryUrlImage(req, "courses", "images.name", "urlImage"),
             ],
@@ -165,6 +166,8 @@ const storeCourse = async (req) => {
 };
 
 const updateCourse = async (req) => {
+
+  console.log(req.files);
   try {
 
     const {
@@ -176,6 +179,12 @@ const updateCourse = async (req) => {
       categoryId,
       visible,
       free,
+      image_1,
+      image_2,
+      image_3,
+      image_1_id,
+      image_2_id,
+      image_3_id,
     } = req.body;
 
     await db.Course.update(
@@ -196,10 +205,77 @@ const updateCourse = async (req) => {
       }
     )
 
+
+    if(image_1 === "null" && image_1_id !== "null"){
+      const image = await db.Image.findByPk(image_1_id);
+      fs.existsSync(`public/images/courses/${image.name}`) && fs.unlinkSync(`public/images/courses/${image.name}`)
+      image.destroy()
+    };
+    if(image_2 === "null" && image_2_id !== "null"){
+      const image = await db.Image.findByPk(image_2_id);
+      fs.existsSync(`public/images/courses/${image.name}`) && fs.unlinkSync(`public/images/courses/${image.name}`)
+      image.destroy()
+    };
+    if(image_3 === "null" && image_3_id !== "null"){
+      const image = await db.Image.findByPk(image_3_id);
+      fs.existsSync(`public/images/courses/${image.name}`) && fs.unlinkSync(`public/images/courses/${image.name}`)
+      image.destroy()
+    };
+
+    const files = [];
+
+    for (const key in req.files) {
+      files.push({
+        filename : req.files[key][0].filename,
+        fieldname : req.files[key][0].fieldname,
+        id : req.body[`${req.files[key][0].fieldname}_id` || null]
+      })
+    }
+
+    files.forEach(async (file) => {
+      if(file.id !== "null"){
+        const image = await db.Image.findByPk(file.id);
+        fs.existsSync(`public/images/courses/${image.name}`) && fs.unlinkSync(`public/images/courses/${image.name}`)
+        image.name = file.filename;
+        image.primary = file.fieldname === "image_1" ? true : false;
+        image.save()
+      }else{
+        await db.Image.create({
+          name : file.filename,
+          courseId : req.params.id,
+          primary : file.fieldname === "image_1" ? true : false
+        })
+      }
+    })
+
     const course = await getCourseById(req,req.params.id);
 
     return course
     
+  } catch (error) {
+    console.log(error);
+    throw {
+      status: 500,
+      message: error.message,
+    };
+  }
+}
+
+const deleteCourse = async (req) => {
+  try {
+    
+    const course = await db.Course.findByPk(req.params.id,{
+      include : ['images']
+    });
+
+    course.images.forEach(image => {
+      fs.existsSync(`public/images/courses/${image.name}`) && fs.unlinkSync(`public/images/courses/${image.name}`)
+    });
+
+    const result = await course.destroy();
+
+    return result
+
   } catch (error) {
     console.log(error);
     throw {
@@ -214,5 +290,6 @@ module.exports = {
   getCourseById,
   getCountCourses,
   storeCourse,
-  updateCourse
+  updateCourse,
+  deleteCourse
 };

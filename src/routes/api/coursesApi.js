@@ -1,5 +1,5 @@
 const router  = require('express').Router();
-const {index, detail, store, update} = require('../../controllers/api/courseApiController');
+const {index, detail, store, update, destroy} = require('../../controllers/api/courseApiController');
 const { uploadImage } = require('../../middlewares/upload');
 /* /api/courses */
 
@@ -16,6 +16,7 @@ router
         {name : 'image_2'},
         {name : 'image_3'},
     ]),update)
+    .delete('/:id',destroy)
    
 
 module.exports = router;

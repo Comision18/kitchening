@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Swal from 'sweetalert2';
 import { CourseAdd } from "../components/courses/CourseAdd";
 import { CoursesTable } from "../components/courses/CoursesTable";
 import { UseFetch } from "../hooks/UseFetch";
@@ -45,6 +46,13 @@ export const Courses = () => {
   const handleAdd = (formdata) => {
     UseFetch("/courses", "POST", formdata).then(({ ok }) => {
       ok && handleGetPage(state.pages);
+      Swal.fire({
+        position : "center",
+        icon : "success",
+        title : "Curso agregado con éxito",
+        showConfirmButton : false,
+        timer : 1500
+      })
     });
   };
 
@@ -64,8 +72,45 @@ export const Courses = () => {
         if(ok){
         setEditCourse(null)
         handleGetPage(state.currentPage)
+        Swal.fire({
+          position : "center",
+          icon : "success",
+          title : "Curso actualizado con éxito",
+          showConfirmButton : false,
+          timer : 1500
+        })
         }
       })
+  };
+
+  const handleDelete = (id) => {
+
+    Swal.fire({
+      title: '¿Estás seguro de eliminar el curso?',
+      text: "No se podrá revertir los cambios",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, eliminalo'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        UseFetch(`/courses/${id}`,"DELETE")
+        .then(({ok}) => {
+          ok && handleGetPage(1)
+          Swal.fire({
+            position : "center",
+            icon : "success",
+            title : "Curso eliminado con éxito",
+            showConfirmButton : false,
+            timer : 1500
+          })
+        })
+        .catch(() => console.error)
+      }
+    })
+
+  
   }
 
   return (
@@ -80,6 +125,7 @@ export const Courses = () => {
                 currentPage={state.currentPage}
                 handleGetPage={handleGetPage}
                 handleEdit={handleEdit}
+                handleDelete={handleDelete}
               />
             </div>
             <div className="col-12 col-lg-5">

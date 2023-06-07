@@ -7,6 +7,7 @@ export const CoursesTable = ({
   currentPage,
   handleGetPage,
   handleEdit,
+  handleDelete,
 }) => {
   const paginator = [];
   for (let i = 1; i <= pages; i++) {
@@ -77,7 +78,12 @@ export const CoursesTable = ({
           </thead>
           <tbody>
             {courses.map((course, index) => (
-              <CourseRow key={index} {...course} handleEdit={handleEdit} />
+              <CourseRow
+                key={index}
+                {...course}
+                handleEdit={handleEdit}
+                handleDelete={handleDelete}
+              />
             ))}
           </tbody>
         </table>
@@ -90,5 +96,6 @@ CoursesTable.propTypes = {
   pages: PropTypes.number,
   currentPage: PropTypes.number,
   handleGetPage: PropTypes.func,
-  handleEdit : PropTypes.func
+  handleEdit: PropTypes.func,
+  handleDelete : PropTypes.func
 };
